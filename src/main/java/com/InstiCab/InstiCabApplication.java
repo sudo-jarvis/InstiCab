@@ -1,4 +1,4 @@
-package com.insticab.InstiCab;
+package com.InstiCab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

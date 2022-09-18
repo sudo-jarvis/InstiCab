@@ -1,4 +1,4 @@
-package com.insticab.InstiCab;
+package com.InstiCab;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
