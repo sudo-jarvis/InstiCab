@@ -1,54 +1,29 @@
 package com.InstiCab.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class RegistrationRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int requestId;
     private Time timeApplied;
     private Date dateApplied;
     private int status;
     private Time timeAccepted;
     private Time dateAccepted;
 
-    public Time getTimeApplied() {
-        return timeApplied;
-    }
-
-    public void setTimeApplied(Time timeApplied) {
-        this.timeApplied = timeApplied;
-    }
-
-    public Date getDateApplied() {
-        return dateApplied;
-    }
-
-    public void setDateApplied(Date dateApplied) {
-        this.dateApplied = dateApplied;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Time getTimeAccepted() {
-        return timeAccepted;
-    }
-
-    public void setTimeAccepted(Time timeAccepted) {
-        this.timeAccepted = timeAccepted;
-    }
-
-    public Time getDateAccepted() {
-        return dateAccepted;
-    }
-
-    public void setDateAccepted(Time dateAccepted) {
-        this.dateAccepted = dateAccepted;
-    }
 }
 
 

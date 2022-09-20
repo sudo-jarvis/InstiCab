@@ -1,22 +1,22 @@
 package com.InstiCab.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class FavouriteLocation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int locationId;
     private float latitudeLocation;
     private float longitudeLocation;
 
-    public float getLatitudeLocation() {
-        return latitudeLocation;
-    }
-
-    public void setLatitudeLocation(float latitudeLocation) {
-        this.latitudeLocation = latitudeLocation;
-    }
-
-    public float getLongitudeLocation() {
-        return longitudeLocation;
-    }
-
-    public void setLongitudeLocation(float longitudeLocation) {
-        this.longitudeLocation = longitudeLocation;
-    }
 }
