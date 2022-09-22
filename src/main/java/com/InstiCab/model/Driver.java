@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int driverId;
+    private Long driverId;
     private String licenseNumber;
     private String aadharNumber;
     private String accountNo;

@@ -17,7 +17,7 @@ import java.util.Date;
 public class RegistrationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int requestId;
+    private Long requestId;
     private Time timeApplied;
     private Date dateApplied;
     private int status;

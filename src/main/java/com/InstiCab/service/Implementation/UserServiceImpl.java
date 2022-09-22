@@ -1,10 +1,11 @@
-package com.InstiCab.service;
+package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dto.UserDto;
 import com.InstiCab.model.Role;
 import com.InstiCab.model.User;
 import com.InstiCab.repository.RoleRepository;
 import com.InstiCab.repository.UserRepository;
+import com.InstiCab.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 

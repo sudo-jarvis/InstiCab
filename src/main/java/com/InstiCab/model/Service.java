@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int serviceId;
+    private Long serviceId;
     private String name;
     private String type;
     private float latitudeLocation;

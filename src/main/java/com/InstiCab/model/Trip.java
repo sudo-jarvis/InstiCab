@@ -17,7 +17,7 @@ import java.util.Date;
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tripId;
+    private Long tripId;
     private Date startDate;
     private Time startTime;
     private Date endDate;

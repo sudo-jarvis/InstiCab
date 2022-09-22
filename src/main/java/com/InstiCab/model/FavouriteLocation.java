@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class FavouriteLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int locationId;
+    private Long locationId;
     private float latitudeLocation;
     private float longitudeLocation;
 
