@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class EarningsHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int earningId;
+    private Long earningId;
     private int cost;
     private int distanceTravelled;
 

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int vehicleId;
+    private Long vehicleId;
     private String vehicleType;
     private String registrationNumber;
     private String insuranceNumber;

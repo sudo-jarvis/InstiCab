@@ -16,7 +16,7 @@ import java.sql.Time;
 public class ScheduledTrip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int scheduledTripId;
+    private Long scheduledTripId;
     private Time tripTime;
     private float startLatitude;
     private float startLongitude;

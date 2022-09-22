@@ -16,7 +16,7 @@ import java.util.Date;
 public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int couponId;
+    private Long couponId;
     private float couponDiscount;
     private Date couponValidity;
     private int maxDiscount;

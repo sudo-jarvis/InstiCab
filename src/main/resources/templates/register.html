@@ -97,6 +97,7 @@
                                 th:field="*{password}"
                                 type="password"
                         />
+
                         <p th:errors = "*{password}" class="text-danger"
                            th:if="${#fields.hasErrors('password')}"></p>
                     </div>

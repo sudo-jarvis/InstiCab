@@ -15,6 +15,6 @@ import javax.persistence.*;
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int passengerId;
+    private Long passengerId;
 
 }
