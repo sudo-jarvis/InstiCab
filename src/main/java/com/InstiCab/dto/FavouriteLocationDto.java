@@ -11,5 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavouriteLocationDto {
-
+    private Long locationId;
+    @NotEmpty
+    private float latitudeLocation;
+    @NotEmpty
+    private float longitudeLocation;
 }

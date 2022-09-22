@@ -11,5 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EarningsHistoryDto {
-
+    private Long earningId;
+    @NotEmpty
+    private float cost;
+    @NotEmpty
+    private float distanceTravelled;
 }

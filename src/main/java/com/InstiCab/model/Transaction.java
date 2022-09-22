@@ -20,14 +20,14 @@ public class Transaction {
     private Long transactionId;
     private Time timeTransaction;
     private Date dateTranscation;
-    private int amount;
+    private float amount;
     private int status;
 
-    public int getTransactionId() {
+    public Long getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -47,7 +47,7 @@ public class Transaction {
         this.dateTranscation = dateTranscation;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 

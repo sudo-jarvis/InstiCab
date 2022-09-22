@@ -11,5 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VehicleDto {
-
+    private Long vehicleId;
+    @NotEmpty
+    private String vehicleType;
+    @NotEmpty(message = "Registration number should not be empty")
+    private String registrationNumber;
+    @NotEmpty(message = "Insurance number should not be empty")
+    private String insuranceNumber;
+    @NotEmpty
+    private String registrationState;
 }

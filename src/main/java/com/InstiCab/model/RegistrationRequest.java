@@ -22,7 +22,7 @@ public class RegistrationRequest {
     private Date dateApplied;
     private int status;
     private Time timeAccepted;
-    private Time dateAccepted;
+    private Date dateAccepted;
 
 }
 

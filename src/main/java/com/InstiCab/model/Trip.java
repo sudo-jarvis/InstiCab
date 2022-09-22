@@ -28,11 +28,11 @@ public class Trip {
     private float endLatitude;
     private float endLongitude;
 
-    public int getTripId() {
+    public Long getTripId() {
         return tripId;
     }
 
-    public void setTripId(int tripId) {
+    public void setTripId(Long tripId) {
         this.tripId = tripId;
     }
 
