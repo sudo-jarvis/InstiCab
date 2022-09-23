@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/driver-register}">Driver Registration</a>
+        <a class="navbar-brand" th:href="@{/driver-register}">Driver Registration and Login System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -77,14 +77,14 @@
                         <label class="form-label">Bank Account Number</label>
                         <input
                                 class="form-control"
-                                id="accountNumber"
-                                name="accountNumber"
+                                id="accountNo"
+                                name="accountNo"
                                 placeholder="Enter Bank account number"
-                                th:field="*{accountNumber}"
+                                th:field="*{accountNo}"
                                 type="text"
                         />
-                        <p th:errors = "*{accountNumber}" class="text-danger"
-                           th:if="${#fields.hasErrors('accountNumber')}"></p>
+                        <p th:errors = "*{accountNo}" class="text-danger"
+                           th:if="${#fields.hasErrors('accountNo')}"></p>
                     </div>
 
                     <div class="form-group mb-3">
