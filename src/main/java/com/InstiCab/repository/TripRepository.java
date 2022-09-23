@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TripRepository extends JpaRepository<Trip,Long> {
-    Trip findByTripid(Long id);
+    Trip findByTripId(Long id);
 }
