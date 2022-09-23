@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/driver-register}">Driver Registration</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/driver-login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br /><br /><br />
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Registration</h2>
+            </div>
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    You have successfully registered our app!
+                </div>
+            </div>
+            <div class="card-body">
+                <form
+                        method="post"
+                        role="form"
+                        th:action="@{/driver-register/save}"
+                        th:object="${driver}"
+                >
+                    <div class="form-group mb-3">
+                        <label class="form-label">License Number</label>
+                        <input
+                                class="form-control"
+                                id="licenseNumber"
+                                name="licenseNumber"
+                                placeholder="Enter License nunber"
+                                th:field="*{licenseNumber}"
+                                type="text"
+                        />
+                        <p th:errors = "*{licenseNumber}" class="text-danger"
+                           th:if="${#fields.hasErrors('licenseNumber')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Aadhar Number</label>
+                        <input
+                                class="form-control"
+                                id="aadharNumber"
+                                name="aadharNumber"
+                                placeholder="Enter Aadhar number"
+                                th:field="*{aadharNumber}"
+                                type="text"
+                        />
+                        <p th:errors = "*{aadharNumber}" class="text-danger"
+                           th:if="${#fields.hasErrors('aadharNumber')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Bank Account Number</label>
+                        <input
+                                class="form-control"
+                                id="accountNumber"
+                                name="accountNumber"
+                                placeholder="Enter Bank account number"
+                                th:field="*{accountNumber}"
+                                type="text"
+                        />
+                        <p th:errors = "*{accountNumber}" class="text-danger"
+                           th:if="${#fields.hasErrors('accountNumber')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Bank Account Name</label>
+                        <input
+                                class="form-control"
+                                id="accountName"
+                                name="accountName"
+                                placeholder="Enter Bank account name"
+                                th:field="*{accountName}"
+                                type="text"
+                        />
+
+                        <p th:errors = "*{accountName}" class="text-danger"
+                           th:if="${#fields.hasErrors('accountName')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">IFSC Code</label>
+                        <input
+                                class="form-control"
+                                id="ifscCode"
+                                name="ifscCode"
+                                placeholder="Enter IFSC Code"
+                                th:field="*{ifscCode}"
+                                type="text"
+                        />
+
+                        <p th:errors = "*{ifscCode}" class="text-danger"
+                           th:if="${#fields.hasErrors('ifscCode')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Bank Name</label>
+                        <input
+                                class="form-control"
+                                id="bankName"
+                                name="bankName"
+                                placeholder="Enter Bank name"
+                                th:field="*{bankName}"
+                                type="text"
+                        />
+
+                        <p th:errors = "*{bankName}" class="text-danger"
+                           th:if="${#fields.hasErrors('bankName')}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                        <span>Already registered? <a th:href="@{/driver-login}">Login here</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
