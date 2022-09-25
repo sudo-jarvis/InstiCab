@@ -16,7 +16,9 @@ public class FavouriteLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long locationId;
+    @Column(nullable = false)
     private float latitudeLocation;
+    @Column(nullable = false)
     private float longitudeLocation;
 
 }

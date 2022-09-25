@@ -31,8 +31,11 @@ public class User {
     @Column(nullable = false)
     private String password;
     private Boolean isDriver = false;
+    @Column(nullable = false)
     private Date dateCreated;
+    @Column(nullable = false)
     private Date lastLoginDate;
+    @Column(nullable = false)
     private Time lastLoginTime;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

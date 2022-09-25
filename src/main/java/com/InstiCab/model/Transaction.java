@@ -18,48 +18,12 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
+    @Column(nullable = false)
     private Time timeTransaction;
+    @Column(nullable = false)
     private Date dateTranscation;
+    @Column(nullable = false)
     private float amount;
+    @Column(nullable = false)
     private int status;
-
-    public Long getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public Time getTimeTransaction() {
-        return timeTransaction;
-    }
-
-    public void setTimeTransaction(Time timeTransaction) {
-        this.timeTransaction = timeTransaction;
-    }
-
-    public Date getDateTranscation() {
-        return dateTranscation;
-    }
-
-    public void setDateTranscation(Date dateTranscation) {
-        this.dateTranscation = dateTranscation;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 }

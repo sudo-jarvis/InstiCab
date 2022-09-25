@@ -19,10 +19,15 @@ public class ScheduledTrip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduledTripId;
+    @Column(nullable = false)
     private Time tripTime;
+    @Column(nullable = false)
     private float startLatitude;
+    @Column(nullable = false)
     private float startLongitude;
+    @Column(nullable = false)
     private float endLatitude;
+    @Column(nullable = false)
     private float endLongitude;
 
 }
