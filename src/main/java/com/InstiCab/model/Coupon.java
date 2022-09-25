@@ -17,7 +17,10 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long couponId;
+    @Column(nullable = false)
     private float couponDiscount;
+    @Column(nullable = false)
     private Date couponValidity;
+    @Column(nullable = false)
     private int maxDiscount;
 }

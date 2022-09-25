@@ -16,7 +16,9 @@ public class EarningsHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long earningId;
+    @Column(nullable = false)
     private float cost;
+    @Column(nullable = false)
     private float distanceTravelled;
 
 }

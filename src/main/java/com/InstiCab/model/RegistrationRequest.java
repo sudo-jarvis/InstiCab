@@ -18,10 +18,15 @@ public class RegistrationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
+    @Column(nullable = false)
     private Time timeApplied;
+    @Column(nullable = false)
     private Date dateApplied;
+    @Column(nullable = false)
     private int status;
+    @Column(nullable = false)
     private Time timeAccepted;
+    @Column(nullable = false)
     private Date dateAccepted;
 
 }

@@ -16,10 +16,15 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long serviceId;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String type;
+    @Column(nullable = false)
     private float latitudeLocation;
+    @Column(nullable = false)
     private float longitudeLocation;
+    @Column(nullable = false, unique = true)
     private String contactNo;
 
 
