@@ -22,6 +22,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/login}">Login</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/register/driver}">Register as Driver</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -46,17 +49,44 @@
                         th:object="${user}"
                 >
                     <div class="form-group mb-3">
+                        <label class="form-label">Username</label>
+                        <input
+                                class="form-control"
+                                id="Username"
+                                name="Username"
+                                placeholder="Enter Username"
+                                th:field="*{username}"
+                                type="text"
+                        />
+                        <p th:errors = "*{username}" class="text-danger"
+                           th:if="${#fields.hasErrors('username')}"></p>
+                    </div>
+                    <div class="form-group mb-3">
                         <label class="form-label">First Name</label>
                         <input
                                 class="form-control"
                                 id="firstName"
                                 name="firstName"
-                                placeholder="Enter first name"
+                                placeholder="Enter First Name"
                                 th:field="*{firstName}"
                                 type="text"
                         />
                         <p th:errors = "*{firstName}" class="text-danger"
                            th:if="${#fields.hasErrors('firstName')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Middle Name</label>
+                        <input
+                                class="form-control"
+                                id="middleName"
+                                name="middleName"
+                                placeholder="Enter Middle Name"
+                                th:field="*{middleName}"
+                                type="text"
+                        />
+                        <p th:errors = "*{middleName}" class="text-danger"
+                           th:if="${#fields.hasErrors('middleName')}"></p>
                     </div>
 
                     <div class="form-group mb-3">
@@ -85,6 +115,20 @@
                         />
                         <p th:errors = "*{email}" class="text-danger"
                            th:if="${#fields.hasErrors('email')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Phone</label>
+                        <input
+                                class="form-control"
+                                id="phoneNo"
+                                name="phoneNo"
+                                placeholder="Enter Phone"
+                                th:field="*{phoneNo}"
+                                type="number"
+                        />
+                        <p th:errors = "*{phoneNo}" class="text-danger"
+                           th:if="${#fields.hasErrors('phoneNo')}"></p>
                     </div>
 
                     <div class="form-group mb-3">
