@@ -23,5 +23,7 @@ public class Driver {
     private String ifscCode;
     private String bankName;
 
+    @OneToOne(mappedBy = "driver")
+    private User user;
 
 }

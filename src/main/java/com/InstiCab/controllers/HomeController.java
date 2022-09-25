@@ -1,8 +1,12 @@
 package com.InstiCab.controllers;
 
+import com.InstiCab.dto.DriverDto;
 import com.InstiCab.dto.UserDto;
 import com.InstiCab.model.User;
+import com.InstiCab.repository.UserRepository;
+import com.InstiCab.service.DriverService;
 import com.InstiCab.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,6 +48,16 @@ public class HomeController {
         return "register";
     }
 
+    @GetMapping("/register/driver")
+    public String showDriverRegistrationForm(Model model){
+        // create model object to store form data
+        UserDto user = new UserDto();
+        DriverDto driverDto = new DriverDto();
+        user.setDriver(driverDto);
+        model.addAttribute("user", user);
+        return "driver_register";
+    }
+
     // handler method to handle user registration form submit request
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
@@ -60,10 +74,12 @@ public class HomeController {
             model.addAttribute("user", userDto);
             return "/register";
         }
-
-        userService.saveUser(userDto);
-        return "redirect:/register?success";
+        else{
+                userService.saveUser(userDto);
+                return "login";
+        }
     }
+
 
     // handler method to handle list of users
     @GetMapping("/users")
