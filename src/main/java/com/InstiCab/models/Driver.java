@@ -10,6 +10,17 @@ public class Driver {
     private String bankName;
     private User user;
 
+    public Driver(Long driverId, String licenseNumber, String aadharNumber, String accountNo, String accountName, String ifscCode, String bankName, User user) {
+        this.driverId = driverId;
+        this.licenseNumber = licenseNumber;
+        this.aadharNumber = aadharNumber;
+        this.accountNo = accountNo;
+        this.accountName = accountName;
+        this.ifscCode = ifscCode;
+        this.bankName = bankName;
+        this.user = user;
+    }
+
     public Long getDriverId() {
         return driverId;
     }

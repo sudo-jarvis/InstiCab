@@ -6,6 +6,13 @@ import java.util.List;
 public class Role {
     private Long id;
     private String name;
+    private List<User> users = new ArrayList<>();
+
+    public Role(Long id, String name, List<User> users) {
+        this.id = id;
+        this.name = name;
+        this.users = users;
+    }
 
     public Long getId() {
         return id;
@@ -30,6 +37,4 @@ public class Role {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
-    private List<User> users = new ArrayList<>();
 }

@@ -5,6 +5,20 @@ import java.util.Date;
 
 public class RegistrationRequest {
     private Long requestId;
+    private Time timeApplied;
+    private Date dateApplied;
+    private int status;
+    private Time timeAccepted;
+    private Date dateAccepted;
+
+    public RegistrationRequest(Long requestId, Time timeApplied, Date dateApplied, int status, Time timeAccepted, Date dateAccepted) {
+        this.requestId = requestId;
+        this.timeApplied = timeApplied;
+        this.dateApplied = dateApplied;
+        this.status = status;
+        this.timeAccepted = timeAccepted;
+        this.dateAccepted = dateAccepted;
+    }
 
     public Long getRequestId() {
         return requestId;
@@ -53,10 +67,4 @@ public class RegistrationRequest {
     public void setDateAccepted(Date dateAccepted) {
         this.dateAccepted = dateAccepted;
     }
-
-    private Time timeApplied;
-    private Date dateApplied;
-    private int status;
-    private Time timeAccepted;
-    private Date dateAccepted;
 }

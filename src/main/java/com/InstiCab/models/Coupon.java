@@ -9,6 +9,13 @@ public class Coupon {
     private Date couponValidity;
     private int maxDiscount;
 
+    public Coupon(Long couponId, float couponDiscount, Date couponValidity, int maxDiscount) {
+        this.couponId = couponId;
+        this.couponDiscount = couponDiscount;
+        this.couponValidity = couponValidity;
+        this.maxDiscount = maxDiscount;
+    }
+
     public void setCouponId(Long couponId) {
         this.couponId = couponId;
     }

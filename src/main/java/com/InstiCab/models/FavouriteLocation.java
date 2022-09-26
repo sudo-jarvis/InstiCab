@@ -3,6 +3,13 @@ package com.InstiCab.models;
 public class FavouriteLocation {
     private Long locationId;
     private float latitudeLocation;
+    private float longitudeLocation;
+
+    public FavouriteLocation(Long locationId, float latitudeLocation, float longitudeLocation) {
+        this.locationId = locationId;
+        this.latitudeLocation = latitudeLocation;
+        this.longitudeLocation = longitudeLocation;
+    }
 
     public Long getLocationId() {
         return locationId;
@@ -27,7 +34,4 @@ public class FavouriteLocation {
     public void setLongitudeLocation(float longitudeLocation) {
         this.longitudeLocation = longitudeLocation;
     }
-
-    private float longitudeLocation;
-
 }
