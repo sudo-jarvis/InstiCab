@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface CouponRepository {
+package com.InstiCab.repository;
+
+public interface CouponRepository {
 }

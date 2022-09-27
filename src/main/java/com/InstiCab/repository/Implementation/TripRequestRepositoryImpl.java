@@ -1,2 +1,6 @@
-package com.InstiCab.repository.Implementation;public class TripRequestRepositoryImpl {
+package com.InstiCab.repository.Implementation;
+
+import com.InstiCab.repository.TripRequestRepository;
+
+public class TripRequestRepositoryImpl implements TripRequestRepository {
 }

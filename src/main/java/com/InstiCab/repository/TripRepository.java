@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface TripRepository {
+package com.InstiCab.repository;
+
+public interface TripRepository {
 }

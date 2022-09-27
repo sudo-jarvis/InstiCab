@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface FavouriteLocationRepository {
+package com.InstiCab.repository;
+
+public interface FavouriteLocationRepository {
 }

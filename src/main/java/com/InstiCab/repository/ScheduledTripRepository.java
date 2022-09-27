@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface ScheduledTripRepository {
+package com.InstiCab.repository;
+
+public interface ScheduledTripRepository {
 }

@@ -1,4 +1,4 @@
 package com.InstiCab.repository;
 
-public class UserRepository {
+public interface UserRepository {
 }

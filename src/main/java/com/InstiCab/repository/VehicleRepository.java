@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface VehicleRepository {
+package com.InstiCab.repository;
+
+public interface VehicleRepository {
 }
