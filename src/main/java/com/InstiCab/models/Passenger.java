@@ -1,17 +1,15 @@
 package com.InstiCab.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Passenger {
     private Long passengerId;
 
-    public Passenger(Long passengerId) {
-        this.passengerId = passengerId;
-    }
-
-    public Long getPassengerId() {
-        return passengerId;
-    }
-
-    public void setPassengerId(Long passengerId) {
-        this.passengerId = passengerId;
-    }
 }

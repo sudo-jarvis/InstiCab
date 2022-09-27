@@ -1,5 +1,14 @@
 package com.InstiCab.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Driver {
     private Long driverId;
     private String licenseNumber;
@@ -8,80 +17,6 @@ public class Driver {
     private String accountName;
     private String ifscCode;
     private String bankName;
-    private User user;
+    private int userId;
 
-    public Driver(Long driverId, String licenseNumber, String aadharNumber, String accountNo, String accountName, String ifscCode, String bankName, User user) {
-        this.driverId = driverId;
-        this.licenseNumber = licenseNumber;
-        this.aadharNumber = aadharNumber;
-        this.accountNo = accountNo;
-        this.accountName = accountName;
-        this.ifscCode = ifscCode;
-        this.bankName = bankName;
-        this.user = user;
-    }
-
-    public Long getDriverId() {
-        return driverId;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public String getAadharNumber() {
-        return aadharNumber;
-    }
-
-    public String getAccountNo() {
-        return accountNo;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public String getIfscCode() {
-        return ifscCode;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setDriverId(Long driverId) {
-        this.driverId = driverId;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public void setAadharNumber(String aadharNumber) {
-        this.aadharNumber = aadharNumber;
-    }
-
-    public void setAccountNo(String accountNo) {
-        this.accountNo = accountNo;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
-
-    public void setIfscCode(String ifscCode) {
-        this.ifscCode = ifscCode;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
