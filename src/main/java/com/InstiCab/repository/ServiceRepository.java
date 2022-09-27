@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface ServiceRepository {
+package com.InstiCab.repository;
+
+public interface ServiceRepository {
 }

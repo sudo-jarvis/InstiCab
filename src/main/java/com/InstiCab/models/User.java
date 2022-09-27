@@ -20,10 +20,10 @@ public class User {
     private String email;
     private String phoneNo;
     private String password;
-    private Boolean isDriver = false;
     private Date dateCreated;
     private Date lastLoginDate;
     private Time lastLoginTime;
+    private Boolean isDriver = false;
     private int driverId;
 
 }

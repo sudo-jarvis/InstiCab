@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface TransactionRepository {
+package com.InstiCab.repository;
+
+public interface TransactionRepository {
 }

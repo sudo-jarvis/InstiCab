@@ -1,2 +1,6 @@
-package com.InstiCab.repository.Implementation;public class PassengerRepositoryImpl {
+package com.InstiCab.repository.Implementation;
+
+import com.InstiCab.repository.PassengerRepository;
+
+public class PassengerRepositoryImpl implements PassengerRepository {
 }

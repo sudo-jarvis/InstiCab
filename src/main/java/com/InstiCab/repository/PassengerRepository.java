@@ -1,2 +1,4 @@
-package com.InstiCab.repository;public interface PassengerRepository {
+package com.InstiCab.repository;
+
+public interface PassengerRepository {
 }

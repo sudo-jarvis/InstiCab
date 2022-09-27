@@ -1,2 +1,6 @@
-package com.InstiCab.repository.Implementation;public class VehicleRepositoryImpl {
+package com.InstiCab.repository.Implementation;
+
+import com.InstiCab.repository.VehicleRepository;
+
+public class VehicleRepositoryImpl implements VehicleRepository {
 }
