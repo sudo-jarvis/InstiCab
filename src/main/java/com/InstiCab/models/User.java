@@ -23,7 +23,7 @@ public class User {
     private Date dateCreated;
     private Date lastLoginDate;
     private Time lastLoginTime;
-    private Boolean isDriver = false;
+    private int isDriver = 0;
     private int driverId;
 
 }
