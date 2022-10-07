@@ -16,5 +16,6 @@ public class Service {
     private float latitudeLocation;
     private float longitudeLocation;
     private String contactNo;
+    private Long vehicleId;
 
 }

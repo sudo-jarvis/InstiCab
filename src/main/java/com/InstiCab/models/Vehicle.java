@@ -16,5 +16,6 @@ public class Vehicle {
     private String registrationNumber;
     private String insuranceNumber;
     private String registrationState;
+    private Long driverId;
 
 }

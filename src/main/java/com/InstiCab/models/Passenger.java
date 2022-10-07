@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Passenger {
     private Long passengerId;
+    private String username;
 
 }

@@ -23,6 +23,7 @@ public class Trip {
     private float startLongitude;
     private float endLatitude;
     private float endLongitude;
-    private int driverId;
+    private Long driverId;
+    private Long passengerId;
 
 }

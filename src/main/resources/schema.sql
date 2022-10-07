@@ -1,107 +1,162 @@
-CREATE TABLE IF NOT EXISTS coupon(
-    coupon_id INT,
-    coupon_discount FLOAT,
-    couponvalidity DATE,
-    maxdiscount INT
+DROP DATABASE IF EXISTS InstiCab;
+CREATE DATABASE InstiCab;
+USE InstiCab;
+
+
+CREATE TABLE IF NOT EXISTS User(
+    username VARCHAR(255) NOT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    middleName VARCHAR(255) DEFAULT NULL,
+    lastName VARCHAR(255) DEFAULT NULL,
+    email VARCHAR(255) NOT NULL,
+    phoneNo VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    dateCreated date NOT NULL,
+    lastLoginDate date DEFAULT NULL,
+    lastLoginTime time DEFAULT NULL,
+    isDriver INT DEFAULT 0 NOT NULL,
+    PRIMARY KEY (username)
 );
 
-CREATE TABLE IF NOT EXISTS driver(
-    driverid INT,
-    licensenumber VARCHAR(255),
-    aadharnumber VARCHAR(255),
-    accountno VARCHAR(255),
-    accountname VARCHAR(255),
-    ifsccode VARCHAR(255),
-    bankname VARCHAR(255),
-    userid INT
+CREATE TABLE IF NOT EXISTS Passenger(
+    passengerId BIGINT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    PRIMARY KEY (passengerId),
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS earningshistory(
-    earningid INT,
-    cost FLOAT,
-    distancetravelled FLOAT
+CREATE TABLE IF NOT EXISTS Driver (
+    driverId BIGINT NOT NULL AUTO_INCREMENT,
+    licenseNumber VARCHAR(255) NOT NULL,
+    aadharNumber VARCHAR(255) NOT NULL,
+    accountNo VARCHAR(255) NOT NULL,
+    accountName VARCHAR(255) NOT NULL,
+    ifscCode VARCHAR(255) NOT NULL,
+    bankName VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    PRIMARY KEY (driverId),
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS favouritelocation(
-    locationid INT,
-    latitudelocation FLOAT,
-    longitudelocation FLOAT
+CREATE TABLE IF NOT EXISTS Coupon (
+    couponId BIGINT NOT NULL AUTO_INCREMENT,
+    couponDiscount FLOAT NOT NULL,
+    couponValidity DATE NOT NULL,
+    maxDiscount INT NOT NULL,
+    passengerId BIGINT NOT NULL,
+    PRIMARY KEY (couponId),
+    FOREIGN KEY (passengerId) REFERENCES Passenger(passengerId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS passenger(passengerid INT);
-
-CREATE TABLE IF NOT EXISTS registrationrequest(
-    requestid INT,
-    timeapplied time,
-    dateapplied date,
-    status INT,
-    timeaccepted time,
-    dateaccepted date
+CREATE TABLE IF NOT EXISTS EarningsHistory(
+    earningId BIGINT NOT NULL AUTO_INCREMENT,
+    cost FLOAT NOT NULL,
+    distanceTravelled FLOAT NOT NULL,
+    driverId BIGINT NOT NULL,
+    PRIMARY KEY(earningId),
+    FOREIGN KEY (driverId) REFERENCES Driver(driverId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS role(id INT, name VARCHAR(255));
-
-CREATE TABLE IF NOT EXISTS scheduledtrip(
-    scheduledtripid INT,
-    triptime time,
-    startlatitude FLOAT,
-    startlongitude FLOAT,
-    endlatitude FLOAT,
-    endlongitude FLOAT
+CREATE TABLE IF NOT EXISTS FavouriteLocation(
+    locationId BIGINT NOT NULL AUTO_INCREMENT,
+    latitudeLocation FLOAT NOT NULL,
+    longitudeLocation FLOAT NOT NULL,
+    passengerId BIGINT NOT NULL,
+    PRIMARY KEY (locationId),
+    FOREIGN KEY (passengerId) REFERENCES Passenger(passengerId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS service(
-    serviceid INT,
-    name VARCHAR(255),
-    type VARCHAR(255),
-    latitudelocation FLOAT,
-    longitudelocation FLOAT,
-    contactno VARCHAR(255)
+CREATE TABLE IF NOT EXISTS RegistrationRequest(
+    requestId BIGINT NOT NULL AUTO_INCREMENT,
+    timeApplied time NOT NULL,
+    dateApplied date NOT NULL,
+    status INT NOT NULL,
+    timeAccepted time DEFAULT NULL,
+    dateAccepted date DEFAULT NULL,
+    driverId BIGINT NOT NULL,
+    PRIMARY KEY (requestId),
+    FOREIGN KEY (driverId) REFERENCES Driver(driverId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS transaction(
-    transactionid INT,
-    timetransaction time,
-    datetransaction date,
-    amount FLOAT,
-    status INT
+CREATE TABLE IF NOT EXISTS Role(
+    id BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS trip(
-    tripid INT,
-    startdate date,
-    starttime time,
-    enddate date,
-    endtime time,
-    status INT,
-    startlatitude FLOAT,
-    startlongitude FLOAT,
-    endlatitude FLOAT,
-    endlongitude FLOAT,
-    driverid INT
+CREATE TABLE IF NOT EXISTS Trip(
+    tripId BIGINT NOT NULL AUTO_INCREMENT,
+    startDate date NOT NULL,
+    startTime time NOT NULL,
+    endDate date NOT NULL,
+    endTime time NOT NULL,
+    status INT NOT NULL,
+    startLatitude FLOAT NOT NULL,
+    startLongitude FLOAT NOT NULL,
+    endLatitude FLOAT NOT NULL,
+    endLongitude FLOAT NOT NULL,
+    driverId BIGINT NOT NULL,
+    passengerId BIGINT NOT NULL,
+    PRIMARY KEY (tripId),
+    FOREIGN KEY (driverId) REFERENCES Driver(driverId) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (passengerId) REFERENCES Passenger(passengerId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS triprequest(triprequestid INT, tripid INT);
-
-CREATE TABLE IF NOT EXISTS user(
-    username VARCHAR(255),
-    firstname VARCHAR(255),
-    middlename VARCHAR(255),
-    lastname VARCHAR(255),
-    email VARCHAR(255),
-    phoneno VARCHAR(255),
-    password VARCHAR(255),
-    datecreated date,
-    lastlogindate date,
-    lastlogintime time,
-    isdriver INT,
-    driverid INT
+CREATE TABLE IF NOT EXISTS ScheduledTrip(
+    scheduledTripId BIGINT NOT NULL AUTO_INCREMENT,
+    tripTime time NOT NULL,
+    startLatitude FLOAT NOT NULL,
+    startLongitude FLOAT NOT NULL,
+    endLatitude FLOAT NOT NULL,
+    endLongitude FLOAT NOT NULL,
+    driverId BIGINT NOT NULL,
+    tripId BIGINT NOT NULL,
+    PRIMARY KEY (scheduledTripId),
+    FOREIGN KEY (driverId) REFERENCES Driver(driverId) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tripId) REFERENCES Trip(tripId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS vehicle(
-    vehicleid INT,
-    vehicletype VARCHAR(255),
-    registrationnumber VARCHAR(255),
-    insurancenumber VARCHAR(255),
-    registrationstate VARCHAR(255)
+CREATE TABLE IF NOT EXISTS Vehicle(
+    vehicleId BIGINT NOT NULL,
+    vehicleType VARCHAR(255) NOT NULL,
+    registrationNumber VARCHAR(255) NOT NULL,
+    insuranceNumber VARCHAR(255) NOT NULL,
+    registrationState VARCHAR(255) NOT NULL,
+    driverId BIGINT NOT NULL,
+    PRIMARY KEY (vehicleId),
+    FOREIGN KEY (driverId) REFERENCES Driver(driverId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Service(
+    serviceId BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    latitudeLocation FLOAT NOT NULL,
+    longitudeLocation FLOAT NOT NULL,
+    contactNo VARCHAR(255) NOT NULL,
+    vehicleId BIGINT,
+    PRIMARY KEY (serviceId),
+    FOREIGN KEY (vehicleId) REFERENCES Vehicle(vehicleId) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Transaction(
+    transactionId BIGINT NOT NULL AUTO_INCREMENT,
+    timeTransaction time NOT NULL,
+    dateTranscation date NOT NULL,
+    amount FLOAT NOT NULL,
+    status INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    PRIMARY KEY (transactionId),
+    FOREIGN KEY (username) REFERENCES User(username) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TripRequest(
+    tripRequestId INT NOT NULL AUTO_INCREMENT,
+    passengerId BIGINT NOT NULL,
+    driverId BIGINT NOT NULL,
+    tripId BIGINT NOT NULL,
+    PRIMARY KEY (tripRequestId),
+    FOREIGN KEY (passengerId) REFERENCES Passenger(passengerId) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (driverId) REFERENCES Driver(driverId) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tripId) REFERENCES Trip(tripId) ON DELETE CASCADE ON UPDATE CASCADE
 );

@@ -18,5 +18,7 @@ public class ScheduledTrip {
     private float startLongitude;
     private float endLatitude;
     private float endLongitude;
+    private Long driverId;
+    private Long tripId;
 
 }
