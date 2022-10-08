@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TripRequest {
     private int tripRequestId;
-    private User user;
-    private Driver driver;
+    private Long passengerId;
+    private Long driverId;
     private int tripId;
 
 }

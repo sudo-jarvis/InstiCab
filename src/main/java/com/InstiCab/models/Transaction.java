@@ -18,5 +18,6 @@ public class Transaction {
     private Date dateTranscation;
     private float amount;
     private int status;
+    private String username;
 
 }

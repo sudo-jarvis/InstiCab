@@ -24,6 +24,5 @@ public class User {
     private Date lastLoginDate;
     private Time lastLoginTime;
     private int isDriver = 0;
-    private int driverId;
 
 }

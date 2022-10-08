@@ -19,5 +19,6 @@ public class RegistrationRequest {
     private int status;
     private Time timeAccepted;
     private Date dateAccepted;
+    private Long driverId;
 
 }

@@ -17,6 +17,6 @@ public class Driver {
     private String accountName;
     private String ifscCode;
     private String bankName;
-    private int userId;
+    private String username;
 
 }

@@ -17,6 +17,7 @@ public class Coupon {
     private float couponDiscount;
     private Date couponValidity;
     private int maxDiscount;
+    private Long passengerId;
 
 }
 
