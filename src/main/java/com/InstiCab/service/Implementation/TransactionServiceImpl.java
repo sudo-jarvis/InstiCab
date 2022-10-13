@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.TransactionRepository;
+import com.InstiCab.service.TransactionService;
 
-public class TransactionRepositoryImpl implements TransactionRepository {
+public class TransactionServiceImpl implements TransactionService {
 }

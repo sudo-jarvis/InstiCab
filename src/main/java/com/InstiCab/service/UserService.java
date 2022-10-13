@@ -1,5 +1,5 @@
-package com.InstiCab.repository;
+package com.InstiCab.service;
 
-public interface UserRepository {
+public interface UserService {
     boolean findLoggedInUsername();
 }

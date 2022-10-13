@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.ServiceRepository;
+import com.InstiCab.service.ServiceService;
 
-public class ServiceRepositoryImpl implements ServiceRepository {
+public class ServiceServiceImpl implements ServiceService {
 }

@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.ScheduledTripRepository;
+import com.InstiCab.service.ScheduledTripService;
 
-public class ScheduledTripRepositoryImpl implements ScheduledTripRepository {
+public class ScheduledTripServiceImpl implements ScheduledTripService {
 }

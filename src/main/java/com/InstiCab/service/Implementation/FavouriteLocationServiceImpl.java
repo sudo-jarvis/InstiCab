@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.FavouriteLocationRepository;
+import com.InstiCab.service.FavouriteLocationService;
 
-public class FavouriteLocationRepositoryImpl implements FavouriteLocationRepository {
+public class FavouriteLocationServiceImpl implements FavouriteLocationService {
 }

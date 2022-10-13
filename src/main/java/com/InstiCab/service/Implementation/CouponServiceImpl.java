@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.CouponRepository;
+import com.InstiCab.service.CouponService;
 
-public class CouponRepositoryImpl implements CouponRepository {
+public class CouponServiceImpl implements CouponService {
 }

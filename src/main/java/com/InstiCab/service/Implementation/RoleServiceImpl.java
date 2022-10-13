@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.RoleRepository;
+import com.InstiCab.service.RoleService;
 
-public class RoleRepositoryImpl implements RoleRepository {
+public class RoleServiceImpl implements RoleService {
 }

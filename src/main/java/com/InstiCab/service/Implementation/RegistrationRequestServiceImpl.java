@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.RegistrationRequestRepository;
+import com.InstiCab.service.RegistrationRequestService;
 
-public class RegistrationRequestRepositoryImpl implements RegistrationRequestRepository {
+public class RegistrationRequestServiceImpl implements RegistrationRequestService {
 }

@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.DriverRepository;
+import com.InstiCab.service.DriverService;
 
-public class DriverRepositoryImpl implements DriverRepository {
+public class DriverServiceImpl implements DriverService {
 }

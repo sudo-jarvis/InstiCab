@@ -1,6 +1,6 @@
-package com.InstiCab.repository.Implementation;
+package com.InstiCab.service.Implementation;
 
-import com.InstiCab.repository.EarningsHistoryRepository;
+import com.InstiCab.service.EarningsHistoryService;
 
-public class EarningsHistoryRepositoryImpl implements EarningsHistoryRepository {
+public class EarningsHistoryServiceImpl implements EarningsHistoryService {
 }

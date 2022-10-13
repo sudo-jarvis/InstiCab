@@ -1,4 +1,4 @@
-package com.InstiCab.repository;
+package com.InstiCab.service;
 
-public interface EarningsHistoryRepository {
+public interface EarningsHistoryService {
 }
