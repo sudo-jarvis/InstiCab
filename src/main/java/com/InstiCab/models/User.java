@@ -24,6 +24,4 @@ public class User {
     private Date lastLoginDate;
     private Time lastLoginTime;
     private String role;
-
-
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+	<head th:replace="components/head :: head"></head>
+	<body>
+		<div th:replace="components/navbar :: navbar"></div>
+		<div
+			class="page-header align-items-start min-vh-100"
+			th:style="'background-image: url(' + @{/images/back-gradient.jpg} + ');'"
+			loading="lazy"
+		>
+			<span class="mask bg-gradient-dark opacity-6"></span>
+			<div class="container my-auto">
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-12 mx-auto">
+						<div class="card z-index-0 fadeIn3 fadeInBottom">
+							<div class="card-body bg-gradient-secondary text-center">
+								<div style="width: 50px">
+									<a th:href="@{/shops/__${shopId}__/}" class="btn btn-primary"
+										><i class="fas fa-arrow-circle-left"></i
+									></a>
+								</div>
+								<h2
+									class="text-center"
+									th:utext="${'List of customers that puchased from <b>' + shopName + '</b>'}"
+								></h2>
+								<br />
+
+								<span th:if="${customerIds eq null or #lists.size(customerIds) eq 0}" class="text-white"
+									>No customers found.</span
+								>
+								<div th:if="${customerIds ne null and #lists.size(customerIds) ne 0}">
+									<table class="table table-dark table-striped text-white table-hover">
+										<thead class="thead-dark">
+											<tr>
+												<th scope="col">Id</th>
+												<th scope="col">Name</th>
+												<!-- <th scope="col">Orders</th> -->
+											</tr>
+										</thead>
+										<tbody class="text-white">
+											<tr th:each="customer:${customerIds}">
+												<td th:text="${customer}"></td>
+												<td th:text="${customerMap.get(customer)}"></td>
+												<!-- <td>
+													<a
+														th:href="@{/shops/__${shopId}__/customers/__${customer}__/}"
+														class="btn btn-info"
+														>Open</a
+													>
+												</td> -->
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer th:replace="components/footer :: footer"></footer>
+		</div>
+		<script th:replace="components/toast :: toast"></script>
+	</body>
+</html>

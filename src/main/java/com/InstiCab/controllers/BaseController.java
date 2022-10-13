@@ -1,13 +1,13 @@
 package com.InstiCab.controllers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.InstiCab.models.User;
 import com.InstiCab.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-public class baseController {
+@Controller
+public class BaseController {
     protected final UserService userService;
     protected User user;
 
@@ -18,11 +18,11 @@ public class baseController {
 
     // Allowed Role Constants
     protected static final String ROLE_DRIVER = "ROLE_DRIVER";
-    protected static final String ROLE_USER = "ROLE_USER";
+    protected static final String ROLE_PASSENGER = "ROLE_PASSENGER";
     protected static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Autowired
-    public baseController(UserService userService) {
+    public BaseController(UserService userService) {
         this.userService = userService;
     }
 
@@ -30,22 +30,11 @@ public class baseController {
         return userService.findLoggedInUsername() != null;
     }
 
-    public boolean isAuthorized(Model model, String permittedRoles) {
+    public boolean isAuthorized(Model model, String checkRole) {
         String username = userService.findLoggedInUsername();
         if (username != null) {
             user = userService.getUserByUsername(username);
-            model.addAttribute("username", username);
-            model.addAttribute("role", user.getRole());
-            model.addAttribute("loggedIn", true);
-
-            List<String> permittedRolesList = Arrays.asList(permittedRoles.split(" "));
-            List<String> userRolesList = Arrays.asList(user.getRole().split(" "));
-            for (String string : userRolesList) {
-                if (permittedRolesList.contains(string)) {
-                    return true;
-                }
-            }
-            return false;
+            return user.getRole().equals(checkRole);
         }
 
         return false;
