@@ -25,8 +25,8 @@ import java.time.LocalTime;
 @Controller
 public class LoginController extends BaseController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Resource(name="authenticationManager")
-    private AuthenticationManager authManager;
+//    @Resource(name="authenticationManager")
+//    private AuthenticationManager authManager;
 
     public LoginController(UserService userService) {
         super(userService);
@@ -43,24 +43,24 @@ public class LoginController extends BaseController {
         return "login";
     }
 
-    @PostMapping("/login/")
-    public String loginManager(@ModelAttribute("user") User user, Model model,
-                                  RedirectAttributes redirectAttributes) {
-
-//        System.out.println(user.getUsername());
-//        System.out.println(user.getPassword());
-
-        if (isLoggedIn()) {
-            return "redirect:/";
-        }
-
-        UsernamePasswordAuthenticationToken authReq
-                = new UsernamePasswordAuthenticationToken(user, user.getPassword());
-        Authentication auth = authManager.authenticate(authReq);
-        SecurityContext sc = SecurityContextHolder.getContext();
-        sc.setAuthentication(auth);
-        return "redirect:/";
-    }
+//    @PostMapping("/login/")
+//    public String loginManager(@ModelAttribute("user") User user, Model model,
+//                                  RedirectAttributes redirectAttributes) {
+//
+////        System.out.println(user.getUsername());
+////        System.out.println(user.getPassword());
+//
+//        if (isLoggedIn()) {
+//            return "redirect:/";
+//        }
+//
+//        UsernamePasswordAuthenticationToken authReq
+//                = new UsernamePasswordAuthenticationToken(user, user.getPassword());
+//        Authentication auth = authManager.authenticate(authReq);
+//        SecurityContext sc = SecurityContextHolder.getContext();
+//        sc.setAuthentication(auth);
+//        return "redirect:/";
+//    }
 
     @GetMapping("/loggedin/")
     public String loginManager(Model model, RedirectAttributes redirectAttributes) {
