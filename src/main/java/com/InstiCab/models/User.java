@@ -23,6 +23,5 @@ public class User {
     private Date dateCreated;
     private Date lastLoginDate;
     private Time lastLoginTime;
-    private int isDriver = 0;
-
+    private String role;
 }
