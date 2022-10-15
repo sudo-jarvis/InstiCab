@@ -2,6 +2,8 @@ package com.InstiCab.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.InstiCab.models.Driver;
 import com.InstiCab.models.User;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -27,6 +29,23 @@ public final class RowMappers {
             user.setLastLoginTime(row.getTime("last_login_time"));
             user.setRole(row.getString("role"));
             return user;
+        }
+    };
+
+    public static RowMapper<Driver> driverRowMapper = new RowMapper<Driver>() {
+        @Override
+        public Driver mapRow(ResultSet row, int i) throws SQLException {
+            Driver driver = new Driver();
+            driver.setDriverId(row.getLong("driver_id"));
+            driver.setLicenseNumber(row.getString("license_number"));
+            driver.setAadharNumber(row.getString("aadhar_number"));
+            driver.setAccountNo(row.getString("account_no"));
+            driver.setAccountName(row.getString("account_name"));
+            driver.setIfscCode(row.getString("ifsc_code"));
+            driver.setBankName(row.getString("bank_name"));
+            driver.setUsername(row.getString("username"));
+
+            return driver;
         }
     };
 

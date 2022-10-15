@@ -22,8 +22,8 @@
 					</ul>
 					<ul class="navbar-nav me-0 mb-2 mb-lg-0">
 						<li class="nav-item ">
-							<a th:href="@{/register/}" class="nav-link active text-light" aria-current="page">
-								<button type="button" class="btn btn-info">Register</button>
+							<a th:href="@{/register/passenger}" class="nav-link active text-light" aria-current="page">
+								<button type="button" class="btn btn-info">Register as User</button>
 							</a>
 						</li>
 						<li class="nav-item ">
@@ -57,8 +57,8 @@
 									autocomplete="off"
 									class="text-start"
 									method="POST"
-									th:action="@{/register/}"
-									th:object="${user}"
+									th:action="@{/register/driver}"
+									th:object="${details}"
 								>
 									<div class="input-group input-group-outline my-3">
 										<label class="form-label">Username *</label>
@@ -66,7 +66,7 @@
 											type="text"
 											class="form-control"
 											name="username"
-											th:field="*{username}"
+											th:field="*{user.username}"
 											required
 										/>
 									</div>
@@ -76,7 +76,7 @@
 												type="text"
 												class="form-control"
 												name="firstName"
-												th:field="*{firstName}"
+												th:field="*{user.firstName}"
 												required
 										/>
 									</div>
@@ -86,7 +86,7 @@
 												type="text"
 												class="form-control"
 												name="middleName"
-												th:field="*{middleName}"
+												th:field="*{user.middleName}"
 												required
 										/>
 									</div>
@@ -96,13 +96,14 @@
 												type="text"
 												class="form-control"
 												name="lastName"
-												th:field="*{lastName}"
+												th:field="*{user.lastName}"
 												required
 										/>
 									</div>
 									<div class="input-group input-group-outline mb-3">
 										<label class="form-label">Email *</label>
-										<input type="email" class="form-control" name="email" th:field="*{email}" required />
+										<input type="email" class="form-control" name="email" th:field="*{user.email}"
+											   required />
 									</div>
 									<div class="input-group input-group-outline my-3">
 										<label class="form-label">Phone *</label>
@@ -110,7 +111,67 @@
 												type="text"
 												class="form-control"
 												name="phoneNo"
-												th:field="*{phoneNo}"
+												th:field="*{user.phoneNo}"
+												required
+										/>
+									</div>
+									<div class="input-group input-group-outline my-3">
+										<label class="form-label">License Number</label>
+										<input
+												type="text"
+												class="form-control"
+												name="licenseNumber"
+												th:field="*{driver.licenseNumber}"
+												required
+										/>
+									</div>
+									<div class="input-group input-group-outline my-3">
+										<label class="form-label">Aadhar Number</label>
+										<input
+												type="text"
+												class="form-control"
+												name="aadharNumber"
+												th:field="*{driver.aadharNumber}"
+												required
+										/>
+									</div>
+									<div class="input-group input-group-outline my-3">
+										<label class="form-label">Bank Account Number</label>
+										<input
+												type="text"
+												class="form-control"
+												name="bankAccountNumber"
+												th:field="*{driver.accountNo}"
+												required
+										/>
+									</div>
+									<div class="input-group input-group-outline my-3">
+										<label class="form-label">Bank Account Name</label>
+										<input
+												type="text"
+												class="form-control"
+												name="bankAccountName"
+												th:field="*{driver.accountName}"
+												required
+										/>
+									</div>
+									<div class="input-group input-group-outline my-3">
+										<label class="form-label">Bank IFSC Code</label>
+										<input
+												type="text"
+												class="form-control"
+												name="bankIFSC"
+												th:field="*{driver.ifscCode}"
+												required
+										/>
+									</div>
+									<div class="input-group input-group-outline my-3">
+										<label class="form-label">Bank Name</label>
+										<input
+												type="text"
+												class="form-control"
+												name="bankName"
+												th:field="*{driver.bankName}"
 												required
 										/>
 									</div>
@@ -120,7 +181,7 @@
 											type="password"
 											class="form-control"
 											name="password"
-											th:field="*{password}"
+											th:field="*{user.password}"
 											required
 										/>
 									</div>
