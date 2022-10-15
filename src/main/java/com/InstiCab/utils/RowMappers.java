@@ -2,11 +2,13 @@ package com.InstiCab.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.User;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
 public final class RowMappers {
-
     private static boolean isValid(String s) {
         return ((s != null) && (s != ""));
     }
@@ -177,15 +179,18 @@ public final class RowMappers {
 //        }
 //    };
 //
-//    public static RowMapper<OwnerRequest> ownerRequestRowMapper = new RowMapper<OwnerRequest>() {
-//        @Override
-//        public OwnerRequest mapRow(ResultSet row, int i) throws SQLException {
-//            OwnerRequest ownerRequest = new OwnerRequest();
-//            ownerRequest.setId(row.getInt("id"));
-//            ownerRequest.setUserId(row.getInt("user_id"));
-//            ownerRequest.setDate(row.getTimestamp("date"));
-//            ownerRequest.setStatus(row.getString("status"));
-//            return ownerRequest;
-//        }
-//    };
+    public static RowMapper<RegistrationRequest> RegistrationRequestRowMapper = new RowMapper<RegistrationRequest>() {
+        @Override
+        public RegistrationRequest mapRow(ResultSet row, int i) throws SQLException {
+            RegistrationRequest registrationRequest = new RegistrationRequest();
+            registrationRequest.setRequestId(row.getLong("request_id"));
+            registrationRequest.setTimeApplied(row.getTime("time_applied"));
+            registrationRequest.setDateApplied(row.getDate("date_applied"));
+            registrationRequest.setStatus(row.getInt("status"));
+            registrationRequest.setTimeAccepted(row.getTime("time_accepted"));
+            registrationRequest.setDateAccepted(row.getDate("date_accepted"));
+            registrationRequest.setDriverId(row.getLong("driver_id"));
+            return registrationRequest;
+        }
+    };
 }
