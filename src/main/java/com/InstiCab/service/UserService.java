@@ -1,6 +1,9 @@
 package com.InstiCab.service;
 
 import com.InstiCab.models.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
 
 public interface UserService {
 //    void saveUser(User user);
@@ -9,4 +12,7 @@ public interface UserService {
     String findLoggedInUsername();
     User getUserByUsername(String username);
     void saveUser(User user);
+    List<String> getUserRoles(String username);
+    UserDetails loadUserByUsername(String username);
+
 }

@@ -19,9 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -35,9 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().permitAll();
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/401/");
 
-////        http.authorizeRequests().and().formLogin().loginPage("/login/").defaultSuccessUrl("/loggedin/")
-//                .failureUrl("/login-error/").usernameParameter("username").passwordParameter("password").and().logout()
-//                .logoutUrl("/logout/").logoutSuccessUrl("/loggedout/");
+        http.authorizeRequests().and().formLogin().loginPage("/login/").defaultSuccessUrl("/loggedin/")
+                .failureUrl("/login-error/").usernameParameter("username").passwordParameter("password").and().logout()
+                .logoutUrl("/logout/").logoutSuccessUrl("/loggedout/");
     }
 
 
