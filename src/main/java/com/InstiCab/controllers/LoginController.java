@@ -26,11 +26,11 @@ import java.time.LocalTime;
 public class LoginController extends BaseController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public LoginController(UserService userService) {
         super(userService);
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
-
 
     @GetMapping("/login")
     public String loginGoto(Model model){
