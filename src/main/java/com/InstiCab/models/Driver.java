@@ -18,5 +18,4 @@ public class Driver {
     private String ifscCode;
     private String bankName;
     private String username;
-
 }

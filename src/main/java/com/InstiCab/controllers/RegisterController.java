@@ -1,7 +1,11 @@
 package com.InstiCab.controllers;
 
+import com.InstiCab.models.Driver;
 import com.InstiCab.models.User;
+import com.InstiCab.service.DriverService;
 import com.InstiCab.service.UserService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
@@ -17,34 +21,84 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+
+
 @Controller
 public class RegisterController extends BaseController {
     private final UserService userService;
+    private final DriverService driverService;
 
+    @Getter
+    @Setter
+    static class DriverDetails {
+        private User user;
+        private Driver driver;
+    }
     @Autowired
-    public RegisterController(UserService userService) {
+    public RegisterController(UserService userService, DriverService driverService) {
         super(userService);
         this.userService = userService;
+        this.driverService = driverService;
     }
 
-    @GetMapping("/register")
-    public String registerGoto(Model model) {
+    @GetMapping("/register/driver")
+    public String registerDriver(Model model) {
+
+
+        DriverDetails driverDetails = new DriverDetails();
+        driverDetails.setDriver(new Driver());
+        driverDetails.setUser(new User());
+
+        if (isLoggedIn()) {
+            return "redirect:/";
+        }
+        model.addAttribute("details", driverDetails);
+        return "register_driver";
+    }
+    @GetMapping("/register/passenger")
+    public String registerPassenger(Model model) {
         if (isLoggedIn()) {
             return "redirect:/";
         }
         model.addAttribute("user", new User());
-        return "register";
+        return "register_passenger";
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     public String handleDuplicateKeyException(Model model, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMsg", "Username not available!");
-        return "redirect:/register/";
+        return "redirect:/login/";
     }
 
-    @PostMapping("/register/")
-    public String registerManager(@ModelAttribute("user") User user, Model model,
-                                  RedirectAttributes redirectAttributes) {
+    @PostMapping("/register/driver")
+    public String registerDriverManager(@ModelAttribute("details") DriverDetails driverDetails,
+                                        Model model, RedirectAttributes redirectAttributes) {
+        User user = driverDetails.getUser();
+        Driver driver = driverDetails.getDriver();
+
+        if (isLoggedIn()) {
+            return "redirect:/";
+        }
+        driver.setUsername(user.getUsername());
+        user.setDateCreated(Date.valueOf(LocalDate.now()));
+        user.setLastLoginTime(Time.valueOf(LocalTime.now()));
+        user.setLastLoginDate(Date.valueOf(LocalDate.now()));
+        user.setRole(ROLE_DRIVER);
+
+        User userToSave = new User(user.getUsername(), user.getFirstName(), user.getMiddleName(),
+                user.getLastName(), user.getEmail(), user.getPhoneNo(), user.getPassword(),
+                user.getDateCreated(), user.getLastLoginDate(),
+                user.getLastLoginTime(), user.getRole());
+        userService.saveUser(userToSave);
+        driverService.saveDriver(driver);
+        redirectAttributes.addFlashAttribute("successMsg",
+                "Registered successfully!");
+        return "redirect:/login";
+    }
+
+    @PostMapping("/register/passenger")
+    public String registerPassengerManager(@ModelAttribute("user") User user, Model model,
+                                        RedirectAttributes redirectAttributes) {
         user.setDateCreated(Date.valueOf(LocalDate.now()));
         user.setLastLoginTime(Time.valueOf(LocalTime.now()));
         user.setLastLoginDate(Date.valueOf(LocalDate.now()));
@@ -59,8 +113,9 @@ public class RegisterController extends BaseController {
                 user.getLastLoginTime(), user.getRole());
         userService.saveUser(userToSave);
 
+
         redirectAttributes.addFlashAttribute("successMsg",
                 "Registered successfully!");
-        return "redirect:/";
+        return "redirect:/login";
     }
 }

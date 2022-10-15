@@ -2,64 +2,6 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 	<head th:replace="components/head :: head"></head>
 	<body class="sign-in-basic">
-		<!-- <div th:replace="components/navbar :: navbar"></div> -->
-		<!-- <div class="container">
-			<div class="d-flex justify-content-center h-100">
-				<div class="card">
-					<div class="card-header">
-						<h3>Sign In</h3>
-						<div class="d-flex justify-content-end social_icon">
-							<span><i class="fab fa-facebook-square"></i></span>
-							<span><i class="fab fa-google-plus-square"></i></span>
-							<span><i class="fab fa-twitter-square"></i></span>
-						</div>
-					</div>
-					<div class="card-body">
-						<form method="POST" th:object="${user}" th:action="@{/login/}">
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fas fa-user"></i></span>
-								</div>
-								<input
-									type="text"
-									class="form-control"
-									th:field="*{username}"
-									placeholder="username"
-									name="username"
-									required
-									autofocus
-								/>
-							</div>
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fas fa-key"></i></span>
-								</div>
-								<input
-									type="password"
-									class="form-control"
-									th:field="*{password}"
-									placeholder="password"
-									name="password"
-									required
-								/>
-							</div>
-							<div class="row align-items-center remember"><input type="checkbox" />Remember Me</div>
-							<div class="form-group">
-								<input type="submit" value="Login" class="btn float-right login_btn" />
-							</div>
-						</form>
-					</div>
-					<div class="card-footer">
-						<div class="d-flex justify-content-center links">
-							Don't have an account?<a th:href="@{/register/}">Sign Up</a>
-						</div>
-						<div class="d-flex justify-content-center">
-							<a href="#">Forgot your password?</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
 		<nav class="navbar navbar-expand-lg bg-dark">
 			<div class="container-fluid">
 				<a class="navbar-item text-light" href="#">InstiCab</a>
@@ -80,8 +22,13 @@
 					</ul>
 					<ul class="navbar-nav me-0 mb-2 mb-lg-0">
 						<li class="nav-item ">
-							<a th:href="@{/register/}" class="nav-link active text-light" aria-current="page">
-								<button type="button" class="btn btn-info">Register</button>
+							<a th:href="@{/register/driver}" class="nav-link active text-light" aria-current="page">
+								<button type="button" class="btn btn-info">Register as Driver</button>
+							</a>
+						</li>
+						<li class="nav-item ">
+							<a th:href="@{/register/passenger}" class="nav-link active text-light" aria-current="page">
+								<button type="button" class="btn btn-info">Register as User</button>
 							</a>
 						</li>
 					</ul>
@@ -114,17 +61,18 @@
 										<label class="form-label">Password *</label>
 										<input type="password" class="form-control" name="password" required />
 									</div>
-									<div class="form-check form-switch d-flex align-items-center mb-3">
-										<input class="form-check-input" type="checkbox" id="rememberMe" />
-										<label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
-									</div>
+<!--									<div class="form-check form-switch d-flex align-items-center mb-3">-->
+<!--										<input class="form-check-input" type="checkbox" id="rememberMe" />-->
+<!--										<label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>-->
+<!--									</div>-->
 									<div class="text-center">
 										<input type="submit" value="Login" class="btn bg-gradient-primary w-100 my-4 mb-2" />
 									</div>
 									<p class="mt-4 text-sm text-center">
 										Don't have an account?
-										<a th:href="@{/register/}" class="text-primary text-gradient font-weight-bold"
-											>Register</a
+										<a th:href="@{/register/passenger}"
+										   class="text-primary text-gradient font-weight-bold"
+											>Register as User</a
 										>
 									</p>
 								</form>
