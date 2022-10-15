@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/loggedin/")
-    public String loginManager(Model model, RedirectAttributes redirectAttributes) {
+    public String loginManager(Model model, RedirectAttributes redirectAttributes) {System.out.println("wrong credential???");
         if (!isLoggedIn()) {
             return PAGE_NOT_FOUND_ERROR_PAGE;
         }
@@ -52,8 +52,17 @@ public class LoginController extends BaseController {
     }
     @GetMapping("/loggedout/")
     public String logoutManager(Model model, RedirectAttributes redirectAttributes) {
-        if (isLoggedIn())
+        if (isLoggedIn()) {
             return PAGE_NOT_FOUND_ERROR_PAGE;
+        }
         return "redirect:/";
+    }
+
+    @GetMapping("/login-error/")
+    public String checkLoginManager(Model model, RedirectAttributes redirectAttributes) {
+        if (isLoggedIn()) {
+            return "redirect:/";
+        }
+        return "redirect:/login/";
     }
 }
