@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/loggedin/")
-    public String loginManager(Model model, RedirectAttributes redirectAttributes) {System.out.println("wrong credential???");
+    public String loginManager(Model model, RedirectAttributes redirectAttributes) {
         if (!isLoggedIn()) {
             return PAGE_NOT_FOUND_ERROR_PAGE;
         }
