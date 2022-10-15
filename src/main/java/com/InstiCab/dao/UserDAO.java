@@ -20,9 +20,9 @@ public class UserDAO {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserDAO(JdbcTemplate jdbcTemplate) {
+    public UserDAO(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jdbcTemplate = jdbcTemplate;
-        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public void createUser(User user) {
@@ -59,4 +59,5 @@ public class UserDAO {
             throw new UsernameNotFoundException("User not found");
         }
     }
+
 }
