@@ -34,7 +34,7 @@ public class AdminController extends BaseController{
         List<RegistrationRequest>requestList = registrationRequestService.getPendingRequest();
         model.addAttribute("requestList",requestList);
         model.addAttribute("isAdmin",true);
-        System.out.println(requestList.size());
+        System.out.println(requestList.get(0).getRequestId());
         return "admin";
     }
 }
