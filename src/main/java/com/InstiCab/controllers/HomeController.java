@@ -18,7 +18,7 @@ public class HomeController extends BaseController{
         if (isLoggedIn()) {
             System.out.println("Welcome to Home page!");
             if (isAuthorized(model, ROLE_ADMIN))
-                return "admin";
+                return "redirect:/admin";
             else return "home";
         }
         return "redirect:/login/";

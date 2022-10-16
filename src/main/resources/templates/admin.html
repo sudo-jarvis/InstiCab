@@ -16,8 +16,8 @@
 							<div class="card-body bg-gradient-secondary text-center">
 								<h1>ALL Pending Registration Requests</h1>
 								<div th:if="${requestList eq null or #lists.size(requestList) eq 0}">
-									No users found! <br />
-									Register some
+									No Pending Requests found! <br />
+<!--									Register some-->
 								</div>
 								<table
 									class="table table-dark table-striped"
@@ -25,30 +25,34 @@
 								>
 									<thead class="thead-dark">
 										<tr>
-											<th scope="col">id</th>
-											<th scope="col">Username</th>
-											<th scope="col">isAdmin</th>
-											<th scope="col">Role</th>
-											<th scope="col">Edit</th>
-											<th scope="col">Delete</th>
+											<th scope="col">requestId</th>
+											<th scope="col">timeApplied</th>
+											<th scope="col">dateApplied</th>
+											<th scope="col">status</th>
+											<th scope="col">timeAccepted</th>
+											<th scope="col">dateAccepted</th>
+											<th scope="col">driverId</th>
 										</tr>
 									</thead>
 									<tbody class="text-white">
-										<tr th:each="user:${userList}">
-											<td th:text="${user.id}"></td>
-											<td th:text="${user.username}"></td>
-											<td th:text="${user.isAdmin}"></td>
-											<td th:text="${user.role}"></td>
-											<td>
-												<a th:href="@{/admin/users/edit/__${user.username}__/}" class="btn btn-primary"
-													>Edit</a
-												>
-											</td>
-											<td>
-												<a th:href="@{/admin/users/delete/__${user.username}__/}" class="btn btn-danger"
-													>Delete</a
-												>
-											</td>
+										<tr th:each="request:${requestList}">
+											<td th:text="${request.requestId}"></td>
+											<td th:text="${request.timeApplied}"></td>
+											<td th:text="${request.dateApplied}"></td>
+											<td th:text="${request.status}"></td>
+											<td th:text="${request.timeAccepted}"></td>
+											<td th:text="${request.dateAccepted}"></td>
+											<td th:text="${request.driverId}"></td>
+<!--											<td>-->
+<!--												<a th:href="@{/admin/users/edit/__${user.username}__/}" class="btn btn-primary"-->
+<!--													>Edit</a-->
+<!--												>-->
+<!--											</td>-->
+<!--											<td>-->
+<!--												<a th:href="@{/admin/users/delete/__${user.username}__/}" class="btn btn-danger"-->
+<!--													>Delete</a-->
+<!--												>-->
+<!--											</td>-->
 										</tr>
 									</tbody>
 								</table>
