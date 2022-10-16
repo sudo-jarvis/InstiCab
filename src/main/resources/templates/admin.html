@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 	<head th:replace="components/head :: head"></head>
-	<body
-		th:style="'background-image: url(' + @{/images/back-gradient-flipped.jpg} + '); background-size: cover;'"
-		loading="lazy"
-	>
-		<div th:replace="components/navbar :: navbar"></div>
+	<body loading="lazy">
+		<nav class="navbar navbar-expand-lg bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-item text-light" href="#">InstiCab</a>
+				<button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+						</li>
+						<li class="nav-item text-light">
+							<a th:href="@{/about/}" class="nav-link text-light">About</a>
+						</li>
+						<li class="nav-item">
+							<a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-0 mb-2 mb-lg-0">
+						<li class="nav-item ">
+							<a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
+								<button type="button" class="btn btn-light">Logout</button>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 		<br />
 		<div class="page-header align-items-start min-vh-100 mt-7" loading="lazy">
 			<div class="container my-auto">
