@@ -46,7 +46,7 @@ public class LoginController extends BaseController {
         if (!isLoggedIn()) {
             return PAGE_NOT_FOUND_ERROR_PAGE;
         }
-
+        if(isAuthorized(model,ROLE_ADMIN)) return "redirect:/admin";
         redirectAttributes.addFlashAttribute("successMsg", "Welcome!");
         return "redirect:/";
     }
