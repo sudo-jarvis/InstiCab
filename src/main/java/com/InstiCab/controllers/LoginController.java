@@ -1,6 +1,8 @@
 package com.InstiCab.controllers;
 
 import com.InstiCab.models.User;
+import com.InstiCab.service.DriverService;
+import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,9 +28,9 @@ import java.time.LocalTime;
 public class LoginController extends BaseController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public LoginController(UserService userService, DriverService driverService, RegistrationRequestService registrationRequestService) {
+        super(userService,driverService,registrationRequestService);
 
-    public LoginController(UserService userService) {
-        super(userService);
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -46,8 +48,14 @@ public class LoginController extends BaseController {
         if (!isLoggedIn()) {
             return PAGE_NOT_FOUND_ERROR_PAGE;
         }
-        if(isAuthorized(model,ROLE_ADMIN)) return "redirect:/admin";
         redirectAttributes.addFlashAttribute("successMsg", "Welcome!");
+        if(isAuthorized(model,ROLE_ADMIN)) return "redirect:/admin";
+        if(isAuthorized(model,ROLE_DRIVER)) {
+            if(!isVerified()){
+                redirectAttributes.addFlashAttribute("errorMsg", "Not Verified ! !");
+                return "redirect:/logout";
+            }
+        }
         return "redirect:/";
     }
     @GetMapping("/loggedout/")

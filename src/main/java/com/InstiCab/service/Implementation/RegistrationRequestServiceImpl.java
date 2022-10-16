@@ -15,8 +15,29 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
     public RegistrationRequestServiceImpl(RegistrationRequestDAO registrationRequestDAO) {
         this.registrationRequestDAO = registrationRequestDAO;
     }
+
+    @Override
+    public void createRegistrationRequest(RegistrationRequest registrationRequest) {
+        registrationRequestDAO.createRegistrationRequest(registrationRequest);
+    }
+
     @Override
     public List<RegistrationRequest>getPendingRequest(){
         return registrationRequestDAO.getAllActiveRegistrationRequests();
+    }
+
+    @Override
+    public void rejectRequest(Long driverId) {
+        registrationRequestDAO.rejectRequest(driverId);
+    }
+
+    @Override
+    public void acceptRequest(RegistrationRequest registrationRequest) {
+        registrationRequestDAO.acceptRequest(registrationRequest);
+    }
+
+    @Override
+    public RegistrationRequest getRequestByDriverId(Long driverId){
+        return registrationRequestDAO.getRequestByDriverId(driverId);
     }
 }

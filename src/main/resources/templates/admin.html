@@ -6,7 +6,6 @@
 		loading="lazy"
 	>
 		<div th:replace="components/navbar :: navbar"></div>
-		<!-- <span class="mask bg-gradient-dark opacity-6"></span> -->
 		<br />
 		<div class="page-header align-items-start min-vh-100 mt-7" loading="lazy">
 			<div class="container my-auto">
@@ -17,7 +16,6 @@
 								<h1>ALL Pending Registration Requests</h1>
 								<div th:if="${requestList eq null or #lists.size(requestList) eq 0}">
 									No Pending Requests found! <br />
-<!--									Register some-->
 								</div>
 								<table
 									class="table table-dark table-striped"
@@ -43,110 +41,16 @@
 											<td th:text="${request.timeAccepted}"></td>
 											<td th:text="${request.dateAccepted}"></td>
 											<td th:text="${request.driverId}"></td>
-<!--											<td>-->
-<!--												<a th:href="@{/admin/users/edit/__${user.username}__/}" class="btn btn-primary"-->
-<!--													>Edit</a-->
-<!--												>-->
-<!--											</td>-->
-<!--											<td>-->
-<!--												<a th:href="@{/admin/users/delete/__${user.username}__/}" class="btn btn-danger"-->
-<!--													>Delete</a-->
-<!--												>-->
-<!--											</td>-->
-										</tr>
-									</tbody>
-								</table>
-								<hr />
-								<h1>ALL SHOPS</h1>
-								<div class="row text-center">
-									<div>
-										<a class="btn btn-primary btn-lg" th:href="@{/admin/shops/new/}"> Add Shop </a>
-										<a class="btn btn-link text-white" th:href="@{/admin/shops/requests/}">
-											View Requests
-										</a>
-									</div>
-								</div>
-								<div th:if="${shopList eq null or #lists.size(shopList) eq 0}">
-									No shops found! <br />
-									Add some
-								</div>
-								<br />
-								<table
-									class="table table-dark table-striped"
-									th:if="${shopList ne null and #lists.size(shopList) ne 0}"
-								>
-									<thead class="thead-dark">
-										<tr>
-											<th scope="col">id</th>
-											<th scope="col">Name</th>
-											<th scope="col">Owner</th>
-											<th scope="col">type</th>
-											<th scope="col">Edit</th>
-											<th scope="col">Delete</th>
-										</tr>
-									</thead>
-									<tbody class="text-white">
-										<tr th:each="shop:${shopList}">
-											<td th:text="${shop.id}"></td>
-											<td th:text="${shop.name}"></td>
-											<td th:text="${shop.owner}"></td>
-											<td th:text="${shop.type}"></td>
 											<td>
-												<a th:href="@{/admin/}" class="btn btn-primary">Edit</a>
+												<form method="POST" th:action="@{/admin/accept/__${request.driverId}__/}">
+													<button type="submit" class="btn btn-success" >Accept</button>
+												</form>
 											</td>
 											<td>
-												<a th:href="@{/admin/shops/delete/__${shop.id}__/}" class="btn btn-danger"
-													>Delete</a
-												>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<hr />
-								<h1>ALL PRODUCTS</h1>
-								<div th:if="${productList eq null or #lists.size(productList) eq 0}">
-									No products found! <br />
-									Add some
-								</div>
-								<div class="text-center">
-									<a class="btn btn-primary btn-lg" th:href="@{/admin/products/new/}"> Add Product </a>
-								</div>
-								<br />
-								<table
-									class="table table-dark table-striped"
-									th:if="${productList ne null and #lists.size(productList) ne 0}"
-								>
-									<thead class="thead-dark">
-										<tr>
-											<th>Name</th>
-											<th>Image</th>
-											<th>Price</th>
-											<th>Description</th>
-											<th>Edit</th>
-											<th>Delete</th>
-										</tr>
-									</thead>
-									<tbody class="text-white">
-										<tr th:each="product : ${productList}">
-											<td th:text="${product.name}"></td>
-											<td>
-												<img
-													th:src="${product.image}"
-													th:alt="${product.name}"
-													width="100"
-													height="100"
-												/>
-											</td>
-											<td th:text="${'Rs. ' + product.price}"></td>
-											<td th:text="${product.description}"></td>
-											<td>
-												<a class="btn btn-primary" href="#">Edit</a>
-												<!-- <a class="btn btn-primary" th:href="@{/products/edit/}${product.id}">Edit</a> -->
-											</td>
-											<td>
-												<a class="btn btn-danger" th:href="@{/admin/products/delete/__${product.id}__/}"
-													>Delete</a
-												>
+												<form method="POST"
+													  th:action="@{/admin/reject/__${request.driverId}__/}">
+													<button type="submit" class="btn btn-danger" >Reject</button>
+												</form>
 											</td>
 										</tr>
 									</tbody>

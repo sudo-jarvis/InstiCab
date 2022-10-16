@@ -1,6 +1,10 @@
 package com.InstiCab.controllers;
 
+import com.InstiCab.models.Driver;
+import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.User;
+import com.InstiCab.service.DriverService;
+import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +13,10 @@ import org.springframework.ui.Model;
 @Controller
 public class BaseController {
     protected final UserService userService;
+    protected final DriverService driverService;
+    protected final RegistrationRequestService registrationRequestService;
+
+
     protected User user;
 
     // Page Constants
@@ -22,8 +30,11 @@ public class BaseController {
     protected static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Autowired
-    public BaseController(UserService userService) {
+    public BaseController(UserService userService,DriverService driverService,
+                          RegistrationRequestService registrationRequestService) {
         this.userService = userService;
+        this.driverService = driverService;
+        this.registrationRequestService = registrationRequestService;
     }
 
     public boolean isLoggedIn() {
@@ -39,5 +50,21 @@ public class BaseController {
 
         return false;
     }
+
+    public boolean isVerified() {
+        String username = userService.findLoggedInUsername();
+        if (username != null) {
+            Driver driver = driverService.getDriverByUsername(username);
+            if(driver == null){
+                return true;
+            }
+            RegistrationRequest req = registrationRequestService.getRequestByDriverId(driver.getDriverId());
+            if(req != null){
+                return req.getStatus() == 1;
+            }
+        }
+        return false;
+    }
+
 
 }

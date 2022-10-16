@@ -39,12 +39,20 @@ public class DriverDAO {
                 driver.getUsername());
     }
 
-    public Driver getDriverDataBydriverId(Integer driverId) {
-        final String sql = "SELECT * FROM user WHERE username=?";
+    public Driver getDriverDataBydriverId(Long driverId) {
+        final String sql = "SELECT * FROM driver WHERE driver_id=?";
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, driverId);
         } catch (Exception e) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Driver not found ! !");
+        }
+    }
+    public Driver getDriverDataByUsername(String username) {
+        final String sql = "SELECT * FROM driver WHERE username=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, username);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Driver not found ! !");
         }
     }
 }

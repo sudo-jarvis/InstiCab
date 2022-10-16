@@ -1,29 +1,33 @@
 package com.InstiCab.controllers;
 
+import com.InstiCab.models.Driver;
 import com.InstiCab.models.RegistrationRequest;
+import com.InstiCab.service.DriverService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
 public class AdminController extends BaseController{
-    private final UserService userService;
-    private final RegistrationRequestService registrationRequestService;
     @Autowired
-    public AdminController(UserService userService, RegistrationRequestService registrationRequestService) {
-        super(userService);
-        this.userService = userService;
-        this.registrationRequestService = registrationRequestService;
+    public AdminController(UserService userService,
+                           DriverService driverService,RegistrationRequestService registrationRequestService) {
+        super(userService,driverService,registrationRequestService);
     }
 
     @GetMapping({"/admin/", "/admin"})
     public String adminHome(Model model) {
-        System.out.println("hi");
         if(!isLoggedIn()) {
             if(isAuthorized(model,ROLE_ADMIN))
                 model.addAttribute("isAdmin", true);
@@ -34,7 +38,21 @@ public class AdminController extends BaseController{
         List<RegistrationRequest>requestList = registrationRequestService.getPendingRequest();
         model.addAttribute("requestList",requestList);
         model.addAttribute("isAdmin",true);
-        System.out.println(requestList.get(0).getRequestId());
         return "admin";
+    }
+
+    @PostMapping("/admin/accept/{driverId}")
+    public String acceptRequest(@PathVariable("driverId") Long driverId, Model model){
+        RegistrationRequest req = registrationRequestService.getRequestByDriverId(driverId);
+        req.setDateAccepted(Date.valueOf(LocalDate.now()));
+        req.setTimeAccepted(Time.valueOf(LocalTime.now()));
+        registrationRequestService.acceptRequest(req);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/reject/{driverId}")
+    public String rejectRequest(@PathVariable("driverId") Long driverId, Model model){
+        registrationRequestService.rejectRequest(driverId);
+        return "redirect:/admin";
     }
 }
