@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS user(
     first_name VARCHAR(255) NOT NULL,
     middle_name VARCHAR(255) DEFAULT NULL,
     last_name VARCHAR(255) DEFAULT NULL,
-    email VARCHAR(255) NOT NULL,
-    phone_no VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone_no VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     date_created date NOT NULL,
     last_login_date date DEFAULT NULL,
@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS passenger(
 
 CREATE TABLE IF NOT EXISTS driver (
     driver_id BIGINT NOT NULL AUTO_INCREMENT,
-    license_number VARCHAR(255) NOT NULL,
-    aadhar_number VARCHAR(255) NOT NULL,
-    account_no VARCHAR(255) NOT NULL,
+    license_number VARCHAR(255) NOT NULL UNIQUE,
+    aadhar_number VARCHAR(255) NOT NULL UNIQUE,
+    account_no VARCHAR(255) NOT NULL UNIQUE,
     account_name VARCHAR(255) NOT NULL,
     ifsc_code VARCHAR(255) NOT NULL,
     bank_name VARCHAR(255) NOT NULL,
@@ -117,8 +117,8 @@ CREATE TABLE IF NOT EXISTS scheduled_trip(
 CREATE TABLE IF NOT EXISTS vehicle(
     vehicle_id BIGINT NOT NULL,
     vehicle_type VARCHAR(255) NOT NULL,
-    registration_number VARCHAR(255) NOT NULL,
-    insurance_number VARCHAR(255) NOT NULL,
+    registration_number VARCHAR(255) NOT NULL UNIQUE,
+    insurance_number VARCHAR(255) NOT NULL UNIQUE,
     registration_state VARCHAR(255) NOT NULL,
     driver_id BIGINT NOT NULL,
     PRIMARY KEY (vehicle_id),
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS service(
     type VARCHAR(255) NOT NULL,
     latitude_location FLOAT NOT NULL,
     longitude_location FLOAT NOT NULL,
-    contact_no VARCHAR(255) NOT NULL,
+    contact_no VARCHAR(255) NOT NULL UNIQUE,
     vehicle_id BIGINT,
     PRIMARY KEY (service_id),
     FOREIGN KEY (vehicle_id) REFERENCES vehicle(vehicle_id) ON DELETE SET NULL ON UPDATE CASCADE
