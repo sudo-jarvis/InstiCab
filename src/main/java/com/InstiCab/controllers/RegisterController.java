@@ -104,7 +104,7 @@ public class RegisterController extends BaseController {
         user.setDateCreated(Date.valueOf(LocalDate.now()));
         user.setLastLoginTime(Time.valueOf(LocalTime.now()));
         user.setLastLoginDate(Date.valueOf(LocalDate.now()));
-        user.setRole(ROLE_ADMIN);
+        user.setRole(ROLE_PASSENGER);
         if (isLoggedIn()) {
             return "redirect:/";
         }
