@@ -17,8 +17,13 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Driver getDriverByDriverId(Integer driverId) {
+    public Driver getDriverByDriverId(Long driverId) {
         return driverDAO.getDriverDataBydriverId(driverId);
+    }
+
+    @Override
+    public Driver getDriverByUsername(String username) {
+        return driverDAO.getDriverDataByUsername(username);
     }
 
     @Override

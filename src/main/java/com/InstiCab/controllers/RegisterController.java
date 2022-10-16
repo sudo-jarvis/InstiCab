@@ -1,8 +1,10 @@
 package com.InstiCab.controllers;
 
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.User;
 import com.InstiCab.service.DriverService;
+import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,12 +23,8 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
-
 @Controller
 public class RegisterController extends BaseController {
-    private final UserService userService;
-    private final DriverService driverService;
 
     @Getter
     @Setter
@@ -35,16 +33,13 @@ public class RegisterController extends BaseController {
         private Driver driver;
     }
     @Autowired
-    public RegisterController(UserService userService, DriverService driverService) {
-        super(userService);
-        this.userService = userService;
-        this.driverService = driverService;
+    public RegisterController(UserService userService, DriverService driverService,RegistrationRequestService registrationRequestService) {
+        super(userService,driverService,registrationRequestService);
+
     }
 
     @GetMapping("/register/driver")
     public String registerDriver(Model model) {
-
-
         DriverDetails driverDetails = new DriverDetails();
         driverDetails.setDriver(new Driver());
         driverDetails.setUser(new User());
@@ -85,12 +80,19 @@ public class RegisterController extends BaseController {
         user.setLastLoginDate(Date.valueOf(LocalDate.now()));
         user.setRole(ROLE_DRIVER);
 
-        User userToSave = new User(user.getUsername(), user.getFirstName(), user.getMiddleName(),
-                user.getLastName(), user.getEmail(), user.getPhoneNo(), user.getPassword(),
-                user.getDateCreated(), user.getLastLoginDate(),
-                user.getLastLoginTime(), user.getRole());
-        userService.saveUser(userToSave);
+        RegistrationRequest userRequest = new RegistrationRequest();
+        userRequest.setTimeApplied(user.getLastLoginTime());
+        userRequest.setDateApplied(user.getDateCreated());
+        userRequest.setStatus(0);
+
+        userService.saveUser(user);
         driverService.saveDriver(driver);
+
+        driver = driverService.getDriverByUsername(user.getUsername());
+        userRequest.setDriverId(driver.getDriverId());
+
+        registrationRequestService.createRegistrationRequest(userRequest);
+
         redirectAttributes.addFlashAttribute("successMsg",
                 "Registered successfully!");
         return "redirect:/login";
@@ -102,17 +104,12 @@ public class RegisterController extends BaseController {
         user.setDateCreated(Date.valueOf(LocalDate.now()));
         user.setLastLoginTime(Time.valueOf(LocalTime.now()));
         user.setLastLoginDate(Date.valueOf(LocalDate.now()));
-        user.setRole(ROLE_PASSENGER);
+        user.setRole(ROLE_ADMIN);
         if (isLoggedIn()) {
             return "redirect:/";
         }
 
-        User userToSave = new User(user.getUsername(), user.getFirstName(), user.getMiddleName(),
-                user.getLastName(), user.getEmail(), user.getPhoneNo(), user.getPassword(),
-                user.getDateCreated(), user.getLastLoginDate(),
-                user.getLastLoginTime(), user.getRole());
-        userService.saveUser(userToSave);
-
+        userService.saveUser(user);
 
         redirectAttributes.addFlashAttribute("successMsg",
                 "Registered successfully!");
