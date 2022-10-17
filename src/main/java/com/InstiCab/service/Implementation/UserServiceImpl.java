@@ -54,6 +54,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User getUserById(int id) {
+        return userDAO.getUserDataById(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDAO.getUserDataByUsername(username);
         if (user == null)

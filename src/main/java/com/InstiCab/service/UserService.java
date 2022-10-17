@@ -13,6 +13,8 @@ public interface UserService {
     User getUserByUsername(String username);
     void saveUser(User user);
     List<String> getUserRoles(String username);
+    User getUserById(int id);
+    List<User> getAllUsers();
     UserDetails loadUserByUsername(String username);
 
 }
