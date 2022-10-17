@@ -30,7 +30,7 @@ public class RegistrationRequestDAO {
         }
     }
     public List<RegistrationRequest> getAllActiveRegistrationRequests() {
-        final String sql = "SELECT * FROM registration_request WHERE status = ?";
+        final String sql = "SELECT * FROM registration_request WHERE status = ? order by driver_id";
         return jdbcTemplate.query(sql, RowMappers.RegistrationRequestRowMapper, "0");
     }
 

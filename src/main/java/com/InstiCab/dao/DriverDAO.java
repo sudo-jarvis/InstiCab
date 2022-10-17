@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class DriverDAO {
     private JdbcTemplate jdbcTemplate;
@@ -53,6 +55,19 @@ public class DriverDAO {
             return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, username);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Driver not found ! !");
+        }
+    }
+    public List<Driver> getAllPendingDrivers(){
+        final String sql = "SELECT d.driver_id, d.license_number,d.aadhar_number,d.account_no,d.account_name,d" +
+                ".ifsc_code," +
+                "d.bank_name, d.username" +
+                " FROM " +
+                "driver as d, registration_request as r WHERE" +
+                " d.driver_id=r.driver_id and r.status = 0 order by d.driver_id";
+        try {
+            return jdbcTemplate.query(sql, RowMappers.driverRowMapper);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Error");
         }
     }
 }
