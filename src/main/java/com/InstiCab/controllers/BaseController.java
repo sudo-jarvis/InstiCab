@@ -16,7 +16,6 @@ public class BaseController {
     protected final DriverService driverService;
     protected final RegistrationRequestService registrationRequestService;
 
-
     protected User user;
 
     // Page Constants

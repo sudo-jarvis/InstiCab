@@ -62,7 +62,10 @@
 											 <td th:text="${request.registrationRequest.driverId}"></td>
 											 <td>
 												 <a class="btn btn-warning" data-bs-toggle="collapse"
-													href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+													th:href="'#collapse'+${request.registrationRequest.driverId}"
+													role="button"
+													aria-expanded="false"
+													th:aria-controls="'collapse'+${request.registrationRequest.driverId}">
 													 View Details
 												 </a>
 											 </td>
@@ -81,15 +84,15 @@
 											 </td>
 
 										 </tr>
-										 <tr class ="collapse" id="collapseExample">
+										 <tr class ="collapse" th:id="'collapse'+${request.registrationRequest.driverId}">
 
 											 <td colspan="12">
 
-												 <!--												<div class="row">-->
-												 <!--													<div class="col-2"> Username</div>-->
-												 <!--													<div th:text="${request.driver.username}"-->
-												 <!--														 class="col-6"></div>-->
-												 <!--												</div>-->
+												 <div class="row">
+													 <div class="col-2"> Username</div>
+													 <div th:text="${request.driver.username}"
+														  class="col-6"></div>
+												 </div>
 												 <div class="row">
 													 <div class="col-2"> Driver Id</div>
 													 <div th:text="${request.driver.driverId}"

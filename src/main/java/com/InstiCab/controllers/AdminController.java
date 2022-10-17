@@ -7,7 +7,6 @@ import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +29,11 @@ public class AdminController extends BaseController{
         private Driver driver;
         private RegistrationRequest registrationRequest;
     }
+
+
     @Autowired
     public AdminController(UserService userService,
-                           DriverService driverService,RegistrationRequestService registrationRequestService) {
+                           DriverService driverService, RegistrationRequestService registrationRequestService) {
         super(userService,driverService,registrationRequestService);
     }
 
@@ -46,7 +47,7 @@ public class AdminController extends BaseController{
         List<RegistrationRequest>requestList = registrationRequestService.getPendingRequest();
         List<Driver>driverList = driverService.getPendingDrivers();
         List<RequestDetails>requestDetailsList = new ArrayList<>();
-
+        List<User>userList
         for(int i = 0; i < requestList.size(); i++) {
             RequestDetails requestDetails = new RequestDetails();
             requestDetails.setRegistrationRequest(requestList.get(i));

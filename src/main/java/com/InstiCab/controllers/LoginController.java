@@ -4,31 +4,18 @@ import com.InstiCab.models.User;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.annotation.Resource;
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Controller
 public class LoginController extends BaseController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public LoginController(UserService userService, DriverService driverService, RegistrationRequestService registrationRequestService) {
+    public LoginController(UserService userService, DriverService driverService,
+                           RegistrationRequestService registrationRequestService) {
         super(userService,driverService,registrationRequestService);
 
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
