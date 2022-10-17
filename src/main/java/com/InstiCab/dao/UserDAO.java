@@ -70,4 +70,13 @@ public class UserDAO {
         }
     }
 
+    public void updateLastLogin(String username) throws Exception {
+        final String sql = "UPDATE user SET last_login_time = ?, last_login_date = ? WHERE username = ?";
+        try {
+            jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
+        }catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
+
 }

@@ -31,14 +31,15 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/loggedin/")
-    public String loginManager(Model model, RedirectAttributes redirectAttributes) {
+    public String loginManager(Model model, RedirectAttributes redirectAttributes) throws Exception {
         if (!isLoggedIn()) {
             return PAGE_NOT_FOUND_ERROR_PAGE;
         }
+        userService.updateLoginDetails(userService.findLoggedInUsername());
         redirectAttributes.addFlashAttribute("successMsg", "Welcome!");
         if(isAuthorized(model,ROLE_ADMIN)) return "redirect:/admin";
         if(isAuthorized(model,ROLE_DRIVER)) {
-            if(!isVerified()){
+            if (!isVerified()) {
                 redirectAttributes.addFlashAttribute("errorMsg", "Not Verified ! !");
                 return "redirect:/logout";
             }

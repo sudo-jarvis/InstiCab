@@ -65,5 +65,10 @@ public class BaseController {
         return false;
     }
 
+    public void lastLogin() {
+        String username = userService.findLoggedInUsername();
+
+    }
+
 
 }

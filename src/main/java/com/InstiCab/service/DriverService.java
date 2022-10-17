@@ -8,5 +8,7 @@ public interface DriverService {
     Driver getDriverByDriverId(Long driverId);
     Driver getDriverByUsername(String username);
     List<Driver> getPendingDrivers();
+
+    Long findLoggedInDriver();
     void saveDriver(Driver driver);
 }

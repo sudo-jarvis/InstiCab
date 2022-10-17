@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 makeAuthorities(user.getRole()));
     }
+
+    @Override
+    public void updateLoginDetails(String username) throws Exception {
+        userDAO.updateLastLogin(username);
+    }
 }
