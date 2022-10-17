@@ -17,4 +17,5 @@ public interface UserService {
     List<User> getAllUsers();
     UserDetails loadUserByUsername(String username);
 
+    void updateLoginDetails(String username) throws Exception;
 }

@@ -159,6 +159,7 @@
 										<th scope="col">dateCreated</th>
 										<th scope="col">lastLoginDate</th>
 										<th scope="col">lastLoginTime</th>
+										<th scope="col">role</th>
 									</tr>
 									</thead>
 									<tbody class="text-white">
@@ -168,6 +169,7 @@
 											<td th:text="${user.dateCreated}"></td>
 											<td th:text="${user.lastLoginDate}"></td>
 											<td th:text="${user.lastLoginTime}"></td>
+											<td th:text="${user.role}"></td>
 											<td>
 												<a class="btn btn-warning" data-bs-toggle="collapse"
 												   th:href="'#collapse'+${user.username}"
