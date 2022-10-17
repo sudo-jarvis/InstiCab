@@ -33,7 +33,8 @@ public class RegisterController extends BaseController {
         private Driver driver;
     }
     @Autowired
-    public RegisterController(UserService userService, DriverService driverService,RegistrationRequestService registrationRequestService) {
+    public RegisterController(UserService userService, DriverService driverService,
+                              RegistrationRequestService registrationRequestService) {
         super(userService,driverService,registrationRequestService);
 
     }

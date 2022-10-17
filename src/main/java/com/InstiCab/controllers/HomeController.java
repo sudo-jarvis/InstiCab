@@ -11,8 +11,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController extends BaseController{
+
+
     @Autowired
-    public HomeController(UserService userService, DriverService driverService, RegistrationRequestService registrationRequestService) {
+    public HomeController(UserService userService, DriverService driverService,
+                          RegistrationRequestService registrationRequestService) {
         super(userService,driverService,registrationRequestService);
     }
 
