@@ -6,6 +6,8 @@ import com.InstiCab.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DriverServiceImpl implements DriverService {
 
@@ -29,5 +31,10 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public void saveDriver(Driver driver) {
         driverDAO.createDriver(driver);
+    }
+
+    @Override
+    public List<Driver> getPendingDrivers() {
+        return driverDAO.getAllPendingDrivers();
     }
 }
