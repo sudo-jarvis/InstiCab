@@ -2,6 +2,7 @@ package com.InstiCab.controllers;
 
 import com.InstiCab.models.Driver;
 import com.InstiCab.models.RegistrationRequest;
+import com.InstiCab.models.User;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
@@ -30,7 +31,6 @@ public class AdminController extends BaseController{
         private RegistrationRequest registrationRequest;
     }
 
-
     @Autowired
     public AdminController(UserService userService,
                            DriverService driverService, RegistrationRequestService registrationRequestService) {
@@ -47,7 +47,8 @@ public class AdminController extends BaseController{
         List<RegistrationRequest>requestList = registrationRequestService.getPendingRequest();
         List<Driver>driverList = driverService.getPendingDrivers();
         List<RequestDetails>requestDetailsList = new ArrayList<>();
-        List<User>userList
+        List<User> userList = userService.getAllUsers();
+
         for(int i = 0; i < requestList.size(); i++) {
             RequestDetails requestDetails = new RequestDetails();
             requestDetails.setRegistrationRequest(requestList.get(i));
@@ -57,6 +58,7 @@ public class AdminController extends BaseController{
         model.addAttribute("requestDetailsList",requestDetailsList);
 //        model.addAttribute("requestList",requestList);
 //        model.addAttribute("driverList",driverList);
+        model.addAttribute("userList", userList);
         model.addAttribute("isAdmin",true);
         return "admin";
     }

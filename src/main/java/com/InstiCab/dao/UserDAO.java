@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 public class UserDAO {
@@ -50,6 +51,15 @@ public class UserDAO {
                 user.getLastLoginTime(), user.getRole());
     }
 
+    public User getUserDataById(int id) {
+        final String sql = "SELECT * FROM users WHERE id=?";
+        return jdbcTemplate.queryForObject(sql, RowMappers.userRowMapper, id);
+    }
+
+    public List<User> getAllUsers() {
+        final String sql = "SELECT * FROM user";
+        return jdbcTemplate.query(sql, RowMappers.userRowMapper);
+    }
 
     public User getUserDataByUsername(String username) {
         final String sql = "SELECT * FROM user WHERE username=?";
