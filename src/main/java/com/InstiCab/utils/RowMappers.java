@@ -3,12 +3,12 @@ package com.InstiCab.utils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.InstiCab.models.Passenger;
-import com.InstiCab.models.User;
+import com.InstiCab.models.*;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
-import com.InstiCab.models.RegistrationRequest;
-import com.InstiCab.models.Driver;
+
 public final class RowMappers {
+
 
     private static boolean isValid(String s) {
         return ((s != null) && (s != ""));
@@ -72,6 +72,26 @@ public final class RowMappers {
             passenger.setPassengerId(row.getLong("passenger_id"));
             passenger.setUsername(row.getString("username"));
             return passenger;
+        }
+    };
+
+    public static RowMapper<Trip> tripRowMapper = new RowMapper<Trip>() {
+        @Override
+        public Trip mapRow(ResultSet row, int i) throws SQLException {
+            Trip trip = new Trip();
+            trip.setTripId(row.getLong("trip_id"));
+            trip.setStartDate(row.getDate("start_date"));
+            trip.setStartTime(row.getTime("start_time"));
+            trip.setEndDate(row.getDate("end_date"));
+            trip.setEndTime(row.getTime("end_time"));
+            trip.setStatus(row.getInt("status"));
+            trip.setStartLatitude(row.getFloat("start_latitude"));
+            trip.setStartLongitude(row.getFloat("start_longitude"));
+            trip.setEndLatitude(row.getFloat("end_latitude"));
+            trip.setEndLongitude(row.getFloat("end_longitude"));
+            trip.setDriverId(row.getLong("driver_id"));
+            trip.setPassengerId(row.getLong("passenger_id"));
+            return trip;
         }
     };
 
