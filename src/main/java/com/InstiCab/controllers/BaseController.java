@@ -4,6 +4,7 @@ import com.InstiCab.models.Driver;
 import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.User;
 import com.InstiCab.service.DriverService;
+import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

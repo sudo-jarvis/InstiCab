@@ -1,6 +1,7 @@
 package com.InstiCab.controllers;
 
 import com.InstiCab.service.DriverService;
+import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class DriverController extends BaseController{
 
     @Autowired
     public DriverController(UserService userService, DriverService driverService,
-                            RegistrationRequestService registrationRequestService) {
-        super(userService,driverService,registrationRequestService);
+                            RegistrationRequestService registrationRequestService, PassengerService passengerService) {
+        super(userService,driverService,registrationRequestService,passengerService);
     }
 
     @GetMapping("/driver")

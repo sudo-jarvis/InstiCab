@@ -29,13 +29,22 @@ public class TripDAO {
         }
     }
 
+
     public boolean tripAlreadyExists(Long passengerId) {
         final String sql = "SELECT * FROM trip WHERE status=0 AND passenger_id=?";
         try {
-            return !jdbcTemplate.query(sql, RowMappers.tripRowMapper,passengerId).isEmpty();
+            return !jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId).isEmpty();
         } catch (Exception e) {
             System.out.println(e);
             throw new UsernameNotFoundException("Error");
+        }
+    }
+    public Trip getTripByTripId(Long tripId) {
+        final String sql = "SELECT * FROM trip WHERE trip_id=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, tripId);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Driver not found ! !");
         }
     }
 }

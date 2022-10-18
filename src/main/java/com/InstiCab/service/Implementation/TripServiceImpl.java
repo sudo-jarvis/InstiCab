@@ -1,6 +1,7 @@
 package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.TripDAO;
+import com.InstiCab.models.Driver;
 import com.InstiCab.models.Trip;
 import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.TripService;
@@ -26,5 +27,10 @@ public class TripServiceImpl implements TripService {
     public boolean tripAlreadyExists() {
         Long passengerId = passengerService.getLoggedInPassengerId();
         return tripDAO.tripAlreadyExists(passengerId);
+    }
+
+    @Override
+    public Trip getTripByTripId(Long tripId) {
+        return tripDAO.getTripByTripId(tripId);
     }
 }
