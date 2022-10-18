@@ -1,9 +1,11 @@
 package com.InstiCab.service;
 
 import com.InstiCab.models.Driver;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface DriverService {
     Driver getDriverByDriverId(Long driverId);
     Driver getDriverByUsername(String username);

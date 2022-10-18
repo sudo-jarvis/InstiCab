@@ -47,6 +47,7 @@ public class AdminController extends BaseController{
         List<RegistrationRequest>requestList = registrationRequestService.getPendingRequest();
         List<Driver>driverList = driverService.getPendingDrivers();
         List<RequestDetails>requestDetailsList = new ArrayList<>();
+
         List<User> userList = userService.getAllUsers();
 
         for(int i = 0; i < requestList.size(); i++) {
@@ -56,8 +57,6 @@ public class AdminController extends BaseController{
             requestDetailsList.add(requestDetails);
         }
         model.addAttribute("requestDetailsList",requestDetailsList);
-//        model.addAttribute("requestList",requestList);
-//        model.addAttribute("driverList",driverList);
         model.addAttribute("userList", userList);
         model.addAttribute("isAdmin",true);
         return "admin";
@@ -71,11 +70,6 @@ public class AdminController extends BaseController{
         registrationRequestService.acceptRequest(req);
         return "redirect:/admin";
     }
-
-//    @GetMapping("/admin/view/{driverId}")
-//    public String viewDriver(@PathVariable("driverId") Long driverId, Model model) {
-//
-//    }
 
     @PostMapping("/admin/reject/{driverId}")
     public String rejectRequest(@PathVariable("driverId") Long driverId, Model model){

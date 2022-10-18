@@ -84,16 +84,16 @@ CREATE TABLE IF NOT EXISTS role(
 
 CREATE TABLE IF NOT EXISTS trip(
     trip_id BIGINT NOT NULL AUTO_INCREMENT,
-    start_date date NOT NULL,
-    start_dime time NOT NULL,
-    end_date date NOT NULL,
-    end_time time NOT NULL,
+    start_date date,
+    start_time time,
+    end_date date,
+    end_time time,
     status INT NOT NULL,
     start_latitude FLOAT NOT NULL,
     start_longitude FLOAT NOT NULL,
     end_latitude FLOAT NOT NULL,
     end_longitude FLOAT NOT NULL,
-    driver_id BIGINT NOT NULL,
+    driver_id BIGINT,
     passenger_id BIGINT NOT NULL,
     PRIMARY KEY (trip_id),
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -103,14 +103,8 @@ CREATE TABLE IF NOT EXISTS trip(
 CREATE TABLE IF NOT EXISTS scheduled_trip(
     scheduled_trip_id BIGINT NOT NULL AUTO_INCREMENT,
     trip_time time NOT NULL,
-    start_latitude FLOAT NOT NULL,
-    start_longitude FLOAT NOT NULL,
-    end_latitude FLOAT NOT NULL,
-    end_longitude FLOAT NOT NULL,
-    driver_id BIGINT NOT NULL,
     trip_id BIGINT NOT NULL,
     PRIMARY KEY (scheduled_trip_id),
-    FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (trip_id) REFERENCES trip(trip_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

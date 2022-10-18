@@ -1,9 +1,11 @@
 package com.InstiCab.controllers;
 
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.Passenger;
 import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.User;
 import com.InstiCab.service.DriverService;
+import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
 import lombok.Getter;
@@ -26,6 +28,7 @@ import java.time.LocalTime;
 @Controller
 public class RegisterController extends BaseController {
 
+    private PassengerService passengerService;
     @Getter
     @Setter
     static class DriverDetails {
@@ -34,9 +37,9 @@ public class RegisterController extends BaseController {
     }
     @Autowired
     public RegisterController(UserService userService, DriverService driverService,
-                              RegistrationRequestService registrationRequestService) {
+                              RegistrationRequestService registrationRequestService,PassengerService passengerService) {
         super(userService,driverService,registrationRequestService);
-
+        this.passengerService = passengerService;
     }
 
     @GetMapping("/register/driver")
@@ -109,7 +112,7 @@ public class RegisterController extends BaseController {
         if (isLoggedIn()) {
             return "redirect:/";
         }
-
+        passengerService.savePassenger(user.getUsername());
         userService.saveUser(user);
 
         redirectAttributes.addFlashAttribute("successMsg",
