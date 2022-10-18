@@ -2,6 +2,7 @@ package com.InstiCab.controllers;
 
 import com.InstiCab.models.Trip;
 import com.InstiCab.service.DriverService;
+import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.TripService;
 import com.InstiCab.service.UserService;
