@@ -42,6 +42,7 @@ public class TripDAO {
             throw new UsernameNotFoundException("Error");
         }
     }
+
     public Trip getTripByTripId(Long tripId) {
         final String sql = "SELECT * FROM trip WHERE trip_id=?";
         try {
@@ -62,6 +63,13 @@ public class TripDAO {
             return jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Error");
+
+    public List<Trip> getTripList(Long driverId) throws Exception {
+        final String sql = "SELECT * from trip WHERE driver_id = ?";
+        try {
+            return jdbcTemplate.query(sql,RowMappers.tripRowMapper,driverId);
+        }catch (Exception e) {
+            throw new Exception(e);
         }
     }
 }

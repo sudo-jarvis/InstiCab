@@ -1,6 +1,8 @@
 package com.InstiCab.dao;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.Trip;
 import com.InstiCab.models.User;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +72,5 @@ public class DriverDAO {
             throw new UsernameNotFoundException("Error");
         }
     }
+
 }

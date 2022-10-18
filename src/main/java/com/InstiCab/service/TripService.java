@@ -13,4 +13,6 @@ public interface TripService {
     boolean tripAlreadyExists();
     Trip getTripByTripId(Long tripId);
     List<Trip> getPassengerAllTrips(Long passengerId);
+
+    List<Trip> getTripList() throws Exception;
 }
