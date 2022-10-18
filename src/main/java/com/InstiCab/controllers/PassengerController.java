@@ -26,9 +26,13 @@ public class PassengerController extends BaseController{
     }
 
     @GetMapping("/passenger/newTrip")
-    public String newTrip(Model model){
+    public String newTrip(Model model,RedirectAttributes redirectAttributes){
         if(!isLoggedIn()){
             return "redirect:/";
+        }
+        if(tripService.tripAlreadyExists()){
+            redirectAttributes.addFlashAttribute("errorMsg", "Pending Trip Already Exists !");
+            return "redirect:/passenger/newTripStatus";
         }
         Trip trip = new Trip();
         model.addAttribute("trip",trip);
