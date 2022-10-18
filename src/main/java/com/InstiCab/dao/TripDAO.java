@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TripDAO {
     private JdbcTemplate jdbcTemplate;
@@ -36,6 +38,15 @@ public class TripDAO {
         } catch (Exception e) {
             System.out.println(e);
             throw new UsernameNotFoundException("Error");
+        }
+    }
+
+    public List<Trip> getTripList(Long driverId) throws Exception {
+        final String sql = "SELECT * from trip WHERE driver_id = ?";
+        try {
+            return jdbcTemplate.query(sql,RowMappers.tripRowMapper,driverId);
+        }catch (Exception e) {
+            throw new Exception(e);
         }
     }
 }

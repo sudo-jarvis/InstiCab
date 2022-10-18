@@ -30,7 +30,7 @@ public class HomeController extends BaseController{
                     redirectAttributes.addFlashAttribute("errorMsg", "Not Verified ! !");
                     return "redirect:/logout";
                 }
-                System.out.println("hi");;
+//                System.out.println("hi");;
                 return "redirect:/driver";
             }
             model.addAttribute("isPassenger",true);
