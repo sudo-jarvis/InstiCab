@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS scheduled_trip(
 CREATE TABLE IF NOT EXISTS vehicle(
     vehicle_id BIGINT NOT NULL,
     vehicle_type VARCHAR(255) NOT NULL,
+    vehicle_name VARCHAR(255) NOT NULL,
     registration_number VARCHAR(255) NOT NULL UNIQUE,
     insurance_number VARCHAR(255) NOT NULL UNIQUE,
     registration_state VARCHAR(255) NOT NULL,

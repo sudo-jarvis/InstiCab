@@ -1,9 +1,6 @@
 package com.InstiCab.controllers;
 
-import com.InstiCab.models.Driver;
-import com.InstiCab.models.Passenger;
-import com.InstiCab.models.RegistrationRequest;
-import com.InstiCab.models.User;
+import com.InstiCab.models.*;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.RegistrationRequestService;
@@ -33,6 +30,7 @@ public class RegisterController extends BaseController {
     @Setter
     static class DriverDetails {
         private User user;
+        private Vehicle vehicle;
         private Driver driver;
     }
     @Autowired
@@ -47,6 +45,7 @@ public class RegisterController extends BaseController {
         DriverDetails driverDetails = new DriverDetails();
         driverDetails.setDriver(new Driver());
         driverDetails.setUser(new User());
+        driverDetails.setVehicle(new Vehicle());
 
         if (isLoggedIn()) {
             return "redirect:/";
@@ -74,7 +73,7 @@ public class RegisterController extends BaseController {
                                         Model model, RedirectAttributes redirectAttributes) {
         User user = driverDetails.getUser();
         Driver driver = driverDetails.getDriver();
-
+        Vehicle vehicle = driverDetails.getVehicle();
         if (isLoggedIn()) {
             return "redirect:/";
         }
