@@ -2,6 +2,8 @@ package com.InstiCab.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.InstiCab.models.Passenger;
 import com.InstiCab.models.User;
 import org.springframework.jdbc.core.RowMapper;
 import com.InstiCab.models.RegistrationRequest;
@@ -60,6 +62,16 @@ public final class RowMappers {
             registrationRequest.setDateAccepted(row.getDate("date_accepted"));
             registrationRequest.setDriverId(row.getLong("driver_id"));
             return registrationRequest;
+        }
+    };
+
+    public static RowMapper<Passenger>passengerRowMapper = new RowMapper<Passenger>() {
+        @Override
+        public Passenger mapRow(ResultSet row, int i) throws SQLException {
+            Passenger passenger = new Passenger();
+            passenger.setPassengerId(row.getLong("passenger_id"));
+            passenger.setUsername(row.getString("username"));
+            return passenger;
         }
     };
 

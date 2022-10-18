@@ -31,10 +31,9 @@ public class HomeController extends BaseController{
                     return "redirect:/logout";
                 }
                 System.out.println("hi");;
-//                return "home";
                 return "redirect:/driver";
             }
-//            if(isAuthorized(model,ROLE_DRIVER)) re
+            model.addAttribute("isPassenger",true);
             return "home";
         }
         return "redirect:/login/";

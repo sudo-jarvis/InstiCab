@@ -46,11 +46,21 @@
 									<br />
 									<br />
 								</div>
+
+								<div th:if="${isPassenger ne null}">
+									<a th:href="@{/passenger/newTrip/}" class="btn bg-gradient-success w-auto me-2">New
+										Trip</a>
+									<br />
+									<br />
+								</div>
+
+								<div th:if="${isDriver ne null}">
 								<a th:href="@{/myorders/}" class="btn bg-gradient-success w-auto me-2">My Orders</a>
 								<br />
 								<br />
 								<a th:href="@{/myshops/}" class="btn bg-gradient-warning w-auto me-2">My Shops</a>
-							</div>
+								</div>
+								</div>
 						</div>
 					</div>
 				</div>
