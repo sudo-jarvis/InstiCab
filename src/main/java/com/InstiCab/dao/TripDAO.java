@@ -1,5 +1,6 @@
 package com.InstiCab.dao;
 
+import com.InstiCab.models.Driver;
 import com.InstiCab.models.Trip;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class TripDAO {
@@ -45,6 +48,20 @@ public class TripDAO {
             return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, tripId);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Driver not found ! !");
+        }
+    }
+
+    public List<Trip> getPassengerAllTrips(Long passengerId){
+        final String sql = "SELECT t.trip_id, t.start_date, t.start_time, t.end_date, t.end_time, " +
+                "t.status, " +
+                "t.start_latitude, t.start_longitude, t.end_latitude, t.end_longitude, t.driver_id, t.passenger_id" +
+                " FROM " +
+                "trip as t WHERE" +
+                " t.passenger_id = ? order by t.trip_id";
+        try {
+            return jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Error");
         }
     }
 }

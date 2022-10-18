@@ -50,7 +50,7 @@ public class PassengerController extends BaseController{
     @GetMapping("/passenger/newTripStatus")
     public String showTripStatus(Model model,RedirectAttributes redirectAttributes){
         Long passengerId = passengerService.getLoggedInPassengerId();
-        model.addAttribute("passenger",passengerService.get);
+        model.addAttribute("passengerTripList",tripService.getPassengerAllTrips(passengerId));
         return "newTripStatus";
     }
 }

@@ -8,6 +8,8 @@ import com.InstiCab.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TripServiceImpl implements TripService {
     private final TripDAO tripDAO;
@@ -32,5 +34,10 @@ public class TripServiceImpl implements TripService {
     @Override
     public Trip getTripByTripId(Long tripId) {
         return tripDAO.getTripByTripId(tripId);
+    }
+
+    @Override
+    public List<Trip> getPassengerAllTrips(Long passengerId) {
+        return tripDAO.getPassengerAllTrips(passengerId);
     }
 }

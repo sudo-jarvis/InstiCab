@@ -15,8 +15,8 @@ public class DriverController extends BaseController{
 
     @Autowired
     public DriverController(UserService userService, DriverService driverService,
-                            RegistrationRequestService registrationRequestService, PassengerService passengerService) {
-        super(userService,driverService,registrationRequestService,passengerService);
+                            RegistrationRequestService registrationRequestService) {
+        super(userService,driverService,registrationRequestService);
     }
 
     @GetMapping("/driver")
