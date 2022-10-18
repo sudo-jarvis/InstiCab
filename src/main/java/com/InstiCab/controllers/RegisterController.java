@@ -112,8 +112,8 @@ public class RegisterController extends BaseController {
         if (isLoggedIn()) {
             return "redirect:/";
         }
-        passengerService.savePassenger(user.getUsername());
         userService.saveUser(user);
+        passengerService.savePassenger(user.getUsername());
 
         redirectAttributes.addFlashAttribute("successMsg",
                 "Registered successfully!");
