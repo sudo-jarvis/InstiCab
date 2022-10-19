@@ -29,8 +29,7 @@ public class RegisterController extends BaseController {
         private Driver driver;
     }
     @Autowired
-    public RegisterController(UserService userService, DriverService driverService,
-                              RegistrationRequestService registrationRequestService,PassengerService passengerService
+    public RegisterController(UserService userService, DriverService driverService,RegistrationRequestService registrationRequestService,PassengerService passengerService
             ,VehicleService vehicleService) {
         super(userService,driverService,registrationRequestService);
         this.passengerService = passengerService;

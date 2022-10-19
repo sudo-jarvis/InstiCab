@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.InstiCab.models.*;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
 public final class RowMappers {
@@ -92,6 +91,7 @@ public final class RowMappers {
             trip.setDriverId(row.getLong("driver_id"));
             trip.setPassengerId(row.getLong("passenger_id"));
             return trip;
+
         }
     };
 

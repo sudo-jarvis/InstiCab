@@ -40,15 +40,6 @@
             <div class="col-lg-4 col-md-8 col-12 mx-auto">
                 <div >
                     <div >
-                        <br />
-<!--                        <div th:if="${isAdmin ne null}">-->
-<!--                            <a th:href="@{/admin/}" class="btn bg-gradient-danger w-auto me-2">Admin</a>-->
-<!--                            <br />-->
-<!--                            <br />-->
-<!--                        </div>-->
-<!--                        <div th:if="${requestDetailsList eq null or #lists.size(requestDetailsList) eq 0}">-->
-<!--                            No Pending Requests found! <br />-->
-<!--                        </div>-->
                         <div class="row">
                             <div class="col-6">Username</div>
                             <div th:text="${driver.username}" class="col-6"></div>
@@ -77,14 +68,70 @@
                             <div class="col-6">Bank Name</div>
                             <div th:text="${driver.bankName}" class="col-6"></div>
                         </div>
-
-<!--                        <a th:href="@{/myorders/}" class="btn bg-gradient-success w-auto me-2">My Orders</a>-->
-<!--                        <br />-->
-<!--                        <br />-->
-<!--                        <a th:href="@{/myshops/}" class="btn bg-gradient-warning w-auto me-2">My Shops</a>-->
                     </div>
                 </div>
             </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            My Trips
+            </div>
+            <div th:if="${tripList eq null or #lists.size(tripList) eq 0}">
+                No Trips found! <br />
+            </div>
+            <table class="table table-dark table-striped"
+                   th:if="${tripList ne null and #lists.size(tripList) ne 0}"
+            >
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">tripId</th>
+                    <th scope="col">startDate</th>
+                    <th scope="col">startTime</th>
+                    <th scope="col">endDate</th>
+                    <th scope="col">endTime</th>
+                    <th scope="col">status</th>
+                    <th scope="col">startLatitude</th>
+                    <th scope="col">startLongitude</th>
+                    <th scope="col">endLatitude</th>
+                    <th scope="col">endLongitude</th>
+                    <th scope="col">passengerId</th>
+                </tr>
+                </thead>
+                <tbody class="text-white">
+                <div th:each="trip:${tripList}">
+                    <tr>
+                        <td th:text="${trip.tripId}"></td>
+                        <td th:text="${trip.startDate}"></td>
+                        <td th:text="${trip.startTime}"></td>
+                        <td th:text="${trip.endDate}"></td>
+                        <td th:text="${trip.endTime}"></td>
+                        <td th:text="${trip.status}"></td>
+                        <td th:text="${trip.startLatitude}"></td>
+                        <td th:text="${trip.startLongitude}"></td>
+                        <td th:text="${trip.endLatitude}"></td>
+                        <td th:text="${trip.endLongitude}"></td>
+                        <td th:text="${trip.passengerId}"></td>
+
+<!--                        <td>-->
+<!--                            <a class="btn btn-warning" data-bs-toggle="collapse"-->
+<!--                               th:href="'#collapse'+${user.username}"-->
+<!--                               role="button"-->
+<!--                               aria-expanded="false"-->
+<!--                               th:aria-controls="'collapse'+${user.username}">-->
+<!--                                View Details-->
+<!--                            </a>-->
+<!--                        </td>-->
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+<!--            <div th:each="trip;${tripList}" class="col-lg-4 col-md-8 col-12 mx-auto">-->
+<!--                <div>-->
+<!--                    <p th:text></p>-->
+<!--                </div>-->
+<!--                -->
+<!--            </div>-->
         </div>
     </div>
     <footer th:replace="components/footer :: footer"></footer>

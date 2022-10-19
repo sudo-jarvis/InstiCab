@@ -1,6 +1,7 @@
 package com.InstiCab.service;
 
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.Trip;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface DriverService {
 
     Long findLoggedInDriver();
     void saveDriver(Driver driver);
+
 }

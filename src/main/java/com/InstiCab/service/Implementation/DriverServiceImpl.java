@@ -2,6 +2,7 @@ package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.DriverDAO;
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.Trip;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
