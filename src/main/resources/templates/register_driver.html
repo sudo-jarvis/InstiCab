@@ -42,8 +42,8 @@
 			<span class="mask bg-light opacity-6"></span>
 			<div class="container my-auto">
 				<br />
-				<div class="row">
-					<div class="col-lg-4 col-md-8 col-12 mx-auto">
+				<div class="row mb-4">
+					<div class="col-md-4 col-md-8 mx-auto">
 						<div class="card z-index-0 fadeIn3 fadeInBottom">
 							<div class="card-body">
 								<div class="text-center">
@@ -60,137 +60,204 @@
 									th:action="@{/register/driver}"
 									th:object="${details}"
 								>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Username *</label>
-										<input
-											type="text"
-											class="form-control"
-											name="username"
-											th:field="*{user.username}"
-											required
-										/>
-									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Firstname *</label>
-										<input
+								<div class="container">
+
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Username *</label>
+											<input
 												type="text"
 												class="form-control"
-												name="firstName"
-												th:field="*{user.firstName}"
+												name="username"
+												th:field="*{user.username}"
 												required
-										/>
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Email *</label>
+											<input type="email" class="form-control" name="email" th:field="*{user.email}"
+												   required />
+										</div>
+
 									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Middlename</label>
-										<input
-												type="text"
-												class="form-control"
-												name="middleName"
-												th:field="*{user.middleName}"
-										/>
+									<div class="row">
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Firstname *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="firstName"
+													th:field="*{user.firstName}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Middlename</label>
+											<input
+													type="text"
+													class="form-control"
+													name="middleName"
+													th:field="*{user.middleName}"
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Lastname *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="lastName"
+													th:field="*{user.lastName}"
+													required
+											/>
+										</div>
 									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Lastname *</label>
-										<input
-												type="text"
+									<div class="row">
+
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Phone *</label>
+											<input
+													type="text"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+													class="form-control"
+													maxlength="10"
+													name="phoneNo"
+													th:field="*{user.phoneNo}"
+													required
+											/>
+										</div>
+										<div class="col"> </div>
+									</div>
+									<div class="row">
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">License Number</label>
+											<input
+													type="text"
+													pattern="[A-Z]{2}[0-9]{2} [0-9]{11}"
+													oninput="setCustomValidity('')"
+													oninvalid="setCustomValidity('Please enter like RJ70 12345678912')"
+													class="form-control"
+													name="licenseNumber"
+													th:field="*{driver.licenseNumber}"
+													required
+											>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Aadhar Number</label>
+											<input
+													type="text"
+													class="form-control"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+													maxlength="12"
+													name="aadharNumber"
+													th:field="*{driver.aadharNumber}"
+													required
+											/>
+										</div>
+									</div>
+									Bank Details
+									<div class="row">
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Bank Account Number</label>
+											<input
+													type="text"
+													class="form-control"
+													name="bankAccountNumber"
+													th:field="*{driver.accountNo}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Bank Account Name</label>
+											<input
+													type="text"
+													class="form-control"
+													name="bankAccountName"
+													th:field="*{driver.accountName}"
+													required
+											/>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Bank IFSC Code</label>
+											<input
+													type="text"
+													class="form-control"
+													name="bankIFSC"
+													th:field="*{driver.ifscCode}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Bank Name</label>
+											<input
+													type="text"
+													class="form-control"
+													name="bankName"
+													th:field="*{driver.bankName}"
+													required
+											/>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col input-group input-group-outline mt-3 mb-3">
+											<label class="form-label">Password *</label>
+											<input
+												type="password"
 												class="form-control"
-												name="lastName"
-												th:field="*{user.lastName}"
+												name="password"
+												th:field="*{user.password}"
 												required
-										/>
+											/>
+										</div>
+										<div class="col"></div>
 									</div>
-									<div class="input-group input-group-outline mb-3">
-										<label class="form-label">Email *</label>
-										<input type="email" class="form-control" name="email" th:field="*{user.email}"
-											   required />
+									Vehicle Details
+									<div class="row">
+
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Vehicle Name *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="vehicleName"
+													th:field="*{vehicle.vehicleName}"
+													required
+											/>
+										</div>
 									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Phone *</label>
-										<input
-												type="text"
-												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-												class="form-control"
-												maxlength="10"
-												name="phoneNo"
-												th:field="*{user.phoneNo}"
-												required
-										/>
+									<div class="row">
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Registration Number *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="registrationNumber"
+													th:field="*{vehicle.registrationNumber}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Insurance Number *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="insuranceNumber"
+													th:field="*{vehicle.insuranceNumber}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Registration State *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="registrationState"
+													th:field="*{vehicle.registrationState}"
+													required
+											/>
+										</div>
 									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">License Number</label>
-										<input
-												type="text"
-												pattern="[A-Z]{2}[0-9]{2} [0-9]{11}"
-												oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Please enter like RJ70 12345678912')"
-												class="form-control"
-												name="licenseNumber"
-												th:field="*{driver.licenseNumber}"
-												required
-										>
-									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Aadhar Number</label>
-										<input
-												type="text"
-												class="form-control"
-												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-												maxlength="12"
-												name="aadharNumber"
-												th:field="*{driver.aadharNumber}"
-												required
-										/>
-									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Bank Account Number</label>
-										<input
-												type="text"
-												class="form-control"
-												name="bankAccountNumber"
-												th:field="*{driver.accountNo}"
-												required
-										/>
-									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Bank Account Name</label>
-										<input
-												type="text"
-												class="form-control"
-												name="bankAccountName"
-												th:field="*{driver.accountName}"
-												required
-										/>
-									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Bank IFSC Code</label>
-										<input
-												type="text"
-												class="form-control"
-												name="bankIFSC"
-												th:field="*{driver.ifscCode}"
-												required
-										/>
-									</div>
-									<div class="input-group input-group-outline my-3">
-										<label class="form-label">Bank Name</label>
-										<input
-												type="text"
-												class="form-control"
-												name="bankName"
-												th:field="*{driver.bankName}"
-												required
-										/>
-									</div>
-									<div class="input-group input-group-outline mb-3">
-										<label class="form-label">Password *</label>
-										<input
-											type="password"
-											class="form-control"
-											name="password"
-											th:field="*{user.password}"
-											required
-										/>
-									</div>
+								</div>
 
 									<div class="text-center">
 										<input type="submit" value="Register" class="btn bg-gradient-primary w-100 my-4 mb-2" />

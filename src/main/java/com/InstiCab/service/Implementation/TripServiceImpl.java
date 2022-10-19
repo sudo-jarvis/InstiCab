@@ -17,12 +17,14 @@ public class TripServiceImpl implements TripService {
     private final TripDAO tripDAO;
     private final PassengerService passengerService;
     private final DriverService driverService;
+    
     @Autowired
     public TripServiceImpl(TripDAO tripDAO, PassengerService passengerService, DriverService driverService){
         this.tripDAO = tripDAO;
         this.passengerService = passengerService;
         this.driverService = driverService;
     }
+    
     @Override
     public void saveTrip(Trip trip) throws Exception {
         tripDAO.saveTrip(trip);

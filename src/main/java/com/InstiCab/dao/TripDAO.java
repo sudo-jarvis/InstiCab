@@ -4,10 +4,8 @@ import com.InstiCab.models.Driver;
 import com.InstiCab.models.Trip;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,7 +40,6 @@ public class TripDAO {
             throw new UsernameNotFoundException("Error");
         }
     }
-
     public List<Trip> getTripList(Long driverId) throws Exception {
         final String sql = "SELECT * from trip WHERE driver_id = ?";
         try {

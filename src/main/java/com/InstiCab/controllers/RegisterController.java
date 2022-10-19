@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
@@ -23,17 +20,20 @@ import java.time.LocalTime;
 public class RegisterController extends BaseController {
 
     private PassengerService passengerService;
+    private VehicleService vehicleService;
     @Getter
     @Setter
     static class DriverDetails {
         private User user;
+        private Vehicle vehicle;
         private Driver driver;
     }
     @Autowired
-    public RegisterController(UserService userService, DriverService driverService,
-                              RegistrationRequestService registrationRequestService, PassengerService passengerService) {
+    public RegisterController(UserService userService, DriverService driverService,RegistrationRequestService registrationRequestService,PassengerService passengerService
+            ,VehicleService vehicleService) {
         super(userService,driverService,registrationRequestService);
         this.passengerService = passengerService;
+        this.vehicleService = vehicleService;
     }
 
     @GetMapping("/register/driver")
@@ -41,6 +41,7 @@ public class RegisterController extends BaseController {
         DriverDetails driverDetails = new DriverDetails();
         driverDetails.setDriver(new Driver());
         driverDetails.setUser(new User());
+        driverDetails.setVehicle(new Vehicle());
 
         if (isLoggedIn()) {
             return "redirect:/";
@@ -68,7 +69,7 @@ public class RegisterController extends BaseController {
                                         Model model, RedirectAttributes redirectAttributes) {
         User user = driverDetails.getUser();
         Driver driver = driverDetails.getDriver();
-
+        Vehicle vehicle = driverDetails.getVehicle();
         if (isLoggedIn()) {
             return "redirect:/";
         }
@@ -88,7 +89,9 @@ public class RegisterController extends BaseController {
 
         driver = driverService.getDriverByUsername(user.getUsername());
         userRequest.setDriverId(driver.getDriverId());
+        vehicle.setDriverId(driver.getDriverId());
 
+        vehicleService.saveVehicle(vehicle);
         registrationRequestService.createRegistrationRequest(userRequest);
 
         redirectAttributes.addFlashAttribute("successMsg",

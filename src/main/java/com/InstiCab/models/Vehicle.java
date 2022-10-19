@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Vehicle {
     private Long vehicleId;
-    private String vehicleType;
+    private String vehicleName;
     private String registrationNumber;
     private String insuranceNumber;
     private String registrationState;
