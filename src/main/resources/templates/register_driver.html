@@ -61,7 +61,7 @@
 									th:object="${details}"
 								>
 								<div class="container">
-									<div class="row">
+
 										<div class="col input-group input-group-outline my-3">
 											<label class="form-label">Username *</label>
 											<input
@@ -213,16 +213,7 @@
 									</div>
 									Vehicle Details
 									<div class="row">
-										<div class="col input-group input-group-outline my-3">
-											<label class="form-label">Vehicle Type *</label>
-											<select class="form-select" aria-label="Default select example" required>
-												<option selected th:value="*{vehicle.vehicleType}" >Select vehicle type</option>
-												<option value="3">Auto</option>
-												<option value="3">Mini</option>
-												<option value="1">Sedan</option>
-												<option value="2">SUV</option>
-											</select>
-										</div>
+
 										<div class="col input-group input-group-outline my-3">
 											<label class="form-label">Vehicle Name *</label>
 											<input
@@ -230,6 +221,38 @@
 													class="form-control"
 													name="vehicleName"
 													th:field="*{vehicle.vehicleName}"
+													required
+											/>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Registration Number *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="registrationNumber"
+													th:field="*{vehicle.registrationNumber}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Insurance Number *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="insuranceNumber"
+													th:field="*{vehicle.insuranceNumber}"
+													required
+											/>
+										</div>
+										<div class="col input-group input-group-outline my-3">
+											<label class="form-label">Registration State *</label>
+											<input
+													type="text"
+													class="form-control"
+													name="registrationState"
+													th:field="*{vehicle.registrationState}"
 													required
 											/>
 										</div>
