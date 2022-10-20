@@ -76,12 +76,6 @@ CREATE TABLE IF NOT EXISTS registration_request(
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS role(
-    id BIGINT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS trip(
     trip_id BIGINT NOT NULL AUTO_INCREMENT,
     start_date date,
