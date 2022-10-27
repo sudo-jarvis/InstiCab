@@ -2,5 +2,5 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost:3306/insticab
 spring.datasource.username=root
 spring.datasource.password=Admin@123
-STRIPE_SECRET_KEY=
-STRIPE_PUBLIC_KEY=
+STRIPE_SECRET_KEY=sk_test_51LxX25SBdEeFV8icthkuwlR7Z2s2amRZUQ379Xw8UxU4lT8VIqR8UjLOX3tbQhMGjPdMI7CcRisk6ejtVK5pgAuV003EOjkgQu
+STRIPE_PUBLIC_KEY=pk_test_51LxX25SBdEeFV8icYq1GlrVGSnYDYfDw2xaeV1CIMLou95D69R1f4UDifm8fNyVHIqBelQYdMEJFYCq5iWzFHFlD00LThohiZ1
