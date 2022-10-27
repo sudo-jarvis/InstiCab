@@ -2,6 +2,7 @@ package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.TripDAO;
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.Trip;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.PassengerService;
@@ -37,9 +38,8 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> getTripList() throws Exception {
-        Long driverId = driverService.findLoggedInDriver();
-        return tripDAO.getTripList(driverId);
+    public List<Trip> getTripReqList() throws Exception {
+        return tripDAO.getTripReqList();
     }
 
     @Override
@@ -51,4 +51,20 @@ public class TripServiceImpl implements TripService {
     public List<Trip> getPassengerAllTrips(Long passengerId) {
         return tripDAO.getPassengerAllTrips(passengerId);
     }
+
+    @Override
+    public void rejectTripRequest(Long tripId) {
+        tripDAO.rejectTripRequest(tripId);
+    }
+
+    @Override
+    public void acceptTripRequest(Trip trip) {
+        tripDAO.acceptTripRequest(trip);
+    }
+
+    @Override
+    public List<Trip> getTripList() throws Exception {
+        return tripDAO.getTripList();
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.InstiCab.dao;
 
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.Trip;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
@@ -40,10 +42,10 @@ public class TripDAO {
             throw new UsernameNotFoundException("Error");
         }
     }
-    public List<Trip> getTripList(Long driverId) throws Exception {
-        final String sql = "SELECT * from trip WHERE driver_id = ?";
+    public List<Trip> getTripReqList() throws Exception {
+        final String sql = "SELECT * from trip WHERE status = ? order by trip_id";
         try {
-            return jdbcTemplate.query(sql,RowMappers.tripRowMapper,driverId);
+            return jdbcTemplate.query(sql,RowMappers.tripRowMapper,0);
         }catch (Exception e) {
             throw new Exception(e);
         }
@@ -54,7 +56,7 @@ public class TripDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, tripId);
         } catch (Exception e) {
-            throw new UsernameNotFoundException("Driver not found ! !");
+            throw new UsernameNotFoundException("Trip not found ! !");
         }
     }
 
@@ -69,6 +71,37 @@ public class TripDAO {
             return jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Error");
+        }
+    }
+
+    public void rejectTripRequest(Long tripId) {
+        final String sql = "UPDATE trip SET status = 2 WHERE trip_id = ?";
+        try {
+            jdbcTemplate.update(sql,tripId);
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip Request doesnt exist ! !");
+        }
+    }
+
+    public void acceptTripRequest(Trip trip) {
+        final String sql = "UPDATE trip SET status = 1,start_date = ?,start_time = ?,driver_id = ? WHERE " +
+                "trip_id = ?";
+        try {
+            jdbcTemplate.update(sql,trip.getStartDate(),
+                    trip.getStartTime(),trip.getDriverId(),trip.getDriverId());
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip Request doesnt exist ! !");
+        }
+    }
+
+    public List<Trip> getTripList() throws Exception {
+        final String sql = "SELECT * from trip WHERE status = ? order by trip_id";
+        try {
+            return jdbcTemplate.query(sql,RowMappers.tripRowMapper,1);
+        }catch (Exception e) {
+            throw new Exception(e);
         }
     }
 }

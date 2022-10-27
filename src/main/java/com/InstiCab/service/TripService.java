@@ -1,6 +1,7 @@
 package com.InstiCab.service;
 
 import com.InstiCab.models.Driver;
+import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.Trip;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,10 @@ public interface TripService {
 
     boolean tripAlreadyExists();
     
-    List<Trip> getTripList() throws Exception;
+    List<Trip> getTripReqList() throws Exception;
     Trip getTripByTripId(Long tripId);
     List<Trip> getPassengerAllTrips(Long passengerId);
+    void rejectTripRequest(Long tripId);
+    void acceptTripRequest(Trip trip);
+    List<Trip> getTripList() throws Exception;
 }
