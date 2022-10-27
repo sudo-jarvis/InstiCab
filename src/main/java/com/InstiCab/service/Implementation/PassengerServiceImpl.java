@@ -1,6 +1,7 @@
 package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.PassengerDAO;
+import com.InstiCab.models.Passenger;
 import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.UserService;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,10 @@ public class PassengerServiceImpl implements PassengerService {
     public Long getLoggedInPassengerId() {
         String username = userService.findLoggedInUsername();
         return passengerDAO.getPassengerByUsername(username).getPassengerId();
+    }
+
+    @Override
+    public Passenger getPassengerByPassengerId(Long passengerId) {
+        return passengerDAO.getPassengerByPassengerId(passengerId);
     }
 }

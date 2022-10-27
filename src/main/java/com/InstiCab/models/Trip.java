@@ -25,5 +25,4 @@ public class Trip {
     private float endLongitude;
     private Long driverId;
     private Long passengerId;
-
 }

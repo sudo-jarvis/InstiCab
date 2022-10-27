@@ -47,22 +47,26 @@
               </h3>
             </div>
             <form role="form" class="text-start" method="POST" th:action="@{/passenger/newTrip}"
-                  th:object="${trip}" autocomplete="off">
+                  th:object="${tripDetails}" autocomplete="off">
               <div class="input-group input-group-outline my-3">
                 <label class="form-label">From Latitude</label>
-                <input type="text" class="form-control" name="fromLatitude" th:field="*{startLatitude}" required />
+                <input type="text" class="form-control" name="fromLatitude" th:field="*{trip.startLatitude}" required />
               </div>
               <div class="input-group input-group-outline my-3">
                 <label class="form-label">From Longitude</label>
-                <input type="text" class="form-control" name="fromLongitude" th:field="*{startLongitude}" required />
+                <input type="text" class="form-control" name="fromLongitude" th:field="*{trip.startLongitude}" required />
               </div>
               <div class="input-group input-group-outline my-3">
                 <label class="form-label">To Latitude</label>
-                <input type="text" class="form-control" name="toLatitude" th:field="*{endLatitude}" required />
+                <input type="text" class="form-control" name="toLatitude" th:field="*{trip.endLatitude}" required />
               </div>
               <div class="input-group input-group-outline my-3">
                 <label class="form-label">To Longitude</label>
-                <input type="text" class="form-control" name="toLongitude" th:field="*{endLongitude}" required />
+                <input type="text" class="form-control" name="toLongitude" th:field="*{trip.endLongitude}" required />
+              </div>
+              <div class="form-check form-switch d-flex align-items-center mb-3">
+                <input class="form-check-input" type="checkbox" name="addFavLoc" id="addFavLoc" />
+                <label class="form-check-label mb-0 ms-2" for="addFavLoc">Add destination to your Favourite locations</label>
               </div>
 
 

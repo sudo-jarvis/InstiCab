@@ -1,7 +1,9 @@
 package com.InstiCab.controllers;
 
-import com.InstiCab.models.Trip;
+import com.InstiCab.models.*;
 import com.InstiCab.service.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +17,23 @@ public class PassengerController extends BaseController{
 
     private TripService tripService;
     private PassengerService passengerService;
+    private FavouriteLocationService favouriteLocationService;
+
+    @Getter
+    @Setter
+    static class TripDetails {
+        private FavouriteLocation favouriteLocation;
+        private Trip trip;
+    }
 
     @Autowired
     public PassengerController(UserService userService, DriverService driverService,
                                RegistrationRequestService registrationRequestService,TripService tripService,
-                               PassengerService passengerService){
+                               PassengerService passengerService, FavouriteLocationService favouriteLocationService){
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
         this.passengerService = passengerService;
+        this.favouriteLocationService = favouriteLocationService;
     }
 
     @GetMapping("/passenger/newTrip")
@@ -34,16 +45,26 @@ public class PassengerController extends BaseController{
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Trip Already Exists !");
             return "redirect:/passenger/newTripStatus";
         }
-        Trip trip = new Trip();
-        model.addAttribute("trip",trip);
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setFavouriteLocation(new FavouriteLocation());
+        tripDetails.setTrip(new Trip());
+        model.addAttribute("tripDetails",tripDetails);
         return "newTrip";
     }
 
     @PostMapping("/passenger/newTrip")
-    public String createTrip(@ModelAttribute("trip") Trip trip,Model model, RedirectAttributes redirectAttributes) throws Exception {
-        trip.setPassengerId(passengerService.getLoggedInPassengerId());
+    public String createTrip(@ModelAttribute("tripDetails") TripDetails tripDetails,Model model, RedirectAttributes redirectAttributes) throws Exception {
+        FavouriteLocation favouriteLocation = tripDetails.getFavouriteLocation();
+        Trip trip = tripDetails.getTrip();
+        Long passengerId = passengerService.getLoggedInPassengerId();
+        trip.setPassengerId(passengerId);
         trip.setStatus(0);
         tripService.saveTrip(trip);
+
+//        favouriteLocation.setLatitudeLocation(trip.getEndLatitude());
+//        favouriteLocation.setLongitudeLocation(trip.getEndLongitude());
+//        favouriteLocation.setPassengerId(passengerId);
+//        favouriteLocationService.saveFavouriteLocation(favouriteLocation);
         return "redirect:/passenger/newTripStatus";
     }
 

@@ -34,4 +34,13 @@ public class PassengerDAO {
             throw new UsernameNotFoundException("Passenger not found");
         }
     }
+
+    public Passenger getPassengerByPassengerId(Long passengerId) {
+        final String sql = "SELECT * FROM passenger WHERE passenger_id=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, RowMappers.passengerRowMapper, passengerId);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Passenger not found ! !");
+        }
+    }
 }
