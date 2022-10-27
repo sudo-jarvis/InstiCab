@@ -12,7 +12,9 @@ public interface TripService {
     void saveTrip(Trip trip) throws Exception;
 
     boolean tripAlreadyExists();
-    
+
+    boolean tripAlreadyRunning() throws Exception;
+
     List<Trip> getTripReqList() throws Exception;
     Trip getTripByTripId(Long tripId);
     List<Trip> getPassengerAllTrips(Long passengerId);
