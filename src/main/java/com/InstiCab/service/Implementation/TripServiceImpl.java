@@ -1,13 +1,10 @@
 package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.TripDAO;
-import com.InstiCab.models.Driver;
-import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.Trip;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.TripService;
-import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +34,11 @@ public class TripServiceImpl implements TripService {
         return tripDAO.tripAlreadyExists(passengerId);
     }
 
+    @Override
+    public boolean tripAlreadyRunning() throws Exception {
+        Long driverId = driverService.findLoggedInDriver();
+        return tripDAO.tripAlreadyRunning(driverId);
+    }
     @Override
     public List<Trip> getTripReqList() throws Exception {
         return tripDAO.getTripReqList();

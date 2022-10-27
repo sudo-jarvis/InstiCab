@@ -104,4 +104,13 @@ public class TripDAO {
             throw new Exception(e);
         }
     }
+
+    public boolean tripAlreadyRunning(Long driverId) throws Exception {
+        final String sql = "SELECT * from trip WHERE status = ? AND driver_id = ?";
+        try {
+            return !jdbcTemplate.query(sql,RowMappers.tripRowMapper,1,driverId).isEmpty();
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+    }
 }

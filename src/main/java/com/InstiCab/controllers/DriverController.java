@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -51,12 +52,17 @@ public class DriverController extends BaseController{
     }
 
     @PostMapping("/driver/accept/{tripId}")
-    public String acceptTripRequest(@PathVariable("tripId") Long tripId, Model model){
+    public String acceptTripRequest(@PathVariable("tripId") Long tripId, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Long driverId = driverService.findLoggedInDriver();
         Trip tripReq = tripService.getTripByTripId(tripId);
         tripReq.setStartDate(Date.valueOf(LocalDate.now()));
         tripReq.setStartTime(Time.valueOf(LocalTime.now()));
         tripReq.setDriverId(driverId);
+        System.out.println("::");
+        if(tripService.tripAlreadyRunning()) {
+            redirectAttributes.addFlashAttribute("errorMsg", "Trip Already running");
+            return "redirect:/driver";
+        }
         tripService.acceptTripRequest(tripReq);
         return "redirect:/driver";
     }
