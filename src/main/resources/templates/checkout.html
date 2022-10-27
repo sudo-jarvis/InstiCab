@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="components/head :: head"></head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-item text-light" href="#">InstiCab</a>
+        <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item text-light">
+                    <a th:href="@{/about/}" class="nav-link text-light">About</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<form role="form" action='/charge' method='POST' id='checkout-form'>
+    <input type='hidden' th:value='${amount}' name='amount' />
+    <label>Price:<span th:text='${amount/100}' /></label>
+    <script
+            src='https://checkout.stripe.com/checkout.js'
+            class='stripe-button'
+            th:attr='data-key=${stripePublicKey},
+                         data-amount=${amount},
+                         data-currency=${currency}'
+            data-name='InstiCab'
+            th:data-image="@{/images/favicon.ico}"
+            data-locale='auto'
+            data-zip-code='false'>
+    </script>
+</form>
+<script th:replace="components/toast :: toast"></script>
+</body>
+</html>
