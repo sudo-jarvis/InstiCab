@@ -13,6 +13,6 @@ public class TripRequest {
     private int tripRequestId;
     private Long passengerId;
     private Long driverId;
-    private int tripId;
+    private Long tripId;
 
 }
