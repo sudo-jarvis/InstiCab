@@ -1,141 +1,200 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="components/head :: head"></head>
-<body>
-<nav class="navbar navbar-expand-lg bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-item text-light" href="#">InstiCab</a>
-        <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
-                </li>
-                <li class="nav-item text-light">
-                    <a th:href="@{/about/}" class="nav-link text-light">About</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav me-0 mb-2 mb-lg-0">
-                <li class="nav-item ">
-                    <a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
-                        <button type="button" class="btn btn-light">Logout</button>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div
-        class="page-header align-items-start min-vh-100"
-        loading="lazy"
->
-    <span class="mask bg-light opacity-6"></span>
-    <div class="container my-auto">
-        <div class="row">
-            <div class="col-lg-4 col-md-8 col-12 mx-auto">
-                <div >
-                    <div >
-                        <div class="row">
-                            <div class="col-6">Username</div>
-                            <div th:text="${driver.username}" class="col-6"></div>
+    <head th:replace="components/head :: head"></head>
+    <body loading="lazy">
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-item text-light" href="#">InstiCab</a>
+                <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+                        </li>
+                        <li class="nav-item text-light">
+                            <a th:href="@{/about/}" class="nav-link text-light">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+                        <li class="nav-item ">
+                            <a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
+                                <button type="button" class="btn btn-light">Logout</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="page-header align-items-start min-vh-100 mt-7" loading="lazy">
+            <div class="container my-auto">
+                <div class="row g-7">
+                    <div class="col-lg-12 col-md-12 col-12 mx-auto">
+                        <div class="card z-index-0 fadeIn3 fadeInBottom">
+                            <div class="card-body bg-gradient-secondary text-center">
+                                <h1>ALL Pending Trip Requests</h1>
+                                <div th:if="${tripReqList eq null or #lists.size(tripReqList) eq 0}">
+                                    No Pending Requests found! <br />
+                                </div>
+                                <table
+                                        class="table table-dark table-striped"
+                                        th:if="${tripReqList ne null and #lists.size(tripReqList) ne 0}"
+                                >
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">tripId</th>
+                                        <th scope="col">startLatitude</th>
+                                        <th scope="col">startLongitude</th>
+                                        <th scope="col">passengerId</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-white">
+                                        <div th:each="request:${tripReqList}">
+                                            <tr>
+                                                <td th:text="${request.tripId}"></td>
+                                                <td th:text="${request.startLatitude}"></td>
+                                                <td th:text="${request.startLongitude}"></td>
+                                                <td th:text="${request.passengerId}"></td>
+                                                <td>
+                                                    <a class="btn btn-warning" data-bs-toggle="collapse"
+                                                       th:href="'#collapse'+${request.tripId}"
+                                                       role="button"
+                                                       aria-expanded="false"
+                                                       th:aria-controls="'collapse'+${request.tripId}">
+                                                        View Details
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <form method="POST"
+                                                          th:action="@{/driver/accept/__${request.tripId}__/}">
+                                                        <button type="submit" class="btn btn-success" >Accept</button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form method="POST"
+                                                          th:action="@{/driver/reject/__${request.tripId}__/}">
+                                                        <button type="submit" class="btn btn-danger" >Reject</button>
+                                                    </form>
+
+                                                </td>
+
+                                            </tr>
+                                            <tr class ="collapse" th:id="'collapse'+${request.tripId}">
+
+                                                <td colspan="12">
+
+                                                    <div class="row">
+                                                        <div class="col-2"> Start Latitude</div>
+                                                        <div th:text="${request.startLatitude}"
+                                                             class="col-6"></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-2"> Start Longitude</div>
+                                                        <div th:text="${request.startLongitude}"
+                                                             class="col-6"></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-2"> End Latitude</div>
+                                                        <div th:text="${request.endLatitude}"
+                                                             class="col-6"></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-2"> End Longitude</div>
+                                                        <div th:text="${request.endLongitude}"
+                                                             class="col-6"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">Driver Id</div>
-                            <div th:text="${driver.driverId}" class="col-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">License Number</div>
-                            <div th:text="${driver.licenseNumber}" class="col-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">Aadhar Number</div>
-                            <div th:text="${driver.aadharNumber}" class="col-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">Account No</div>
-                            <div th:text="${driver.accountNo}" class="col-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">IFSC Code</div>
-                            <div th:text="${driver.ifscCode}" class="col-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">Bank Name</div>
-                            <div th:text="${driver.bankName}" class="col-6"></div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12 mx-auto">
+                        <div class="card z-index-0 fadeIn3 fadeInBottom">
+                            <div class="card-body bg-gradient-secondary text-center">
+                                <h1>My Ongoing Trips</h1>
+                                <div th:if="${tripList eq null or #lists.size(tripList) eq 0}">
+                                    No Ongoing Trips found! <br />
+                                </div>
+                                <table
+                                        class="table table-dark table-striped"
+                                        th:if="${tripList ne null and #lists.size(tripList) ne 0}"
+                                >
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">tripId</th>
+                                        <th scope="col">startDate</th>
+                                        <th scope="col">startTime</th>
+                                        <th scope="col">passengerId</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-white">
+                                    <div th:each="request:${tripList}">
+                                        <tr>
+                                            <td th:text="${request.tripId}"></td>
+                                            <td th:text="${request.startDate}"></td>
+                                            <td th:text="${request.startTime}"></td>
+                                            <td th:text="${request.passengerId}"></td>
+                                            <td>
+                                                <a class="btn btn-warning" data-bs-toggle="collapse"
+                                                   th:href="'#collapse'+${request.tripId}"
+                                                   role="button"
+                                                   aria-expanded="false"
+                                                   th:aria-controls="'collapse'+${request.tripId}">
+                                                    View Details
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <form method="POST"
+                                                      th:action="@{/driver/accept/__${request.tripId}__/}">
+                                                    <button type="submit" class="btn btn-success" >End Trip</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr class ="collapse" th:id="'collapse'+${request.tripId}">
+
+                                            <td colspan="12">
+
+                                                <div class="row">
+                                                    <div class="col-2"> Start Latitude</div>
+                                                    <div th:text="${request.startLatitude}"
+                                                         class="col-6"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-2"> Start Longitude</div>
+                                                    <div th:text="${request.startLongitude}"
+                                                         class="col-6"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-2"> End Latitude</div>
+                                                    <div th:text="${request.endLatitude}"
+                                                         class="col-6"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-2"> End Longitude</div>
+                                                    <div th:text="${request.endLongitude}"
+                                                         class="col-6"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <footer th:replace="components/footer :: footer"></footer>
         </div>
-        <br><br>
-        <div class="row">
-            <div class="col-lg-4 col-md-8 col-12 mx-auto">
-            My Trips
-            </div>
-            <div th:if="${tripList eq null or #lists.size(tripList) eq 0}">
-                No Trips found! <br />
-            </div>
-            <table class="table table-dark table-striped"
-                   th:if="${tripList ne null and #lists.size(tripList) ne 0}"
-            >
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">tripId</th>
-                    <th scope="col">startDate</th>
-                    <th scope="col">startTime</th>
-                    <th scope="col">endDate</th>
-                    <th scope="col">endTime</th>
-                    <th scope="col">status</th>
-                    <th scope="col">startLatitude</th>
-                    <th scope="col">startLongitude</th>
-                    <th scope="col">endLatitude</th>
-                    <th scope="col">endLongitude</th>
-                    <th scope="col">passengerId</th>
-                </tr>
-                </thead>
-                <tbody class="text-white">
-                <div th:each="trip:${tripList}">
-                    <tr>
-                        <td th:text="${trip.tripId}"></td>
-                        <td th:text="${trip.startDate}"></td>
-                        <td th:text="${trip.startTime}"></td>
-                        <td th:text="${trip.endDate}"></td>
-                        <td th:text="${trip.endTime}"></td>
-                        <td th:text="${trip.status}"></td>
-                        <td th:text="${trip.startLatitude}"></td>
-                        <td th:text="${trip.startLongitude}"></td>
-                        <td th:text="${trip.endLatitude}"></td>
-                        <td th:text="${trip.endLongitude}"></td>
-                        <td th:text="${trip.passengerId}"></td>
-
-<!--                        <td>-->
-<!--                            <a class="btn btn-warning" data-bs-toggle="collapse"-->
-<!--                               th:href="'#collapse'+${user.username}"-->
-<!--                               role="button"-->
-<!--                               aria-expanded="false"-->
-<!--                               th:aria-controls="'collapse'+${user.username}">-->
-<!--                                View Details-->
-<!--                            </a>-->
-<!--                        </td>-->
-                    </tr>
-                </div>
-                </tbody>
-            </table>
-<!--            <div th:each="trip;${tripList}" class="col-lg-4 col-md-8 col-12 mx-auto">-->
-<!--                <div>-->
-<!--                    <p th:text></p>-->
-<!--                </div>-->
-<!--                -->
-<!--            </div>-->
-        </div>
-    </div>
-    <footer th:replace="components/footer :: footer"></footer>
-</div>
-<script th:replace="components/toast :: toast"></script>
-</body>
+        <script th:replace="components/toast :: toast"></script>
+    </body>
 </html>
