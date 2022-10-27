@@ -94,17 +94,4 @@ public final class RowMappers {
 
         }
     };
-
-    public static RowMapper<TripRequest> TripRequestRowMapper = new RowMapper<TripRequest>() {
-        @Override
-        public TripRequest mapRow(ResultSet row, int i) throws SQLException {
-            TripRequest tripRequest = new TripRequest();
-            tripRequest.setTripRequestId(row.getInt("trip_request_id"));
-            tripRequest.setPassengerId(row.getLong("passenger_id"));
-            tripRequest.setDriverId(row.getLong("driver_id"));
-            tripRequest.setTripId(row.getLong("trip_id"));
-            return tripRequest;
-        }
-    };
-
 }
