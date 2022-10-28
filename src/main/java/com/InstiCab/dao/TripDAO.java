@@ -89,7 +89,7 @@ public class TripDAO {
                 "trip_id = ?";
         try {
             jdbcTemplate.update(sql,trip.getStartDate(),
-                    trip.getStartTime(),trip.getDriverId(),trip.getDriverId());
+                    trip.getStartTime(),trip.getDriverId(),trip.getTripId());
         } catch (Exception e){
             System.out.println(e);
             throw new DuplicateKeyException("Trip Request doesnt exist ! !");
@@ -108,7 +108,7 @@ public class TripDAO {
     public boolean tripAlreadyRunning(Long driverId) throws Exception {
         final String sql = "SELECT * from trip WHERE status = ? AND driver_id = ?";
         try {
-            return !jdbcTemplate.query(sql,RowMappers.tripRowMapper,1,driverId).isEmpty();
+            return !(jdbcTemplate.query(sql,RowMappers.tripRowMapper,1,driverId).isEmpty());
         }catch (Exception e){
             throw new Exception(e);
         }
