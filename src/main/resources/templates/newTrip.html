@@ -65,7 +65,8 @@
                 <input type="text" class="form-control" name="toLongitude" th:field="*{trip.endLongitude}" required />
               </div>
               <div class="form-check form-switch d-flex align-items-center mb-3">
-                <input class="form-check-input" type="checkbox" name="addFavLoc" id="addFavLoc" />
+                <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" />
+                <input type="hidden" name="addFavouriteLocation" value="false"/>
                 <label class="form-check-label mb-0 ms-2" for="addFavLoc">Add destination to your Favourite locations</label>
               </div>
 
