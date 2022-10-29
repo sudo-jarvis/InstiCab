@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="components/head :: head"></head>
+<script src="https://apis.mapmyindia.com/advancedmaps/v1/f58efe742d0caa4d25320dd851351674/map_load?v=1.5">
+</script>
+<script src="https://apis.mapmyindia.com/advancedmaps/api/f58efe742d0caa4d25320dd851351674/map_sdk_plugins">
+</script>
+<style>
+            #map{
+            height: 75vh;padding: 0;
+        }
+        </style>
 <body loading="lazy">
 <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
@@ -48,22 +57,41 @@
             </div>
             <form role="form" class="text-start" method="POST" th:action="@{/passenger/newTrip}"
                   th:object="${tripDetails}" autocomplete="off">
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">From Latitude</label>
-                <input type="text" class="form-control" name="fromLatitude" th:field="*{trip.startLatitude}" required />
+
+              <div class="d-none row">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">From Latitude</label>
+                  <input type="text" class="form-control" name="fromLatitude" th:field="*{trip.startLatitude}" required />
+                </div>
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">From Longitude</label>
+                  <input type="text" class="form-control" name="fromLongitude" th:field="*{trip.startLongitude}" required />
+                </div>
+
               </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">From Longitude</label>
-                <input type="text" class="form-control" name="fromLongitude" th:field="*{trip.startLongitude}" required />
+
+              <div class="d-none row">
+                <div class="col input-group input-group-outline my-3">
+                  <label class="form-label">To Latitude</label>
+                  <input type="text" class="form-control" name="toLatitude" th:field="*{trip.endLatitude}" required />
+                </div>
+                <div class="col input-group input-group-outline my-3">
+                  <label class="form-label">To Longitude</label>
+                  <input type="text" class="form-control" name="toLongitude" th:field="*{trip.endLongitude}" required />
+                </div>
+
               </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">To Latitude</label>
-                <input type="text" class="form-control" name="toLatitude" th:field="*{trip.endLatitude}" required />
-              </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">To Longitude</label>
-                <input type="text" class="form-control" name="toLongitude" th:field="*{trip.endLongitude}" required />
-              </div>
+
+              <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                      onclick="changeVal(1)">
+                Select From Location
+              </button>
+
+              <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                      onclick="changeVal(0)">
+                Select To Location
+              </button>
+
               <div class="form-check form-switch d-flex align-items-center mb-3">
                 <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" />
                 <input type="hidden" name="addFavouriteLocation" value="false"/>
@@ -71,6 +99,23 @@
               </div>
 
 
+
+              <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="ModalLabel">Select Location</h1>
+                    </div>
+                    <div class="modal-body">
+                      <div id="map">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="text-center">
                 <input type="submit" value="Find Ride" class="btn bg-gradient-primary w-100 my-4 mb-2" />
               </div>
@@ -89,6 +134,50 @@
   </div>
   <footer th:replace="components/footer :: footer"></footer>
 </div>
+<script>
+        var curModal = -1;
+        var map = new MapmyIndia.Map('map', {center: [25.2623590000001, 82.9893520000001], zoom: 15, search: false});
+
+           var options={
+                map:map,
+                callback:callback_method,
+                closeBtn:false,
+                topText:false,
+                search:false,
+                location:{lat:25.2623590000001,lng:82.9893520000001},
+            };
+
+            var picker= new MapmyIndia.placePicker(options);
+            function callback_method(data) {
+            if(curModal===1){
+               var lat = document.getElementById("trip.startLatitude");
+               var lng = document.getElementById("trip.startLongitude");
+
+               lat.value = data.lat;
+               lng.value = data.lng;
+
+            }
+            else if(curModal===0){
+             var lat = document.getElementById("trip.endLatitude");
+               var lng = document.getElementById("trip.endLongitude");
+
+               lat.value = data.lat;
+               lng.value = data.lng;
+            }
+            $('#Modal').modal('hide')
+             }
+             /*methods
+              *
+              picker.remove();
+              picker.getLocation();
+              picker.setLocation({lat:28.8787,lng:77.787877});
+              *
+              */
+
+              function changeVal(x){
+                curModal = x;
+              }
+    </script>
 <script th:replace="components/toast :: toast"></script>
 </body>
 </html>
