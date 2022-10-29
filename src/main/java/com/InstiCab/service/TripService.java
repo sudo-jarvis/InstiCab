@@ -21,4 +21,6 @@ public interface TripService {
     void rejectTripRequest(Long tripId);
     void acceptTripRequest(Trip trip);
     List<Trip> getTripList() throws Exception;
+
+    void endTrip(Trip trip);
 }

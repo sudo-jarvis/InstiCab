@@ -113,4 +113,16 @@ public class TripDAO {
             throw new Exception(e);
         }
     }
+
+    public void endTrip(Trip trip) {
+        final String sql = "UPDATE trip SET status = 3,end_date = ?,end_time = ?,end_latitude = ?,end_longitude = ? WHERE" +
+                " trip_id = ?";
+        try {
+            jdbcTemplate.update(sql,trip.getEndDate(),trip.getEndTime(),trip.getEndLatitude(),trip.getEndLongitude(),
+                    trip.getTripId());
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip doesnt exist ! !");
+        }
+    }
 }
