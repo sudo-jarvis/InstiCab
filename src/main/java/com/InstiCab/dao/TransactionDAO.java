@@ -40,4 +40,14 @@ public class TransactionDAO {
             throw new UsernameNotFoundException("Error");
         }
     }
+
+    public boolean transactionPending(String username) {
+        final String sql = "SELECT * FROM transaction WHERE status!=1 AND username=?";
+        try {
+            return !jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username).isEmpty();
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new UsernameNotFoundException("Error");
+        }
+    }
 }

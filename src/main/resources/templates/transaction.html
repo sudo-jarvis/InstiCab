@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="components/head :: head"></head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-item text-light" href="#">InstiCab</a>
+        <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item text-light">
+                    <a th:href="@{/about/}" class="nav-link text-light">About</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+                <li class="nav-item ">
+                    <a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
+                        <button type="button" class="btn btn-light">Logout</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br />
+<div class="page-header align-items-start min-vh-100 mt-7" loading="lazy">
+    <div class="container my-auto">
+        <div class="row g-7">
+            <div class="col-lg-12 col-md-12 col-12 mx-auto">
+                <div class="card z-index-0 fadeIn3 fadeInBottom">
+                    <div class="card-body bg-gradient-secondary text-center">
+                        <h1>All Transactions</h1>
+                        <div th:if="${transactionList eq null or #lists.size(transactionList) eq 0}">
+                            No Transactions found! <br />
+                        </div>
+                        <table
+                                class="table table-dark table-striped"
+                                th:if="${transactionList ne null and #lists.size(transactionList) ne 0}"
+                        >
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">transactionId</th>
+                                <th scope="col">amount</th>
+                                <th scope="col">status</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-white">
+                            <div th:each="transaction:${transactionList}">
+                                <tr>
+                                    <td th:text="${transaction.transactionId}"></td>
+                                    <td th:text="${transaction.amount}"></td>
+                                    <td th:if="${transaction.status eq 0}" th:text="Pending"></td>
+                                    <td th:if="${transaction.status eq 1}" th:text="Completed"></td>
+                                    <td>
+                                        <a class="btn btn-warning" data-bs-toggle="collapse"
+                                           th:href="'#collapse'+${transaction.transactionId}"
+                                           role="button"
+                                           aria-expanded="false"
+                                           th:aria-controls="'collapse'+${transaction.transactionId}">
+                                            View Details
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form method="POST"
+                                              th:action="@{/checkout/}">
+                                            <button type="submit" class="btn btn-success" >Pay</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr class ="collapse" th:id="'collapse'+${transaction.transactionId}">
+
+                                    <td colspan="12">
+
+                                        <div class="row">
+                                            <div class="col-2"> Transaction Date</div>
+                                            <div th:text="${transaction.dateTranscation}"
+                                                 class="col-6"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-2"> Transaction Time</div>
+                                            <div th:text="${transaction.timeTransaction}"
+                                                 class="col-6"></div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </div>
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="components/footer :: footer"></footer>
+</div>
+<script th:replace="components/toast :: toast"></script>
+</body>
+</html>
