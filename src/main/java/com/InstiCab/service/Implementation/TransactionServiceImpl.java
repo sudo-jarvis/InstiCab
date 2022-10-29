@@ -10,6 +10,8 @@ import com.InstiCab.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TransactionServiceImpl implements TransactionService {
     private final TransactionDAO transactionDAO;
@@ -20,5 +22,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void saveTransaction(Transaction transaction) throws Exception {
         transactionDAO.saveTransaction(transaction);
+    }
+
+    @Override
+    public List<Transaction> getPassengerAllTransactions(String username) {
+        return transactionDAO.getPassengerAllTransactions(username);
     }
 }
