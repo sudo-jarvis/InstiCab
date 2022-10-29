@@ -10,7 +10,8 @@ import lombok.Setter;
 public class ChargeRequest {
 
     public enum Currency {
-        INR
+        INR,
+        USD
     }
     private String description;
     private int amount; // cents

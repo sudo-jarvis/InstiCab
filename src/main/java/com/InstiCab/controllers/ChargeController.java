@@ -4,6 +4,7 @@ import com.InstiCab.models.ChargeRequest;
 import com.InstiCab.service.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
+import com.stripe.model.PaymentIntent;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +25,10 @@ public class ChargeController {
     public String charge(ChargeRequest chargeRequest, Model model) throws StripeException {
         chargeRequest.setDescription("Example charge");
         chargeRequest.setCurrency(ChargeRequest.Currency.INR);
-        Charge charge = paymentsService.charge(chargeRequest);
+       PaymentIntent charge = paymentsService.charge(chargeRequest);
         model.addAttribute("id", charge.getId());
         model.addAttribute("status", charge.getStatus());
         model.addAttribute("chargeId", charge.getId());
-        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
         return "result";
     }
 
