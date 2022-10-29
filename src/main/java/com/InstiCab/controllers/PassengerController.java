@@ -51,6 +51,11 @@ public class PassengerController extends BaseController{
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Trip Already Exists !");
             return "redirect:/passenger/newTripStatus";
         }
+
+        if(transactionService.transactionPending()){
+            redirectAttributes.addFlashAttribute("errorMsg", "Pending Transaction Exists !");
+            return "redirect:/passenger/transaction";
+        }
         model.addAttribute("tripDetails", tripDetails);
         return "newTrip";
     }

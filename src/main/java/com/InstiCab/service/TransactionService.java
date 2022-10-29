@@ -11,4 +11,6 @@ public interface TransactionService {
     void saveTransaction(Transaction transaction) throws Exception;
 
     List<Transaction> getPassengerAllTransactions(String username);
+
+    boolean transactionPending();
 }
