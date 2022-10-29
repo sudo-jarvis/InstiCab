@@ -1,12 +1,10 @@
 package com.InstiCab.controllers;
 
+import com.InstiCab.models.Passenger;
 import com.InstiCab.models.RegistrationRequest;
+import com.InstiCab.models.Transaction;
 import com.InstiCab.models.Trip;
-import com.InstiCab.service.DriverService;
-import com.InstiCab.service.PassengerService;
-import com.InstiCab.service.RegistrationRequestService;
-import com.InstiCab.service.TripService;
-import com.InstiCab.service.UserService;
+import com.InstiCab.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +23,15 @@ import java.util.List;
 public class DriverController extends BaseController{
 
     private TripService tripService;
+    private PassengerService passengerService;
+    private TransactionService transactionService;
     @Autowired
     public DriverController(UserService userService, DriverService driverService,
-                            RegistrationRequestService registrationRequestService, TripService tripService) {
+                            RegistrationRequestService registrationRequestService, TripService tripService, PassengerService passengerService, TransactionService transactionService) {
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
+        this.passengerService = passengerService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/driver")
@@ -70,6 +72,27 @@ public class DriverController extends BaseController{
     @PostMapping("/driver/reject/{tripId}")
     public String rejectTripRequest(@PathVariable("tripId") Long tripId, Model model){
         tripService.rejectTripRequest(tripId);
+        return "redirect:/driver";
+    }
+
+    @PostMapping("/driver/end/{tripId}")
+    public String endTrip(@PathVariable("tripId") Long tripId, Model model) throws Exception {
+        Trip trip = tripService.getTripByTripId(tripId);
+        trip.setEndDate(Date.valueOf(LocalDate.now()));
+        trip.setEndTime(Time.valueOf(LocalTime.now()));
+        trip.setEndLatitude(trip.getEndLatitude());
+        trip.setEndLongitude(trip.getEndLongitude());
+
+        Transaction transaction = new Transaction();
+        Long passengerId = trip.getPassengerId();
+        Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
+        transaction.setUsername(passenger.getUsername());
+        transaction.setAmount(50);
+        transaction.setStatus(0);
+        transaction.setDateTranscation(Date.valueOf(LocalDate.now()));
+        transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
+        transactionService.saveTransaction(transaction);
+        tripService.endTrip(trip);
         return "redirect:/driver";
     }
 }

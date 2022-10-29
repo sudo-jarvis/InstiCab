@@ -69,4 +69,9 @@ public class TripServiceImpl implements TripService {
         return tripDAO.getTripList();
     }
 
+    @Override
+    public void endTrip(Trip trip) {
+        tripDAO.endTrip(trip);
+    }
+
 }
