@@ -169,7 +169,9 @@
 											<td th:text="${user.dateCreated}"></td>
 											<td th:text="${user.lastLoginDate}"></td>
 											<td th:text="${user.lastLoginTime}"></td>
-											<td th:text="${user.role}"></td>
+											<td th:if="${user.role eq 'ROLE_ADMIN'}" th:text="ADMIN"></td>
+											<td th:if="${user.role eq 'ROLE_PASSENGER'}" th:text="PASSENGER"></td>
+											<td th:if="${user.role eq 'ROLE_DRIVER'}" th:text="DRIVER"></td>
 											<td>
 												<a class="btn btn-warning" data-bs-toggle="collapse"
 												   th:href="'#collapse'+${user.username}"
