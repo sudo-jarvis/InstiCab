@@ -63,7 +63,10 @@
                       <td th:text="${passengerTrip.startLongitude}"></td>
                       <td th:text="${passengerTrip.endLatitude}"></td>
                       <td th:text="${passengerTrip.endLongitude}"></td>
-                      <td th:text="${passengerTrip.status}"></td>
+                      <td th:if="${passengerTrip.status eq 0}" th:text="Pending"></td>
+                      <td th:if="${passengerTrip.status eq 1}" th:text="Running"></td>
+                      <td th:if="${passengerTrip.status eq 2}" th:text="Rejected"></td>
+                      <td th:if="${passengerTrip.status eq 3}" th:text="Completed"></td>
                       <td>
                         <a class="btn btn-warning" data-bs-toggle="collapse"
                            th:href="'#collapse'+${passengerTrip.tripId}"
@@ -100,7 +103,7 @@
                         </div>
                         <div class="row">
                           <div class="col-2"> Driver ID</div>
-                          <div th:text="${passengerTrip.driverId}"
+                          <div th:if="${passengerTrip.driverId ne 0}" th:text="${passengerTrip.driverId}"
                                class="col-6"></div>
                         </div>
 
