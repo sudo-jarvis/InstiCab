@@ -19,6 +19,7 @@ public class PassengerController extends BaseController{
     private TripService tripService;
     private PassengerService passengerService;
     private FavouriteLocationService favouriteLocationService;
+    private TransactionService transactionService;
 
     @Getter
     @Setter
@@ -30,11 +31,12 @@ public class PassengerController extends BaseController{
     @Autowired
     public PassengerController(UserService userService, DriverService driverService,
                                RegistrationRequestService registrationRequestService,TripService tripService,
-                               PassengerService passengerService, FavouriteLocationService favouriteLocationService){
+                               PassengerService passengerService, FavouriteLocationService favouriteLocationService, TransactionService transactionService){
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
         this.passengerService = passengerService;
         this.favouriteLocationService = favouriteLocationService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/passenger/newTrip")
@@ -77,5 +79,13 @@ public class PassengerController extends BaseController{
         Long passengerId = passengerService.getLoggedInPassengerId();
         model.addAttribute("passengerTripList",tripService.getPassengerAllTrips(passengerId));
         return "newTripStatus";
+    }
+
+    @GetMapping("/passenger/transaction")
+    public String showTransaction(Model model,RedirectAttributes redirectAttributes){
+        Long passengerId = passengerService.getLoggedInPassengerId();
+        Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
+        model.addAttribute("transactionList",transactionService.getPassengerAllTransactions(passenger.getUsername()));
+        return "transaction";
     }
 }
