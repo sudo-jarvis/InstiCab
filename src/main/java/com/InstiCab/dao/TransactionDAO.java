@@ -8,6 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -33,7 +37,7 @@ public class TransactionDAO {
                 "t.status, t.username" +
                 " FROM " +
                 "transaction as t WHERE" +
-                " t.username = ? order by t.transaction_id";
+                " t.status!=1 and t.username = ? order by t.transaction_id";
         try {
             return jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username);
         } catch (Exception e) {
@@ -48,6 +52,15 @@ public class TransactionDAO {
         } catch (Exception e) {
             System.out.println(e);
             throw new UsernameNotFoundException("Error");
+        }
+    }
+
+    public void endTransaction(String username) throws Exception {
+        final String sql = "UPDATE transaction SET status = 1, time_transaction = ?, date_transcation = ? WHERE username = ?";
+        try {
+            jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
+        } catch (Exception e) {
+            throw new Exception(e);
         }
     }
 }
