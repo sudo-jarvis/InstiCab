@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS transaction(
     transaction_id BIGINT NOT NULL AUTO_INCREMENT,
     time_transaction time NOT NULL,
     date_transcation date NOT NULL,
-    amount FLOAT NOT NULL,
+    amount INT NOT NULL,
     status INT NOT NULL,
     username VARCHAR(255) NOT NULL,
     PRIMARY KEY (transaction_id),

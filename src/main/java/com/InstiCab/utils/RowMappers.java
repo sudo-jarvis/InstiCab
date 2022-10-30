@@ -102,7 +102,7 @@ public final class RowMappers {
             transaction.setTransactionId(row.getLong("transaction_id"));
             transaction.setTimeTransaction(row.getTime("time_transaction"));
             transaction.setDateTranscation(row.getDate("date_transcation"));
-            transaction.setAmount(row.getFloat("amount"));
+            transaction.setAmount(row.getInt("amount"));
             transaction.setStatus(row.getInt("status"));
             transaction.setUsername(row.getString("username"));
             return transaction;

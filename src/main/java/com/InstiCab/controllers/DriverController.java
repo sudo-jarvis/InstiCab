@@ -87,7 +87,7 @@ public class DriverController extends BaseController{
         Long passengerId = trip.getPassengerId();
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         transaction.setUsername(passenger.getUsername());
-        transaction.setAmount(50);
+        transaction.setAmount(70);
         transaction.setStatus(0);
         transaction.setDateTranscation(Date.valueOf(LocalDate.now()));
         transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));

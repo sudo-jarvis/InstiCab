@@ -37,4 +37,9 @@ public class TransactionServiceImpl implements TransactionService {
         String username = userService.findLoggedInUsername();
         return transactionDAO.transactionPending(username);
     }
+
+    @Override
+    public void endTransaction(String username) throws Exception {
+        transactionDAO.endTransaction(username);
+    }
 }

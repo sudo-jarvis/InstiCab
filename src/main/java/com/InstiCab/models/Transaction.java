@@ -16,7 +16,7 @@ public class Transaction {
     private Long transactionId;
     private Time timeTransaction;
     private Date dateTranscation;
-    private float amount;
+    private int amount;
     private int status;
     private String username;
 
