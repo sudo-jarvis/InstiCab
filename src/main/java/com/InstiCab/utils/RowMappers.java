@@ -108,4 +108,16 @@ public final class RowMappers {
             return transaction;
         }
     };
+
+    public static RowMapper<EarningsHistory> earningsHistoryRowMapper = new RowMapper<EarningsHistory>() {
+        @Override
+        public EarningsHistory mapRow(ResultSet row, int i) throws SQLException {
+            EarningsHistory earning = new EarningsHistory();
+            earning.setEarningId(row.getLong("earning_id"));
+            earning.setCost(row.getFloat("cost"));
+            earning.setDistanceTravelled(row.getFloat("distance_travelled"));
+            earning.setDriverId(row.getLong("driver_id"));
+            return earning;
+        }
+    };
 }

@@ -102,4 +102,11 @@ public class DriverController extends BaseController{
         earningsHistoryService.saveEarning(earning);
         return "redirect:/driver";
     }
+
+    @GetMapping("/driver/showEarningHistory")
+    public String showEarningHistory(Model model,RedirectAttributes redirectAttributes){
+        Long driverId = driverService.findLoggedInDriver();
+        model.addAttribute("earningHistory",earningsHistoryService.getEarningHistory(driverId));
+        return "earning_history";
+    }
 }
