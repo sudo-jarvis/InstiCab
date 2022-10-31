@@ -1,9 +1,6 @@
 package com.InstiCab.controllers;
 
-import com.InstiCab.models.Passenger;
-import com.InstiCab.models.RegistrationRequest;
-import com.InstiCab.models.Transaction;
-import com.InstiCab.models.Trip;
+import com.InstiCab.models.*;
 import com.InstiCab.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,13 +22,15 @@ public class DriverController extends BaseController{
     private TripService tripService;
     private PassengerService passengerService;
     private TransactionService transactionService;
+    private EarningsHistoryService earningsHistoryService;
     @Autowired
     public DriverController(UserService userService, DriverService driverService,
-                            RegistrationRequestService registrationRequestService, TripService tripService, PassengerService passengerService, TransactionService transactionService) {
+                            RegistrationRequestService registrationRequestService, TripService tripService, PassengerService passengerService, TransactionService transactionService, EarningsHistoryService earningsHistoryService) {
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
         this.passengerService = passengerService;
         this.transactionService = transactionService;
+        this.earningsHistoryService = earningsHistoryService;
     }
 
     @GetMapping("/driver")
@@ -91,8 +90,16 @@ public class DriverController extends BaseController{
         transaction.setStatus(0);
         transaction.setDateTranscation(Date.valueOf(LocalDate.now()));
         transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
+
+        EarningsHistory earning = new EarningsHistory();
+        Long driverId = driverService.findLoggedInDriver();
+        earning.setDriverId(driverId);
+        earning.setCost(70);
+        earning.setDistanceTravelled(7);
+
         transactionService.saveTransaction(transaction);
         tripService.endTrip(trip);
+        earningsHistoryService.saveEarning(earning);
         return "redirect:/driver";
     }
 }
