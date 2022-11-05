@@ -62,7 +62,7 @@ public class AdminController extends BaseController{
         return "admin";
     }
 
-    @GetMapping("/admin/accept/{driverId}")
+    @GetMapping("/admi![](../../../../resources/static/images/nyc-taxis-gty-rc-200220_hpMain_16x9_992.jpg)n/accept/{driverId}")
     public String invalidPage(Model model){
         if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
             return FORBIDDEN_ERROR_PAGE;
