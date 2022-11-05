@@ -5,36 +5,6 @@
 </script>
 <script src="https://apis.mapmyindia.com/advancedmaps/api/f58efe742d0caa4d25320dd851351674/map_sdk_plugins">
 </script>
-<script>
-  function hide1(){
-    const var3=document.getElementById("location1");
-    const var1=document.getElementById("startLocation");
-    const var2=document.getElementById("endLocation");
-    const var4=document.getElementById("locationsLabel1");
-    if(var3.checked){
-      var1.classList.add("d-none");
-      var4.classList.remove("d-none");
-    }
-    else{
-      var1.classList.remove("d-none");
-      var4.classList.add("d-none");
-    }
-  }
-  function hide2(){
-    const var3=document.getElementById("location2");
-    const var1=document.getElementById("startLocation");
-    const var2=document.getElementById("endLocation");
-    const var4=document.getElementById("locationsLabel2");
-    if(var3.checked){
-      var2.classList.add("d-none");
-      var4.classList.remove("d-none");
-    }
-    else{
-      var2.classList.remove("d-none");
-      var4.classList.add("d-none");
-    }
-  }
-</script>
 <style>
             #map{
             height: 75vh;padding: 0;
@@ -82,10 +52,10 @@
           <div class="card-body">
             <div class="text-center">
               <h3>
-                New Trip
+                New Scheduled Trip
               </h3>
             </div>
-            <form role="form" class="text-start" method="POST" th:action="@{/passenger/newTrip}"
+            <form role="form" class="text-start" method="POST" th:action="@{/passenger/newScheduledTrip}"
                   th:object="${tripDetails}" autocomplete="off">
 
               <div class="d-none row">
@@ -112,41 +82,21 @@
 
               </div>
               <div class="row">
-                <div class="col input-group input-group-outline my-3" id ="startLocation" >
+                <div class="col input-group input-group-outline my-3">
                   <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
                           onclick="changeVal(1)">
                     Select From Location
                   </button>
                 </div>
-                <div class="col input-group input-group-outline my-3 d-none" id="locationsLabel1">
-                  <label for="locations">Choose a car:</label>
-                  <select name="locations" id="locations">
-                    <option value="volvo">Volvo</option>
-                  </select>
-                </div>
-                <div class="col input-group input-group-outline my-3" >
-                  <input id="location1" type="checkbox"name="location1" value="location1" onchange="hide1()">
-                  <label for="location1"> Select from fav location</label><br>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col input-group input-group-outline my-3" id ="endLocation">
-                  <button type="button" id="endLocation" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
-                          onclick="changeVal(0)">
-                    Select To Location
-                  </button>
-                </div>
-                <div class="col input-group input-group-outline my-3 d-none" id="locationsLabel2">
-                  <label for="locations">Choose a car:</label>
-                  <select name="locations" id="locations">
-                    <option value="volvo">Volvo</option>
-                  </select>
-                </div>
                 <div class="col input-group input-group-outline my-3">
-                  <input type="checkbox" id="location2" name="location2" value="location2" onchange="hide2()">
-                  <label for="location2"> Select from fav location</label><br>
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                  <label for="vehicle1"> Select from fav location</label><br>
                 </div>
               </div>
+              <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                      onclick="changeVal(0)">
+                Select To Location
+              </button>
 
               <div class="form-check form-switch d-flex align-items-center mb-3">
                 <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" />
@@ -172,14 +122,19 @@
                   </div>
                 </div>
               </div>
+              <div class="form-input text-center">
+                <label for="scheduledTime">Select Time:</label>
+                <input type="time" id="scheduledTime" name="scheduledTime" th:value="*{scheduledTime}"
+                       required>
+              </div>
               <div class="text-center">
-                <input type="submit" value="Find Ride" class="btn bg-gradient-primary w-100 my-4 mb-2" />
+                <input type="submit" value="Schedule Trip" class="btn bg-gradient-primary w-100 my-4 mb-2" />
               </div>
               <p class="mt-4 text-sm text-center">
-                Want To Schedule A Trip ?
-                <a th:href="@{/register/passenger}"
+                New Trip ?
+                <a th:href="@{/passenger/newTrip}"
                    class="text-primary text-gradient font-weight-bold"
-                >Schedule Trip</a
+                >New Trip</a
                 >
               </p>
             </form>
@@ -225,7 +180,6 @@
                document.getElementsByClassName("col btn btn-primary")[1].style.background="green";
                document.getElementsByClassName("col btn btn-primary")[1].innerHTML="End location selected";
             }
-            document.getElementsById("location1").click().visibility="hidden";
             $('#Modal').modal('hide')
              }
              /*methods
