@@ -50,17 +50,16 @@ public class PassengerController extends BaseController{
 
     @GetMapping("/passenger/newTrip")
     public String newTrip(Model model,RedirectAttributes redirectAttributes){
-        TripDetails tripDetails = new TripDetails();
-        tripDetails.setTrip(new Trip());
-
         if(!isLoggedIn()){
             return "redirect:/";
         }
+        if(!isAuthorized(model,ROLE_PASSENGER)) return FORBIDDEN_ERROR_PAGE;
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setTrip(new Trip());
         if(tripService.tripAlreadyExists()){
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Trip Already Exists !");
             return "redirect:/passenger/newTripStatus";
         }
-
         if(transactionService.transactionPending()){
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Transaction Exists !");
             return "redirect:/passenger/transaction";
@@ -158,6 +157,10 @@ public class PassengerController extends BaseController{
 
     @GetMapping("/passenger/newTripStatus")
     public String showTripStatus(Model model,RedirectAttributes redirectAttributes){
+        if(!isLoggedIn()){
+            return "redirect:/";
+        }
+        if(!isAuthorized(model,ROLE_PASSENGER)) return FORBIDDEN_ERROR_PAGE;
         Long passengerId = passengerService.getLoggedInPassengerId();
         model.addAttribute("passengerTripList",tripService.getPassengerAllTrips(passengerId));
         return "newTripStatus";
@@ -165,6 +168,10 @@ public class PassengerController extends BaseController{
 
     @GetMapping("/passenger/transaction")
     public String showTransaction(Model model,RedirectAttributes redirectAttributes){
+        if(!isLoggedIn()){
+            return "redirect:/";
+        }
+        if(!isAuthorized(model,ROLE_PASSENGER)) return FORBIDDEN_ERROR_PAGE;
         Long passengerId = passengerService.getLoggedInPassengerId();
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         model.addAttribute("transactionList",transactionService.getPassengerAllTransactions(passenger.getUsername()));

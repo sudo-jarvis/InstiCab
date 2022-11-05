@@ -70,6 +70,4 @@ public class BaseController {
         String username = userService.findLoggedInUsername();
 
     }
-
-
 }

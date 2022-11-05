@@ -42,7 +42,6 @@ public class RegisterController extends BaseController {
         driverDetails.setDriver(new Driver());
         driverDetails.setUser(new User());
         driverDetails.setVehicle(new Vehicle());
-
         if (isLoggedIn()) {
             return "redirect:/";
         }
