@@ -89,11 +89,11 @@
                   th:object="${tripDetails}" autocomplete="off">
 
               <div class="d-none row">
-                <div class="input-group input-group-outline my-3">
+                <div class="col input-group input-group-outline my-3">
                   <label class="form-label">From Latitude</label>
                   <input type="text" class="form-control" name="fromLatitude" th:field="*{trip.startLatitude}" required />
                 </div>
-                <div class="input-group input-group-outline my-3">
+                <div class="col input-group input-group-outline my-3">
                   <label class="form-label">From Longitude</label>
                   <input type="text" class="form-control" name="fromLongitude" th:field="*{trip.startLongitude}" required />
                 </div>
@@ -124,7 +124,7 @@
                     <option value="volvo">Volvo</option>
                   </select>
                 </div>
-                <div class="col input-group input-group-outline my-3" >
+                <div class="col input-group input-group-outline my-3" id="fromFavLocations" >
                   <input id="location1" type="checkbox"name="location1" value="location1" onchange="hide1()">
                   <label for="location1"> Select from fav location</label><br>
                 </div>
@@ -142,7 +142,7 @@
                     <option value="volvo">Volvo</option>
                   </select>
                 </div>
-                <div class="col input-group input-group-outline my-3">
+                <div class="col input-group input-group-outline my-3" id="toFavLocations">
                   <input type="checkbox" id="location2" name="location2" value="location2" onchange="hide2()">
                   <label for="location2"> Select from fav location</label><br>
                 </div>
@@ -224,8 +224,8 @@
                lng.value = data.lng;
                document.getElementsByClassName("col btn btn-primary")[1].style.background="green";
                document.getElementsByClassName("col btn btn-primary")[1].innerHTML="End location selected";
+
             }
-            document.getElementsById("location1").click().visibility="hidden";
             $('#Modal').modal('hide')
              }
              /*methods

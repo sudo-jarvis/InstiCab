@@ -15,9 +15,11 @@ public class FavouriteLocationDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public void saveFavouriteLocation(FavouriteLocation favouriteLocation) {
-        final String sql = "INSERT INTO favourite_location(latitude_location, longitude_location, passenger_id) VALUES (?,?,?)";
+        final String sql = "INSERT INTO favourite_location(label,latitude_location, longitude_location, passenger_id)" +
+                " VALUES (?,?,?,?)";
         try {
-            jdbcTemplate.update(sql,favouriteLocation.getLatitudeLocation(),favouriteLocation.getLongitudeLocation()
+            jdbcTemplate.update(sql,favouriteLocation.getLabel(),favouriteLocation.getLatitudeLocation(),
+                    favouriteLocation.getLongitudeLocation()
                     ,favouriteLocation.getPassengerId());
         } catch (Exception e){
             System.out.println(e);

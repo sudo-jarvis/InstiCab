@@ -10,4 +10,6 @@ public interface PassengerService {
 
     Long getLoggedInPassengerId();
     Passenger getPassengerByPassengerId(Long passengerId);
+
+    Long getLoggedPassengerIdByUsername(String username);
 }
