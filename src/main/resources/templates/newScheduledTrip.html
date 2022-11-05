@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="components/head :: head"></head>
+<script src="https://apis.mapmyindia.com/advancedmaps/v1/f58efe742d0caa4d25320dd851351674/map_load?v=1.5">
+</script>
+<script src="https://apis.mapmyindia.com/advancedmaps/api/f58efe742d0caa4d25320dd851351674/map_sdk_plugins">
+</script>
+<style>
+            #map{
+            height: 75vh;padding: 0;
+        }
+        </style>
+<body loading="lazy">
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-item text-light" href="#">InstiCab</a>
+    <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+        </li>
+        <li class="nav-item text-light">
+          <a th:href="@{/about/}" class="nav-link text-light">About</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+        <li class="nav-item ">
+          <a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
+            <button type="button" class="btn btn-light">Logout</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div
+        class="page-header align-items-start min-vh-100"
+        loading="lazy"
+>
+  <span class="mask bg-light opacity-6"></span>
+  <div class="container my-auto">
+    <br />
+    <div class="row">
+      <div class="col-lg-4 col-md-8 col-12 mx-auto">
+        <div class="card z-index-0 fadeIn3 fadeInBottom">
+          <div class="card-body">
+            <div class="text-center">
+              <h3>
+                New Scheduled Trip
+              </h3>
+            </div>
+            <form role="form" class="text-start" method="POST" th:action="@{/passenger/newScheduledTrip}"
+                  th:object="${tripDetails}" autocomplete="off">
+
+              <div class="d-none row">
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">From Latitude</label>
+                  <input type="text" class="form-control" name="fromLatitude" th:field="*{trip.startLatitude}" required />
+                </div>
+                <div class="input-group input-group-outline my-3">
+                  <label class="form-label">From Longitude</label>
+                  <input type="text" class="form-control" name="fromLongitude" th:field="*{trip.startLongitude}" required />
+                </div>
+
+              </div>
+
+              <div class="d-none row">
+                <div class="col input-group input-group-outline my-3">
+                  <label class="form-label">To Latitude</label>
+                  <input type="text" class="form-control" name="toLatitude" th:field="*{trip.endLatitude}" required />
+                </div>
+                <div class="col input-group input-group-outline my-3">
+                  <label class="form-label">To Longitude</label>
+                  <input type="text" class="form-control" name="toLongitude" th:field="*{trip.endLongitude}" required />
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col input-group input-group-outline my-3">
+                  <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                          onclick="changeVal(1)">
+                    Select From Location
+                  </button>
+                </div>
+                <div class="col input-group input-group-outline my-3">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                  <label for="vehicle1"> Select from fav location</label><br>
+                </div>
+              </div>
+              <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                      onclick="changeVal(0)">
+                Select To Location
+              </button>
+
+              <div class="form-check form-switch d-flex align-items-center mb-3">
+                <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" />
+                <input type="hidden" name="addFavouriteLocation" value="false"/>
+                <label class="form-check-label mb-0 ms-2" for="addFavLoc">Add destination to your Favourite locations</label>
+              </div>
+
+
+
+              <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="ModalLabel">Select Location</h1>
+                    </div>
+                    <div class="modal-body">
+                      <div id="map">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input text-center">
+                <label for="scheduledTime">Select Time:</label>
+                <input type="time" id="scheduledTime" name="scheduledTime" th:value="*{scheduledTime}"
+                       required>
+              </div>
+              <div class="text-center">
+                <input type="submit" value="Schedule Trip" class="btn bg-gradient-primary w-100 my-4 mb-2" />
+              </div>
+              <p class="mt-4 text-sm text-center">
+                New Trip ?
+                <a th:href="@{/passenger/newTrip}"
+                   class="text-primary text-gradient font-weight-bold"
+                >New Trip</a
+                >
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer th:replace="components/footer :: footer"></footer>
+</div>
+<script>
+        var curModal = -1;
+        var map = new MapmyIndia.Map('map', {center: [25.2623590000001, 82.9893520000001], zoom: 15, search: false});
+
+           var options={
+                map:map,
+                callback:callback_method,
+                closeBtn:false,
+                topText:false,
+                search:false,
+                location:{lat:25.2623590000001,lng:82.9893520000001},
+            };
+
+            var picker= new MapmyIndia.placePicker(options);
+            function callback_method(data) {
+            if(curModal===1){
+               var lat = document.getElementById("trip.startLatitude");
+               var lng = document.getElementById("trip.startLongitude");
+
+               lat.value = data.lat;
+               lng.value = data.lng;
+
+               document.getElementsByClassName("col btn btn-primary")[0].style.background="green";
+               document.getElementsByClassName("col btn btn-primary")[0].innerHTML="Start location selected";
+
+            }
+            else if(curModal===0){
+             var lat = document.getElementById("trip.endLatitude");
+               var lng = document.getElementById("trip.endLongitude");
+
+               lat.value = data.lat;
+               lng.value = data.lng;
+               document.getElementsByClassName("col btn btn-primary")[1].style.background="green";
+               document.getElementsByClassName("col btn btn-primary")[1].innerHTML="End location selected";
+            }
+            $('#Modal').modal('hide')
+             }
+             /*methods
+              *
+              picker.remove();
+              picker.getLocation();
+              picker.setLocation({lat:28.8787,lng:77.787877});
+              *
+              */
+
+              function changeVal(x){
+                curModal = x;
+              }
+    </script>
+<script th:replace="components/toast :: toast"></script>
+</body>
+</html>

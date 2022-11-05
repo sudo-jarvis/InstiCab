@@ -10,10 +10,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
+
 @Controller
 public class PassengerController extends BaseController{
 
     private TripService tripService;
+    private ScheduledTripService scheduledTripService;
     private PassengerService passengerService;
     private FavouriteLocationService favouriteLocationService;
     private TransactionService transactionService;
@@ -23,17 +32,20 @@ public class PassengerController extends BaseController{
     static class TripDetails {
         private FavouriteLocation favouriteLocation;
         private Trip trip;
+        String scheduledTime;
     }
 
     @Autowired
     public PassengerController(UserService userService, DriverService driverService,
                                RegistrationRequestService registrationRequestService,TripService tripService,
-                               PassengerService passengerService, FavouriteLocationService favouriteLocationService, TransactionService transactionService){
+                               PassengerService passengerService, FavouriteLocationService favouriteLocationService,
+                               TransactionService transactionService,ScheduledTripService scheduledTripService){
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
         this.passengerService = passengerService;
         this.favouriteLocationService = favouriteLocationService;
         this.transactionService = transactionService;
+        this.scheduledTripService = scheduledTripService;
     }
 
     @GetMapping("/passenger/newTrip")
@@ -57,6 +69,26 @@ public class PassengerController extends BaseController{
         return "newTrip";
     }
 
+    @GetMapping("/passenger/newScheduledTrip")
+    public String newScheduledTrip(Model model,RedirectAttributes redirectAttributes){
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setTrip(new Trip());
+
+        if(!isLoggedIn()){
+            return "redirect:/";
+        }
+        if(tripService.tripAlreadyExists()){
+            redirectAttributes.addFlashAttribute("errorMsg", "Pending Trip Already Exists !");
+            return "redirect:/passenger/newTripStatus";
+        }
+        if(transactionService.transactionPending()){
+            redirectAttributes.addFlashAttribute("errorMsg", "Pending Transaction Exists !");
+            return "redirect:/passenger/transaction";
+        }
+        model.addAttribute("tripDetails", tripDetails);
+        return "newScheduledTrip";
+    }
+
     @PostMapping("/passenger/newTrip")
     public String createTrip(@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Trip trip = tripDetails.getTrip();
@@ -64,6 +96,54 @@ public class PassengerController extends BaseController{
         trip.setPassengerId(passengerId);
         trip.setStatus(0);
         tripService.saveTrip(trip);
+
+        if(addFavouriteLocation){
+            tripDetails.setFavouriteLocation(new FavouriteLocation());
+            FavouriteLocation favouriteLocation = tripDetails.getFavouriteLocation();
+            favouriteLocation.setLatitudeLocation(trip.getEndLatitude());
+            favouriteLocation.setLongitudeLocation(trip.getEndLongitude());
+            favouriteLocation.setPassengerId(passengerId);
+            favouriteLocationService.saveFavouriteLocation(favouriteLocation);
+        }
+        return "redirect:/passenger/newTripStatus";
+    }
+
+    @PostMapping("/passenger/newScheduledTrip")
+    public String createScheduledTrip(@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
+        Trip trip = tripDetails.getTrip();
+        Long passengerId = passengerService.getLoggedInPassengerId();
+        trip.setPassengerId(passengerId);
+        trip.setStatus(5);
+        String time = tripDetails.getScheduledTime();
+        time = time + ":00";
+        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String today = dateFormat2.format(new Date());
+        String dateTime = today + " " + time;
+        Date d = dateFormat1.parse(dateTime);
+        tripService.saveTrip(trip);
+        trip = tripService.getScheduledTrip(passengerService.getLoggedInPassengerId());
+        ScheduledTrip scheduledTrip = new ScheduledTrip();
+        scheduledTrip.setTripId(trip.getTripId());
+        scheduledTrip.setTripTime(new Time(d.getTime()));
+        scheduledTripService.saveScheduledTrip(scheduledTrip);
+        Timer timer = new Timer();
+        Trip finalTrip = trip;
+        TimerTask scheduleTripInsert = new TimerTask(){
+            final Date date = d;
+            final Trip t = finalTrip;
+            @Override
+            public void run(){
+                t.setStatus(0);
+                tripService.updateTrip(t);
+                try {
+                    scheduledTripService.delete(scheduledTrip);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        timer.schedule(scheduleTripInsert, d);
 
         if(addFavouriteLocation){
             tripDetails.setFavouriteLocation(new FavouriteLocation());

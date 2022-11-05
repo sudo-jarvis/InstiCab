@@ -74,4 +74,14 @@ public class TripServiceImpl implements TripService {
         tripDAO.endTrip(trip);
     }
 
+    @Override
+    public Trip getScheduledTrip(Long passengerId) {
+        return tripDAO.getScheduledTrip(passengerId);
+    }
+
+    @Override
+    public void updateTrip(Trip trip){
+        tripDAO.updateTrip(trip);
+    }
+
 }
