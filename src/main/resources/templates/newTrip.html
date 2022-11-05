@@ -81,12 +81,18 @@
                 </div>
 
               </div>
-
-              <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
-                      onclick="changeVal(1)">
-                Select From Location
-              </button>
-
+              <div class="row">
+                <div class="col input-group input-group-outline my-3">
+                  <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                          onclick="changeVal(1)">
+                    Select From Location
+                  </button>
+                </div>
+                <div class="col input-group input-group-outline my-3">
+                  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                  <label for="vehicle1"> Select from fav location</label><br>
+                </div>
+              </div>
               <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
                       onclick="changeVal(0)">
                 Select To Location
@@ -156,6 +162,9 @@
                lat.value = data.lat;
                lng.value = data.lng;
 
+               document.getElementsByClassName("col btn btn-primary")[0].style.background="green";
+               document.getElementsByClassName("col btn btn-primary")[0].innerHTML="Start location selected";
+
             }
             else if(curModal===0){
              var lat = document.getElementById("trip.endLatitude");
@@ -163,6 +172,8 @@
 
                lat.value = data.lat;
                lng.value = data.lng;
+               document.getElementsByClassName("col btn btn-primary")[1].style.background="green";
+               document.getElementsByClassName("col btn btn-primary")[1].innerHTML="End location selected";
             }
             $('#Modal').modal('hide')
              }
