@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS earning_history(
 
 CREATE TABLE IF NOT EXISTS favourite_location(
     location_id BIGINT NOT NULL AUTO_INCREMENT,
+    label VARCHAR(255) NOT NULL,
     latitude_location FLOAT NOT NULL,
     longitude_location FLOAT NOT NULL,
     passenger_id BIGINT NOT NULL,
