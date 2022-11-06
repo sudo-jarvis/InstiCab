@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -199,8 +199,8 @@ public class PassengerController extends BaseController{
         List<Coupon> availableCoupons = new ArrayList<>();
         for(int i=0; i<allCoupons.size(); i++){
             Coupon coupon = allCoupons.get(i);
-            java.util.Date d1 = coupon.getCouponValidity();
-            java.util.Date d2 = Date.valueOf(LocalDate.now());
+            Date d1 = coupon.getCouponValidity();
+            Date d2 = java.sql.Date.valueOf(LocalDate.now());
             if(d1.compareTo(d2) >= 0){
                 coupon.setCouponDiscount(amountToPay - coupon.getCouponDiscount());
                 availableCoupons.add(coupon);
