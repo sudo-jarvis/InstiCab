@@ -80,8 +80,8 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void updateTrip(Trip trip){
-        tripDAO.updateTrip(trip);
+    public void changeTripStatus(Long tripId, int status) {
+        tripDAO.changeTripStatus(tripId,status);
     }
 
 }

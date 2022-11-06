@@ -2,9 +2,11 @@ package com.InstiCab.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.InstiCab.models.*;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 public final class RowMappers {
@@ -101,6 +103,7 @@ public final class RowMappers {
         @Override
         public Transaction mapRow(ResultSet row, int i) throws SQLException {
             Transaction transaction = new Transaction();
+            transaction.setTripId(row.getLong("trip_id"));
             transaction.setTransactionId(row.getLong("transaction_id"));
             transaction.setTimeTransaction(row.getTime("time_transaction"));
             transaction.setDateTranscation(row.getDate("date_transcation"));
@@ -145,6 +148,18 @@ public final class RowMappers {
             favouriteLocation.setLongitudeLocation(row.getFloat("longitude_location"));
             favouriteLocation.setLabel(row.getString("label"));
             return favouriteLocation;
+        }
+    };
+
+    public static RowMapper<TransactionDispute> transactionDisputeRowMapper = new RowMapper<TransactionDispute>() {
+        @Override
+        public TransactionDispute mapRow(ResultSet row, int i) throws SQLException {
+            TransactionDispute transactionDispute = new TransactionDispute();
+            transactionDispute.setStatus(row.getInt("status"));
+            transactionDispute.setDisputeId(row.getLong("dispute_id"));
+            transactionDispute.setTransactionId(row.getLong("transaction_id"));
+            transactionDispute.setDescription(row.getString("description"));
+            return transactionDispute;
         }
     };
 }

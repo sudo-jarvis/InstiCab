@@ -135,12 +135,11 @@ public class TripDAO {
             throw new DuplicateKeyException("Trip doesnt exist ! !");
         }
     }
-
-    public void updateTrip(Trip trip) {
-        final String sql = "UPDATE trip SET status = 0 WHERE " +
+    public void changeTripStatus(Long tripId, int status) {
+        final String sql = "UPDATE trip SET status = ? WHERE " +
                 "trip_id = ?";
         try {
-            jdbcTemplate.update(sql,trip.getTripId());
+            jdbcTemplate.update(sql,status,tripId);
         } catch (Exception e){
             System.out.println(e);
             throw new DuplicateKeyException("Trip Request doesnt exist ! !");

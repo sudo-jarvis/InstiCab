@@ -23,9 +23,11 @@ public class TransactionDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public void saveTransaction(Transaction transaction) throws Exception {
-        final String sql = "INSERT INTO transaction(status,amount,username,date_transcation,time_transaction) VALUES (?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO transaction(trip_id,status,amount,username,date_transcation,time_transaction)" +
+                " VALUES (?,?, ?, ?, ?, ?)";
         try {
-            jdbcTemplate.update(sql,transaction.getStatus(),transaction.getAmount(),transaction.getUsername(),
+            jdbcTemplate.update(sql,transaction.getTripId(),transaction.getStatus(),transaction.getAmount(),
+                    transaction.getUsername(),
                     transaction.getDateTranscation(), transaction.getTimeTransaction());
         } catch (Exception e) {
             throw new Exception(e);
@@ -33,11 +35,9 @@ public class TransactionDAO {
     }
 
     public List<Transaction> getPassengerAllTransactions(String username) {
-        final String sql = "SELECT t.transaction_id, t.time_transaction, t.date_transcation, t.amount, " +
-                "t.status, t.username" +
-                " FROM " +
+        final String sql = "SELECT * FROM " +
                 "transaction as t WHERE" +
-                " t.status!=1 and t.username = ? order by t.transaction_id";
+                " t.username = ? order by t.transaction_id";
         try {
             return jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class TransactionDAO {
     }
 
     public boolean transactionPending(String username) {
-        final String sql = "SELECT * FROM transaction WHERE status!=1 AND username=?";
+        final String sql = "SELECT * FROM transaction WHERE status=0 AND username=?";
         try {
             return !jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username).isEmpty();
         } catch (Exception e) {
@@ -59,6 +59,26 @@ public class TransactionDAO {
         final String sql = "UPDATE transaction SET status = 1, time_transaction = ?, date_transcation = ? WHERE username = ?";
         try {
             jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
+
+
+    public void changeTransactionStatus(Long transactionId, Integer status) throws Exception {
+        final String sql = "UPDATE transaction SET status = ? WHERE " +
+                "transaction_id = ?";
+        try {
+            jdbcTemplate.update(sql, status,transactionId);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
+
+    public Transaction getTransaction(Long transactionId) throws Exception{
+        final String sql = "SELECT * FROM transaction WHERE transaction_id=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, RowMappers.transactionRowMapper,transactionId);
         } catch (Exception e) {
             throw new Exception(e);
         }
