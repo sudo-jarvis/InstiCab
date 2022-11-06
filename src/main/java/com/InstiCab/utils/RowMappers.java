@@ -120,4 +120,17 @@ public final class RowMappers {
             return earning;
         }
     };
+
+    public static RowMapper<Coupon> couponRowMapper = new RowMapper<Coupon>() {
+        @Override
+        public Coupon mapRow(ResultSet row, int i) throws SQLException {
+            Coupon coupon = new Coupon();
+            coupon.setCouponId(row.getLong("coupon_id"));
+            coupon.setCouponDiscount(row.getInt("coupon_discount"));
+            coupon.setCouponValidity(row.getDate("coupon_validity"));
+            coupon.setMaxDiscount(row.getInt("max_discount"));
+            coupon.setPassengerId(row.getLong("passenger_id"));
+            return coupon;
+        }
+    };
 }

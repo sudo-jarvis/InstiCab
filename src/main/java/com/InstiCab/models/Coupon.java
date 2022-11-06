@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Coupon {
     private Long couponId;
-    private float couponDiscount;
+    private int couponDiscount;
     private Date couponValidity;
     private int maxDiscount;
     private Long passengerId;

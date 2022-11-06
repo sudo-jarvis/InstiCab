@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS driver (
 
 CREATE TABLE IF NOT EXISTS coupon (
     coupon_id BIGINT NOT NULL AUTO_INCREMENT,
-    coupon_discount FLOAT NOT NULL,
+    coupon_discount INT NOT NULL,
     coupon_validity DATE NOT NULL,
     max_discount INT NOT NULL,
     passenger_id BIGINT NOT NULL,

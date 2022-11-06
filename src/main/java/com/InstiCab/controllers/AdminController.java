@@ -1,8 +1,10 @@
 package com.InstiCab.controllers;
 
+import com.InstiCab.models.Coupon;
 import com.InstiCab.models.Driver;
 import com.InstiCab.models.RegistrationRequest;
 import com.InstiCab.models.User;
+import com.InstiCab.service.CouponService;
 import com.InstiCab.service.DriverService;
 import com.InstiCab.service.RegistrationRequestService;
 import com.InstiCab.service.UserService;
@@ -14,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsFileUploadSupport;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -24,6 +28,7 @@ import java.util.List;
 
 @Controller
 public class AdminController extends BaseController{
+    private CouponService couponService;
     @Getter
     @Setter
     static class RequestDetails {
@@ -33,8 +38,9 @@ public class AdminController extends BaseController{
 
     @Autowired
     public AdminController(UserService userService,
-                           DriverService driverService, RegistrationRequestService registrationRequestService) {
+                           DriverService driverService, RegistrationRequestService registrationRequestService, CouponService couponService) {
         super(userService,driverService,registrationRequestService);
+        this.couponService = couponService;
     }
 
     @GetMapping({"/admin/", "/admin"})
@@ -76,4 +82,15 @@ public class AdminController extends BaseController{
         registrationRequestService.rejectRequest(driverId);
         return "redirect:/admin";
     }
+
+//    @PostMapping({"/admin/grantCoupon"})
+//    public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name = "couponValidity") Date couponValidity, Model model) {
+//        for(int i=0; i<5; i++){
+//            Coupon coupon = new Coupon();
+//            coupon.setMaxDiscount(maxDiscount);
+//            coupon.setCouponValidity(couponValidity);
+//            couponService.saveCoupon(coupon);
+//        }
+//        return "newCoupon";
+//    }
 }
