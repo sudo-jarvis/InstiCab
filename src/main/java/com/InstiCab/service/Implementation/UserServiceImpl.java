@@ -1,12 +1,9 @@
 package com.InstiCab.service.Implementation;
 
-import com.InstiCab.dao.FavouriteLocationDAO;
 import com.InstiCab.dao.PassengerDAO;
 import com.InstiCab.dao.UserDAO;
-import com.InstiCab.models.FavouriteLocation;
 import com.InstiCab.models.User;
 import com.InstiCab.service.FavouriteLocationService;
-import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -86,5 +84,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void updateLoginDetails(String username) throws Exception {
         userDAO.updateLastLogin(username);
+    }
+
+    @Override
+    public List<User> getCouponBeneficiaries(Date sinceDate, Integer numCoupons) {
+        return userDAO.getCouponBeneficiaries(sinceDate, numCoupons);
     }
 }

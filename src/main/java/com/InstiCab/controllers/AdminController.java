@@ -20,9 +20,11 @@ import java.util.List;
 @Controller
 public class AdminController extends BaseController{
     private CouponService couponService;
+    private PassengerService passengerService;
     private TransactionDisputeService transactionDisputeService;
     private TransactionService transactionService;
     private TripService tripService;
+
     @Getter
     @Setter
     static class RequestDetails {
@@ -34,12 +36,13 @@ public class AdminController extends BaseController{
     public AdminController(UserService userService,
                            DriverService driverService, RegistrationRequestService registrationRequestService,
                            CouponService couponService,TransactionDisputeService transactionDisputeService,
-                           TransactionService transactionService,TripService tripService) {
+                           TransactionService transactionService,TripService tripService, PassengerService passengerService) {
         super(userService,driverService,registrationRequestService);
         this.couponService = couponService;
         this.transactionDisputeService = transactionDisputeService;
         this.transactionService = transactionService;
         this.tripService = tripService;
+        this.passengerService = passengerService;
     }
 
     @GetMapping({"/admin/", "/admin"})
@@ -99,6 +102,25 @@ public class AdminController extends BaseController{
         registrationRequestService.rejectRequest(driverId);
         return "redirect:/admin";
     }
+
+    @GetMapping("/admin/newCoupon")
+    public String newCoupon(Model model) {
+        return "newCoupon";
+    }
+
+    @PostMapping({"/admin/grantCoupon"})
+    public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name = "couponValidity") Date couponValidity, @RequestParam(name = "sinceDate") Date sinceDate, @RequestParam(name = "numCoupons") Integer numCoupons, Model model) {
+        List<User> couponBeneficiaries = userService.getCouponBeneficiaries(sinceDate, numCoupons);
+        for(int i=0; i<numCoupons; i++){
+            String username = couponBeneficiaries.get(i).getUsername();
+            Long passengerId = passengerService.getLoggedPassengerIdByUsername(username);
+            Coupon coupon = new Coupon();
+            coupon.setMaxDiscount(maxDiscount);
+            coupon.setCouponValidity(couponValidity);
+            coupon.setPassengerId(passengerId);
+            couponService.saveCoupon(coupon);
+        }
+        return "newCoupon";
 
     @GetMapping("/admin/disputes")
     public String showDisputes(Model model){

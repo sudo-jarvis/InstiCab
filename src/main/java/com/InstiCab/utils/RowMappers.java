@@ -151,6 +151,16 @@ public final class RowMappers {
         }
     };
 
+//    public static RowMapper<CouponBeneficiary> couponBeneficiaryRowMapper = new RowMapper<CouponBeneficiary>() {
+//        @Override
+//        public CouponBeneficiary mapRow(ResultSet row, int i) throws SQLException {
+//            CouponBeneficiary couponBeneficiary = new CouponBeneficiary();
+//            couponBeneficiary.setUsername(row.getString("username"));
+//            couponBeneficiary.setCount(row.getInt("count"));
+//            return couponBeneficiary;
+//        }
+//    };
+
     public static RowMapper<TransactionDispute> transactionDisputeRowMapper = new RowMapper<TransactionDispute>() {
         @Override
         public TransactionDispute mapRow(ResultSet row, int i) throws SQLException {
