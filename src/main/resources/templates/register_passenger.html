@@ -1,7 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="components/head::head"></head>
-<body class="sign-in-basic">
+<!--<head th:replace="components/head::head"></head>-->
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>InstiCab</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link href="/images/favicon.ico" rel="icon">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
 <header id="header" class="fixed-top ">
   <div class="container d-flex align-items-center justify-content-lg-between">
 
@@ -11,138 +29,21 @@
 
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
-<!--        <li><a class="nav-link scrollto active" th:href="@{/}">Home</a></li>-->
-<!--        <li><a class="nav-link scrollto" href="#about">About</a></li>-->
-<!--        <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>-->
-        <li><a th:href="@{/register/driver/}">As Driver</a></li>
-<!--        <li class="dropdown"><a th:href="@{/register/passenger/}"><span>Register</span> <i class="bi bi-chevron-down"></i></a>-->
-<!--          <ul>-->
-<!--&lt;!&ndash;            <li><a th:href="@{/register/passenger/}">As Passenger</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;            <li><a th:href="@{/register/driver/}">As Driver</a></li>&ndash;&gt;-->
-<!--          </ul>-->
-<!--        </li>-->
+        <li><a class="nav-link scrollto active" th:href="@{/}">Home</a></li>
+        <li><a class="nav-link scrollto" href="#about">About</a></li>
+        <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
+        <li class="dropdown"><a th:href="@{/register/passenger/}"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a th:href="@{/register/passenger/}">As Passenger</a></li>
+            <li><a th:href="@{/register/driver/}">As Driver</a></li>
+          </ul>
+        </li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
     <a class="get-started-btn scrollto" th:href="@{/login/}">Login</a>
   </div>
-</header>
-<div
-        class="page-header align-items-start min-vh-100"
-        loading="lazy"
->
-  <span class="mask bg-light opacity-6"></span>
-  <div class="container my-auto">
-    <br />
-    <div class="row">
-      <div class="col-lg-4 col-md-8 col-12 mx-auto">
-        <div class="card z-index-0 fadeIn3 fadeInBottom">
-          <div class="card-body">
-            <div class="text-center">
-              <h3>
-                InstiCab
-                <small class="text-muted">| Register</small>
-              </h3>
-            </div>
-            <form
-                    role="form"
-                    autocomplete="off"
-                    class="text-start"
-                    method="POST"
-                    th:action="@{/register/passenger}"
-                    th:object="${user}"
-            >
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">Username *</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        name="username"
-                        th:field="*{username}"
-                        required
-                />
-              </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">Firstname *</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        name="firstName"
-                        th:field="*{firstName}"
-                        required
-                />
-              </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">Middlename</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        name="middleName"
-                        th:field="*{middleName}"
-                />
-              </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">Lastname *</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        name="lastName"
-                        th:field="*{lastName}"
-                        required
-                />
-              </div>
-              <div class="input-group input-group-outline mb-3">
-                <label class="form-label">Email *</label>
-                <input type="email" class="form-control" name="email" th:field="*{email}" required />
-              </div>
-              <div class="input-group input-group-outline my-3">
-                <label class="form-label">Phone *</label>
-<!--                <input-->
-<!--                        type="text"-->
-<!--                        class="form-control"-->
-<!--                        name="phoneNo"-->
-<!--                        th:field="*{phoneNo}"-->
-<!--                        required-->
-<!--                >-->
-                <input
-                        type="text"
-                        class="form-control"
-                        name="phoneNo"
-                        required
-                        th:field="*{phoneNo}"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                        maxlength="10"
-                >
-              </div>
-              <div class="input-group input-group-outline mb-3">
-                <label class="form-label">Password *</label>
-                <input
-                        type="password"
-                        class="form-control"
-                        name="password"
-                        th:field="*{password}"
-                        required
-                />
-              </div>
-              <div class="form-check form-switch d-flex align-items-center mb-3">
-                <input class="form-check-input" type="checkbox" id="rememberMe" />
-                <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
-              </div>
-              <div class="text-center">
-                <input type="submit" value="Register" class="btn bg-gradient-primary w-100 my-4 mb-2" />
-              </div>
-              <p class="mt-4 text-sm text-center">
-                Already have an account?
-                <a th:href="@{/login/}" class="text-primary text-gradient font-weight-bold">Login</a>
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer th:replace="components/footer :: footer"></footer>
-</div>
-<script th:replace="components/toast :: toast"></script>
+</header><!-- End Header -->
+
 </body>
 </html>
