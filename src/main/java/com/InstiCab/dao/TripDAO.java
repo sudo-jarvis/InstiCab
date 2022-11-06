@@ -2,6 +2,7 @@ package com.InstiCab.dao;
 
 import com.InstiCab.models.Driver;
 import com.InstiCab.models.RegistrationRequest;
+import com.InstiCab.models.ScheduledTrip;
 import com.InstiCab.models.Trip;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class TripDAO {
 
 
     public boolean tripAlreadyExists(Long passengerId) {
-        final String sql = "SELECT * FROM trip WHERE status!=3 AND passenger_id=?";
+        final String sql = "SELECT * FROM trip WHERE (status!=3 AND status!=2) AND passenger_id=?";
         try {
             return !jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId).isEmpty();
         } catch (Exception e) {
@@ -55,6 +56,15 @@ public class TripDAO {
         final String sql = "SELECT * FROM trip WHERE trip_id=?";
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, tripId);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Trip not found ! !");
+        }
+    }
+
+    public Trip getScheduledTrip(Long passengerId){
+        final String sql = "SELECT * FROM trip WHERE passenger_id=? and status=5";
+        try {
+            return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, passengerId);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Trip not found ! !");
         }
@@ -123,6 +133,17 @@ public class TripDAO {
         } catch (Exception e){
             System.out.println(e);
             throw new DuplicateKeyException("Trip doesnt exist ! !");
+        }
+    }
+
+    public void updateTrip(Trip trip) {
+        final String sql = "UPDATE trip SET status = 0 WHERE " +
+                "trip_id = ?";
+        try {
+            jdbcTemplate.update(sql,trip.getTripId());
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip Request doesnt exist ! !");
         }
     }
 }

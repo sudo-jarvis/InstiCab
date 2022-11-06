@@ -68,13 +68,28 @@ public class AdminController extends BaseController{
         return "admin";
     }
 
+    @GetMapping("/admi![](../../../../resources/static/images/nyc-taxis-gty-rc-200220_hpMain_16x9_992.jpg)n/accept/{driverId}")
+    public String invalidPage(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        return "redirect:/";
+    }
+
     @PostMapping("/admin/accept/{driverId}")
     public String acceptRequest(@PathVariable("driverId") Long driverId, Model model){
+
         RegistrationRequest req = registrationRequestService.getRequestByDriverId(driverId);
         req.setDateAccepted(Date.valueOf(LocalDate.now()));
         req.setTimeAccepted(Time.valueOf(LocalTime.now()));
         registrationRequestService.acceptRequest(req);
         return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/reject/{driverId}")
+    public String invalidPage2(Model model) {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        return "redirect:/";
     }
 
     @PostMapping("/admin/reject/{driverId}")

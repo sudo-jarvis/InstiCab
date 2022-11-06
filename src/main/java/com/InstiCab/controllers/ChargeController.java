@@ -20,12 +20,16 @@ public class ChargeController {
     @Autowired
     StripeService paymentsService;
 
+    @GetMapping("/charge")
+    public String invalid() {
+        return "redirect:/";
+    }
 
     @PostMapping("/charge")
     public String charge(ChargeRequest chargeRequest, Model model) throws StripeException {
         chargeRequest.setDescription("Example charge");
         chargeRequest.setCurrency(ChargeRequest.Currency.INR);
-       PaymentIntent charge = paymentsService.charge(chargeRequest);
+        PaymentIntent charge = paymentsService.charge(chargeRequest);
         model.addAttribute("id", charge.getId());
         model.addAttribute("status", charge.getStatus());
         model.addAttribute("chargeId", charge.getId());

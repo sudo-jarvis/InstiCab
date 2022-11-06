@@ -36,8 +36,6 @@ public class DriverController extends BaseController{
     @GetMapping("/driver")
     public String driverhomepage(Model model) throws Exception {
         if(!isLoggedIn()) {
-            if (isAuthorized(model, ROLE_ADMIN))
-                model.addAttribute("isAdmin", true);
             return "redirect:/login/";
         }
         if(!isAuthorized(model,ROLE_DRIVER))
@@ -50,6 +48,13 @@ public class DriverController extends BaseController{
         model.addAttribute("tripList", tripList);
         System.out.println(tripReqList.size());
         return "driver";
+    }
+
+    @GetMapping("/driver/accept/{tripId}")
+    public String invalidPage(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        return "redirect:/";
     }
 
     @PostMapping("/driver/accept/{tripId}")
@@ -68,10 +73,24 @@ public class DriverController extends BaseController{
         return "redirect:/driver";
     }
 
+    @GetMapping("/driver/reject/{tripId}")
+    public String invalidPage2(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        return "redirect:/";
+    }
+
     @PostMapping("/driver/reject/{tripId}")
     public String rejectTripRequest(@PathVariable("tripId") Long tripId, Model model){
         tripService.rejectTripRequest(tripId);
         return "redirect:/driver";
+    }
+
+    @GetMapping("/driver/end/{tripId}")
+    public String invalidPage3(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        return "redirect:/";
     }
 
     @PostMapping("/driver/end/{tripId}")
@@ -105,6 +124,8 @@ public class DriverController extends BaseController{
 
     @GetMapping("/driver/showEarningHistory")
     public String showEarningHistory(Model model,RedirectAttributes redirectAttributes){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
         Long driverId = driverService.findLoggedInDriver();
         model.addAttribute("earningHistory",earningsHistoryService.getEarningHistory(driverId));
         return "earning_history";

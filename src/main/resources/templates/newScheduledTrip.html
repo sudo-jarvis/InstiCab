@@ -20,7 +20,7 @@
       var4.classList.add("d-none");
     }
   }
-   function hide2(){
+  function hide2(){
     const var3=document.getElementById("location2");
     const var1=document.getElementById("startLocation");
     const var2=document.getElementById("endLocation");
@@ -114,15 +114,15 @@
                 New Trip
               </h3>
             </div>
-            <form role="form" class="text-start" method="POST" th:action="@{/passenger/newTrip}"
+            <form role="form" class="text-start" method="POST" th:action="@{/passenger/newScheduledTrip}"
                   th:object="${tripDetails}" autocomplete="off">
 
               <div class="d-none row">
-                <div class="col input-group input-group-outline my-3">
+                <div class="input-group input-group-outline my-3">
                   <label class="form-label">From Latitude</label>
                   <input type="text" class="form-control" name="fromLatitude" th:field="*{trip.startLatitude}" required />
                 </div>
-                <div class="col input-group input-group-outline my-3">
+                <div class="input-group input-group-outline my-3">
                   <label class="form-label">From Longitude</label>
                   <input type="text" class="form-control" name="fromLongitude" th:field="*{trip.startLongitude}" required />
                 </div>
@@ -155,7 +155,7 @@
                             th:text="${loc.label}"></span></option>
                   </select>
                 </div>
-                <div class="col input-group input-group-outline my-3" id="fromFavLocations" >
+                <div class="col input-group input-group-outline my-3" >
                   <input id="location1" type="checkbox"name="location1" value="location1" onchange="hide1()">
                   <label for="location1"> Select from fav location</label><br>
                 </div>
@@ -176,7 +176,7 @@
                             th:text="${loc.label}"></span></option>
                   </select>
                 </div>
-                <div class="col input-group input-group-outline my-3" id="toFavLocations">
+                <div class="col input-group input-group-outline my-3">
                   <input type="checkbox" id="location2" name="location2" value="location2" onchange="hide2()">
                   <label for="location2"> Select from fav location</label><br>
                 </div>
@@ -206,15 +206,19 @@
                   </div>
                 </div>
               </div>
+              <div class="form-input text-center">
+                <label for="scheduledTime">Select Time:</label>
+                <input type="time" id="scheduledTime" name="scheduledTime" th:value="*{scheduledTime}"
+                       required>
+              </div>
               <div class="text-center">
                 <input type="submit" value="Find Ride" class="btn bg-gradient-primary w-100 my-4 mb-2" />
               </div>
               <p class="mt-4 text-sm text-center">
                 Want To Schedule A Trip ?
-                <a th:href="@{/passenger/newScheduledTrip}"
+                <a th:href="@{/passenger/newTrip}"
                    class="text-primary text-gradient font-weight-bold"
-                >Schedule Trip</a
-                >
+                >New Trip</a>
               </p>
             </form>
           </div>
@@ -258,7 +262,6 @@
                lng.value = data.lng;
                document.getElementsByClassName("col btn btn-primary")[1].style.background="green";
                document.getElementsByClassName("col btn btn-primary")[1].innerHTML="End location selected";
-
             }
             $('#Modal').modal('hide')
              }

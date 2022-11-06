@@ -1,7 +1,12 @@
 package com.InstiCab.service.Implementation;
 
+import com.InstiCab.dao.FavouriteLocationDAO;
+import com.InstiCab.dao.PassengerDAO;
 import com.InstiCab.dao.UserDAO;
+import com.InstiCab.models.FavouriteLocation;
 import com.InstiCab.models.User;
+import com.InstiCab.service.FavouriteLocationService;
+import com.InstiCab.service.PassengerService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,9 +21,14 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDAO userDAO;
+    private final FavouriteLocationService favouriteLocationService;
+    private final PassengerDAO passengerDAO;
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO, FavouriteLocationService favouriteLocationService,
+                           PassengerDAO passengerDAO) {
         this.userDAO = userDAO;
+        this.favouriteLocationService = favouriteLocationService;
+        this.passengerDAO = passengerDAO;
     }
 
     public String findLoggedInUsername() {

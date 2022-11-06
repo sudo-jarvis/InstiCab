@@ -23,4 +23,8 @@ public interface TripService {
     List<Trip> getTripList() throws Exception;
 
     void endTrip(Trip trip);
+
+    Trip getScheduledTrip(Long passengerId);
+
+    void updateTrip(Trip t);
 }

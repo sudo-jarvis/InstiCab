@@ -21,6 +21,7 @@ public class RegisterController extends BaseController {
 
     private PassengerService passengerService;
     private VehicleService vehicleService;
+    private FavouriteLocationService favouriteLocationService;
     @Getter
     @Setter
     static class DriverDetails {
@@ -30,10 +31,11 @@ public class RegisterController extends BaseController {
     }
     @Autowired
     public RegisterController(UserService userService, DriverService driverService,RegistrationRequestService registrationRequestService,PassengerService passengerService
-            ,VehicleService vehicleService) {
+            ,VehicleService vehicleService,FavouriteLocationService favouriteLocationService) {
         super(userService,driverService,registrationRequestService);
         this.passengerService = passengerService;
         this.vehicleService = vehicleService;
+        this.favouriteLocationService = favouriteLocationService;
     }
 
     @GetMapping("/register/driver")
@@ -42,7 +44,6 @@ public class RegisterController extends BaseController {
         driverDetails.setDriver(new Driver());
         driverDetails.setUser(new User());
         driverDetails.setVehicle(new Vehicle());
-
         if (isLoggedIn()) {
             return "redirect:/";
         }
@@ -111,7 +112,8 @@ public class RegisterController extends BaseController {
         }
         userService.saveUser(user);
         passengerService.savePassenger(user.getUsername());
-
+        Long passengerId = passengerService.getLoggedPassengerIdByUsername(user.getUsername());
+        favouriteLocationService.addDefaultLocation(passengerId);
         redirectAttributes.addFlashAttribute("successMsg",
                 "Registered successfully!");
         return "redirect:/login";

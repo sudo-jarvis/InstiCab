@@ -30,4 +30,9 @@ public class PassengerServiceImpl implements PassengerService {
     public Passenger getPassengerByPassengerId(Long passengerId) {
         return passengerDAO.getPassengerByPassengerId(passengerId);
     }
+
+    @Override
+    public Long getLoggedPassengerIdByUsername(String username) {
+        return passengerDAO.getPassengerByUsername(username).getPassengerId();
+    }
 }
