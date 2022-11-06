@@ -2,44 +2,22 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 	<head th:replace="components/head :: head"></head>
 	<body class="sign-in-basic">
-		<nav class="navbar navbar-expand-lg bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-item text-light" href="#">InstiCab</a>
-				<button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
-						</li>
-						<li class="nav-item text-light">
-							<a th:href="@{/about/}" class="nav-link text-light">About</a>
-						</li>
-						<li class="nav-item">
-							<a th:href="@{/contact}" class="nav-link text-light">Contact</a>
-						</li>
-					</ul>
-					<ul class="navbar-nav me-0 mb-2 mb-lg-0">
-						<li class="nav-item ">
-							<a th:href="@{/register/driver}" class="nav-link active text-light" aria-current="page">
-								<button type="button" class="btn btn-info">Register as Driver</button>
-							</a>
-						</li>
-						<li class="nav-item ">
-							<a th:href="@{/register/passenger}" class="nav-link active text-light" aria-current="page">
-								<button type="button" class="btn btn-info">Register as User</button>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<div
+	<div
 			class="page-header align-items-start min-vh-100"
 			loading="lazy"
-		>
-			<span class="mask bg-light opacity-6"></span>
+	>
+		<header class="curved-header">
+			<div class="logo">
+				<a th:href="@{/}">Logo</a>
+			</div>
+			<ul class="nav-links">
+				<li><a th:href="@{/}">Home</a></li>
+				<li><a th:href="@{/about/}">About Us</a></li>
+				<li><a th:href="@{/services/}">Services</a></li>
+				<li><a th:href="@{/pricing/}">Pricing</a></li>
+				<li><a th:href="@{/contact/}">Contact</a></li>
+			</ul>
+		</header>
 			<div class="container my-auto">
 				<br />
 				<div class="row">
@@ -77,9 +55,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div></div>
+		<div class="navbar fixed-bottom">
 			<footer th:replace="components/footer :: footer"></footer>
 		</div>
-		<script th:replace="components/toast :: toast"></script>
+			<script th:replace="components/toast :: toast"></script>
 	</body>
 </html>
