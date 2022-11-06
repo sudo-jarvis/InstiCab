@@ -133,6 +133,8 @@ public final class RowMappers {
             coupon.setMaxDiscount(row.getInt("max_discount"));
             coupon.setPassengerId(row.getLong("passenger_id"));
             return coupon;
+        }
+    };
 
     public static RowMapper<FavouriteLocation> favouriteLocationRowMapper = new RowMapper<FavouriteLocation>() {
         @Override
