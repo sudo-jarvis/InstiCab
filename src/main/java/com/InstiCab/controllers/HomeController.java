@@ -39,4 +39,11 @@ public class HomeController extends BaseController{
 
         return "index";
     }
+
+
+    @GetMapping({"/test"})
+    public String test(Model model, RedirectAttributes redirectAttributes) {
+        System.out.println("adfdadad");
+        return "emergencyServices";
+    }
 }
