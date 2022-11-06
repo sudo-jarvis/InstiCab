@@ -111,57 +111,60 @@ public class AdminController extends BaseController{
     @PostMapping({"/admin/grantCoupon"})
     public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name = "couponValidity") Date couponValidity, @RequestParam(name = "sinceDate") Date sinceDate, @RequestParam(name = "numCoupons") Integer numCoupons, Model model) {
         List<User> couponBeneficiaries = userService.getCouponBeneficiaries(sinceDate, numCoupons);
-        for(int i=0; i<numCoupons; i++){
-            String username = couponBeneficiaries.get(i).getUsername();
-            Long passengerId = passengerService.getLoggedPassengerIdByUsername(username);
-            Coupon coupon = new Coupon();
-            coupon.setMaxDiscount(maxDiscount);
-            coupon.setCouponValidity(couponValidity);
-            coupon.setPassengerId(passengerId);
-            couponService.saveCoupon(coupon);
+        if(couponBeneficiaries.size() >= numCoupons){
+            for (int i = 0; i < numCoupons; i++) {
+                String username = couponBeneficiaries.get(i).getUsername();
+                Long passengerId = passengerService.getLoggedPassengerIdByUsername(username);
+                Coupon coupon = new Coupon();
+                coupon.setMaxDiscount(maxDiscount);
+                coupon.setCouponValidity(couponValidity);
+                coupon.setPassengerId(passengerId);
+                couponService.saveCoupon(coupon);
+            }
         }
         return "newCoupon";
-
-    @GetMapping("/admin/disputes")
-    public String showDisputes(Model model){
-        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
-            return FORBIDDEN_ERROR_PAGE;
-        List <TransactionDispute> transactionDisputes = transactionDisputeService.getDisputes();
-        model.addAttribute("disputesList",transactionDisputes);
-        return "dispute";
     }
 
-    @PostMapping("/admin/disputes/reject/{disputeId}/{transactionId}")
-    public String rejectDispute(@PathVariable("disputeId") Long disputeId,
-                                @PathVariable("transactionId") Long transactionId,
-                                Model model) throws Exception {
-        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
-            return FORBIDDEN_ERROR_PAGE;
-        transactionDisputeService.changeDisputeStatus(disputeId,1);
-        transactionService.changeTransactionStatus(transactionId,3);
-        return "redirect:/admin/disputes";
-    }
+        @GetMapping("/admin/disputes")
+        public String showDisputes(Model model){
+            if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+                return FORBIDDEN_ERROR_PAGE;
+            List <TransactionDispute> transactionDisputes = transactionDisputeService.getDisputes();
+            model.addAttribute("disputesList",transactionDisputes);
+            return "dispute";
+        }
 
-    @PostMapping("/admin/disputes/accept/{disputeId}/{transactionId}")
-    public String acceptDispute(@PathVariable("disputeId") Long disputeId,
-                                @PathVariable("transactionId") Long transactionId, Model model) throws Exception {
-        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
-            return FORBIDDEN_ERROR_PAGE;
-        transactionDisputeService.changeDisputeStatus(disputeId,2);
-        transactionService.changeTransactionStatus(transactionId,4);
-        Long tripId = transactionService.getTransaction(transactionId).getTripId();
-        tripService.changeTripStatus(tripId,2);
-        return "redirect:/admin/disputes";
+        @PostMapping("/admin/disputes/reject/{disputeId}/{transactionId}")
+        public String rejectDispute(@PathVariable("disputeId") Long disputeId,
+                @PathVariable("transactionId") Long transactionId,
+                Model model) throws Exception {
+            if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+                return FORBIDDEN_ERROR_PAGE;
+            transactionDisputeService.changeDisputeStatus(disputeId,1);
+            transactionService.changeTransactionStatus(transactionId,3);
+            return "redirect:/admin/disputes";
+        }
+
+        @PostMapping("/admin/disputes/accept/{disputeId}/{transactionId}")
+        public String acceptDispute(@PathVariable("disputeId") Long disputeId,
+                @PathVariable("transactionId") Long transactionId, Model model) throws Exception {
+            if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+                return FORBIDDEN_ERROR_PAGE;
+            transactionDisputeService.changeDisputeStatus(disputeId,2);
+            transactionService.changeTransactionStatus(transactionId,4);
+            Long tripId = transactionService.getTransaction(transactionId).getTripId();
+            tripService.changeTripStatus(tripId,2);
+            return "redirect:/admin/disputes";
+        }
+        @PostMapping("/admin/disputes/raise/{transactionId}")
+        public String raiseDispute(@PathVariable("transactionId") Long transactionId,
+                @ModelAttribute("dispute") TransactionDispute transactionDispute,
+                Model model) throws Exception {
+            if(!isLoggedIn())
+                return FORBIDDEN_ERROR_PAGE;
+            transactionDispute.setTransactionId(transactionId);
+            transactionService.changeTransactionStatus(transactionId,2);
+            transactionDisputeService.saveDispute(transactionDispute);
+            return "redirect:/passenger/transaction";
+        }
     }
-    @PostMapping("/admin/disputes/raise/{transactionId}")
-    public String raiseDispute(@PathVariable("transactionId") Long transactionId,
-                               @ModelAttribute("dispute") TransactionDispute transactionDispute,
-                               Model model) throws Exception {
-        if(!isLoggedIn())
-            return FORBIDDEN_ERROR_PAGE;
-        transactionDispute.setTransactionId(transactionId);
-        transactionService.changeTransactionStatus(transactionId,2);
-        transactionDisputeService.saveDispute(transactionDispute);
-        return "redirect:/passenger/transaction";
-    }
-}
