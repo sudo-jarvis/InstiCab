@@ -1,13 +1,7 @@
 package com.InstiCab.controllers;
 
-import com.InstiCab.models.Coupon;
-import com.InstiCab.models.Driver;
-import com.InstiCab.models.RegistrationRequest;
-import com.InstiCab.models.User;
-import com.InstiCab.service.CouponService;
-import com.InstiCab.service.DriverService;
-import com.InstiCab.service.RegistrationRequestService;
-import com.InstiCab.service.UserService;
+import com.InstiCab.models.*;
+import com.InstiCab.service.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +23,7 @@ import java.util.List;
 @Controller
 public class AdminController extends BaseController{
     private CouponService couponService;
+    private PassengerService passengerService;
     @Getter
     @Setter
     static class RequestDetails {
@@ -38,9 +33,10 @@ public class AdminController extends BaseController{
 
     @Autowired
     public AdminController(UserService userService,
-                           DriverService driverService, RegistrationRequestService registrationRequestService, CouponService couponService) {
+                           DriverService driverService, RegistrationRequestService registrationRequestService, CouponService couponService, PassengerService passengerService) {
         super(userService,driverService,registrationRequestService);
         this.couponService = couponService;
+        this.passengerService = passengerService;
     }
 
     @GetMapping({"/admin/", "/admin"})
@@ -98,14 +94,23 @@ public class AdminController extends BaseController{
         return "redirect:/admin";
     }
 
-//    @PostMapping({"/admin/grantCoupon"})
-//    public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name = "couponValidity") Date couponValidity, Model model) {
-//        for(int i=0; i<5; i++){
-//            Coupon coupon = new Coupon();
-//            coupon.setMaxDiscount(maxDiscount);
-//            coupon.setCouponValidity(couponValidity);
-//            couponService.saveCoupon(coupon);
-//        }
-//        return "newCoupon";
-//    }
+    @GetMapping("/admin/newCoupon")
+    public String newCoupon(Model model) {
+        return "newCoupon";
+    }
+
+    @PostMapping({"/admin/grantCoupon"})
+    public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name = "couponValidity") Date couponValidity, @RequestParam(name = "sinceDate") Date sinceDate, @RequestParam(name = "numCoupons") Integer numCoupons, Model model) {
+        List<User> couponBeneficiaries = userService.getCouponBeneficiaries(sinceDate, numCoupons);
+        for(int i=0; i<numCoupons; i++){
+            String username = couponBeneficiaries.get(i).getUsername();
+            Long passengerId = passengerService.getLoggedPassengerIdByUsername(username);
+            Coupon coupon = new Coupon();
+            coupon.setMaxDiscount(maxDiscount);
+            coupon.setCouponValidity(couponValidity);
+            coupon.setPassengerId(passengerId);
+            couponService.saveCoupon(coupon);
+        }
+        return "newCoupon";
+    }
 }

@@ -147,4 +147,14 @@ public final class RowMappers {
             return favouriteLocation;
         }
     };
+
+//    public static RowMapper<CouponBeneficiary> couponBeneficiaryRowMapper = new RowMapper<CouponBeneficiary>() {
+//        @Override
+//        public CouponBeneficiary mapRow(ResultSet row, int i) throws SQLException {
+//            CouponBeneficiary couponBeneficiary = new CouponBeneficiary();
+//            couponBeneficiary.setUsername(row.getString("username"));
+//            couponBeneficiary.setCount(row.getInt("count"));
+//            return couponBeneficiary;
+//        }
+//    };
 }
