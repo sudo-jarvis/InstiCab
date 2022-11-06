@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.*;
@@ -24,6 +26,7 @@ public class PassengerController extends BaseController{
     private PassengerService passengerService;
     private FavouriteLocationService favouriteLocationService;
     private TransactionService transactionService;
+    private CouponService couponService;
 
     @Getter
     @Setter
@@ -38,12 +41,13 @@ public class PassengerController extends BaseController{
     public PassengerController(UserService userService, DriverService driverService,
                                RegistrationRequestService registrationRequestService,TripService tripService,
                                PassengerService passengerService, FavouriteLocationService favouriteLocationService,
-                               TransactionService transactionService,ScheduledTripService scheduledTripService){
+                               TransactionService transactionService,ScheduledTripService scheduledTripService, CouponService couponService){
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
         this.passengerService = passengerService;
         this.favouriteLocationService = favouriteLocationService;
         this.transactionService = transactionService;
+        this.couponService = couponService;
         this.scheduledTripService = scheduledTripService;
     }
 
@@ -186,5 +190,23 @@ public class PassengerController extends BaseController{
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         transactionService.endTransaction(passenger.getUsername());
         return "redirect:/";
+    }
+
+    @PostMapping("/passenger/coupon")
+    public String useCoupon(@RequestParam(name = "amountToPay") Integer amountToPay, Model model,RedirectAttributes redirectAttributes) throws ParseException {
+        Long passengerId = passengerService.getLoggedInPassengerId();
+        List<Coupon>allCoupons = couponService.getPassengerAllCoupons(passengerId);
+        List<Coupon> availableCoupons = new ArrayList<>();
+        for(int i=0; i<allCoupons.size(); i++){
+            Coupon coupon = allCoupons.get(i);
+            java.util.Date d1 = coupon.getCouponValidity();
+            java.util.Date d2 = Date.valueOf(LocalDate.now());
+            if(d1.compareTo(d2) >= 0){
+                coupon.setCouponDiscount(amountToPay - coupon.getCouponDiscount());
+                availableCoupons.add(coupon);
+            }
+        }
+        model.addAttribute("couponList",availableCoupons);
+        return "coupon";
     }
 }

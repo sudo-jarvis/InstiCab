@@ -70,6 +70,14 @@
                                     </td>
                                     <td>
                                         <form method="POST"
+                                              th:action="@{/passenger/coupon/}">
+                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
+                                            <button type="submit" class="btn btn-info" >Use Coupon</button>
+                                        </form>
+<!--                                        <a th:href="@{/passenger/coupon/}" class="btn bg-gradient-primary w-auto me-2">Use Coupon</a>-->
+                                    </td>
+                                    <td>
+                                        <form method="POST"
                                               th:action="@{/checkout/}">
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-success" >Pay</button>
