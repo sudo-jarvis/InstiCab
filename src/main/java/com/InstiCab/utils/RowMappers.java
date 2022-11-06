@@ -4,9 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.InstiCab.models.*;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
 public final class RowMappers {
+
 
 
     private static boolean isValid(String s) {
@@ -118,6 +120,18 @@ public final class RowMappers {
             earning.setDistanceTravelled(row.getFloat("distance_travelled"));
             earning.setDriverId(row.getLong("driver_id"));
             return earning;
+        }
+    };
+
+    public static RowMapper<FavouriteLocation> favouriteLocationRowMapper = new RowMapper<FavouriteLocation>() {
+        @Override
+        public FavouriteLocation mapRow(ResultSet row, int i) throws SQLException {
+            FavouriteLocation favouriteLocation = new FavouriteLocation();
+            favouriteLocation.setLocationId(row.getLong("location_id"));
+            favouriteLocation.setLatitudeLocation(row.getFloat("latitude_location"));
+            favouriteLocation.setLongitudeLocation(row.getFloat("longitude_location"));
+            favouriteLocation.setLabel(row.getString("label"));
+            return favouriteLocation;
         }
     };
 }

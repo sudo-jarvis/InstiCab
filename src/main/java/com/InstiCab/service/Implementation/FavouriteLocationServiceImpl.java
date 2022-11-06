@@ -7,6 +7,9 @@ import com.InstiCab.service.FavouriteLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class FavouriteLocationServiceImpl implements FavouriteLocationService {
     private final FavouriteLocationDAO favouriteLocationDAO;
@@ -58,5 +61,10 @@ public class FavouriteLocationServiceImpl implements FavouriteLocationService {
 
         favouriteLocationDAO.saveFavouriteLocation(lib);
 
+    }
+
+    @Override
+    public List<FavouriteLocation> getFavLocations(Long passengerId) {
+        return favouriteLocationDAO.getFavLocations(passengerId);
     }
 }

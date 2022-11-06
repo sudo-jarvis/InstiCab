@@ -25,14 +25,43 @@
     const var1=document.getElementById("startLocation");
     const var2=document.getElementById("endLocation");
     const var4=document.getElementById("locationsLabel2");
+    const var5=document.getElementById("addDestFav");
+    const var6=document.getElementById("favAdd");
     if(var3.checked){
       var2.classList.add("d-none");
       var4.classList.remove("d-none");
+      var5.classList.add("d-none");
+      var6.value = false;
     }
     else{
       var2.classList.remove("d-none");
       var4.classList.add("d-none");
+      var5.classList.remove("d-none");
+
     }
+  }
+
+  function setToLocation(){
+    const x = document.getElementById("toLocations").value;
+    const arr = x.split(" ");
+
+     var lat = document.getElementById("trip.endLatitude");
+      var lng = document.getElementById("trip.endLongitude");
+
+      lat.value = arr[0];
+      lng.value = arr[1];
+
+  }
+
+  function setFromLocation(){
+      var x = document.getElementById("fromLocations").value;
+      const arr = x.split(" ");
+
+      var lat = document.getElementById("trip.startLatitude");
+      var lng = document.getElementById("trip.startLongitude");
+
+      lat.value = arr[0];
+      lng.value = arr[1];
   }
 </script>
 <style>
@@ -119,9 +148,11 @@
                   </button>
                 </div>
                 <div class="col input-group input-group-outline my-3 d-none" id="locationsLabel1">
-                  <label for="locations">Choose a car:</label>
-                  <select name="locations" id="locations">
-                    <option value="volvo">Volvo</option>
+                  <label for="fromLocations">Choose a location:</label>
+                  <select name="locations" id="fromLocations" onchange="setFromLocation()">
+                    <option th:each="loc:${tripDetails.favouriteLocationsList}"
+                            th:value="${loc.latitudeLocation}+' '+${loc.longitudeLocation}"><span
+                            th:text="${loc.label}"></span></option>
                   </select>
                 </div>
                 <div class="col input-group input-group-outline my-3" >
@@ -137,9 +168,12 @@
                   </button>
                 </div>
                 <div class="col input-group input-group-outline my-3 d-none" id="locationsLabel2">
-                  <label for="locations">Choose a car:</label>
-                  <select name="locations" id="locations">
-                    <option value="volvo">Volvo</option>
+                  <label for="toLocations">Choose a location:</label>
+
+                  <select name="locations" id="toLocations" onchange="setToLocation()">
+                    <option th:each="loc:${tripDetails.favouriteLocationsList}"
+                            th:value="${loc.latitudeLocation}+' '+${loc.longitudeLocation}"><span
+                            th:text="${loc.label}"></span></option>
                   </select>
                 </div>
                 <div class="col input-group input-group-outline my-3">
@@ -148,9 +182,9 @@
                 </div>
               </div>
 
-              <div class="form-check form-switch d-flex align-items-center mb-3">
+              <div class="form-check form-switch d-flex align-items-center mb-3" id="addDestFav">
                 <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" />
-                <input type="hidden" name="addFavouriteLocation" value="false"/>
+                <input id="favAdd" type="hidden" name="addFavouriteLocation" value="false"/>
                 <label class="form-check-label mb-0 ms-2" for="addFavLoc">Add destination to your Favourite locations</label>
               </div>
 
@@ -229,7 +263,6 @@
                document.getElementsByClassName("col btn btn-primary")[1].style.background="green";
                document.getElementsByClassName("col btn btn-primary")[1].innerHTML="End location selected";
             }
-            document.getElementsById("location1").click().visibility="hidden";
             $('#Modal').modal('hide')
              }
              /*methods
