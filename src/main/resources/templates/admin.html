@@ -2,232 +2,226 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 	<head th:replace="components/head :: head"></head>
 	<body loading="lazy">
-		<nav class="navbar navbar-expand-lg bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-item text-light" href="#">InstiCab</a>
-				<button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
-						</li>
-						<li class="nav-item text-light">
-							<a th:href="@{/about/}" class="nav-link text-light">About</a>
-						</li>
-						<li class="nav-item">
-							<a th:href="@{/contact}" class="nav-link text-light">Contact</a>
-						</li>
-					</ul>
-					<ul class="navbar-nav me-0 mb-2 mb-lg-0">
-<!--						<li class="nav-item ">-->
-<!--							<a th:href="@{/admin/grantCoupon/}" class="nav-link active text-light" aria-current="page">-->
-<!--								<button type="button" class="btn btn-info">Grant Coupons</button>-->
-<!--							</a>-->
-<!--						</li>-->
-						<li class="nav-item ">
-							<a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
-								<button type="button" class="btn btn-light">Logout</button>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<br />
-		<div class="page-header align-items-start min-vh-100 mt-7" loading="lazy">
-			<div class="container my-auto">
-				<div class="row g-7">
-					<div class="col-lg-12 col-md-12 col-12 mx-auto">
-						<div class="card z-index-0 fadeIn3 fadeInBottom">
-							<div class="card-body bg-gradient-secondary text-center">
-								<h1>ALL Pending Registration Requests</h1>
-								<div th:if="${requestDetailsList eq null or #lists.size(requestDetailsList) eq 0}">
-									No Pending Requests found! <br />
-								</div>
-								<table
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center justify-content-lg-between">
+
+			<h1 class="logo me-auto me-lg-0"><a th:href="@{/}">IC<span>.</span></a></h1>
+			<!-- Uncomment below if you prefer to use an image logo -->
+			<!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+			<nav id="navbar" class="navbar order-last order-lg-0">
+				<ul>
+					<li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
+					<li><a class="nav-link scrollto" th:href="@{/register/driver/}"> Register as Driver</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav>
+			<a class="get-started-btn scrollto" th:href="@{/login/}">Login</a>
+		</div>
+	</header>
+	<section id="hero" class="d-flex align-items-center justify-content-center">
+		<div class="container my-auto">
+			<div class="row g-7">
+				<div class="col-lg-12 col-md-12 col-12 mx-auto">
+					<div class="card z-index-0 fadeIn3 fadeInBottom">
+						<div class="card-body bg-gradient-secondary text-center">
+							<h1>ALL Pending Registration Requests</h1>
+							<div th:if="${requestDetailsList eq null or #lists.size(requestDetailsList) eq 0}">
+								No Pending Requests found! <br />
+							</div>
+							<table
 									class="table table-dark table-striped"
 									th:if="${requestDetailsList ne null and #lists.size(requestDetailsList) ne 0}"
-								>
-									<thead class="thead-dark">
-										<tr>
-											<th scope="col">requestId</th>
-											<th scope="col">timeApplied</th>
-											<th scope="col">dateApplied</th>
-											<th scope="col">driverId</th>
-										</tr>
-									</thead>
-									<tbody class="text-white">
-									 <div th:each="request:${requestDetailsList}">
-										 <tr>
-											 <td th:text="${request.registrationRequest.requestId}"></td>
-											 <td th:text="${request.registrationRequest.timeApplied}"></td>
-											 <td th:text="${request.registrationRequest.dateApplied}"></td>
-											 <td th:text="${request.registrationRequest.driverId}"></td>
-											 <td>
-												 <a class="btn btn-warning" data-bs-toggle="collapse"
-													th:href="'#collapse'+${request.registrationRequest.driverId}"
-													role="button"
-													aria-expanded="false"
-													th:aria-controls="'collapse'+${request.registrationRequest.driverId}">
-													 View Details
-												 </a>
-											 </td>
-											 <td>
-												 <form method="POST"
-													   th:action="@{/admin/accept/__${request.registrationRequest.driverId}__/}">
-													 <button type="submit" class="btn btn-success" >Accept</button>
-												 </form>
-											 </td>
-											 <td>
-												 <form method="POST"
-													   th:action="@{/admin/reject/__${request.registrationRequest.driverId}__/}">
-													 <button type="submit" class="btn btn-danger" >Reject</button>
-												 </form>
+							>
+								<thead class="thead-dark">
+								<tr>
+									<th scope="col">requestId</th>
+									<th scope="col">timeApplied</th>
+									<th scope="col">dateApplied</th>
+									<th scope="col">driverId</th>
+								</tr>
+								</thead>
+								<tbody class="text-white">
+								<div th:each="request:${requestDetailsList}">
+									<tr>
+										<td th:text="${request.registrationRequest.requestId}"></td>
+										<td th:text="${request.registrationRequest.timeApplied}"></td>
+										<td th:text="${request.registrationRequest.dateApplied}"></td>
+										<td th:text="${request.registrationRequest.driverId}"></td>
+										<td>
+											<a class="btn btn-warning" data-bs-toggle="collapse"
+											   th:href="'#collapse'+${request.registrationRequest.driverId}"
+											   role="button"
+											   aria-expanded="false"
+											   th:aria-controls="'collapse'+${request.registrationRequest.driverId}">
+												View Details
+											</a>
+										</td>
+										<td>
+											<form method="POST"
+												  th:action="@{/admin/accept/__${request.registrationRequest.driverId}__/}">
+												<button type="submit" class="btn btn-success" >Accept</button>
+											</form>
+										</td>
+										<td>
+											<form method="POST"
+												  th:action="@{/admin/reject/__${request.registrationRequest.driverId}__/}">
+												<button type="submit" class="btn btn-danger" >Reject</button>
+											</form>
 
-											 </td>
+										</td>
 
-										 </tr>
-										 <tr class ="collapse" th:id="'collapse'+${request.registrationRequest.driverId}">
+									</tr>
+									<tr class ="collapse" th:id="'collapse'+${request.registrationRequest.driverId}">
 
-											 <td colspan="12">
+										<td colspan="12">
 
-												 <div class="row">
-													 <div class="col-2"> Username</div>
-													 <div th:text="${request.driver.username}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> Driver Id</div>
-													 <div th:text="${request.driver.driverId}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> License Number</div>
-													 <div th:text="${request.driver.licenseNumber}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> Aadhar Number</div>
-													 <div th:text="${request.driver.aadharNumber}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> Bank Name</div>
-													 <div th:text="${request.driver.bankName}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> Account Name</div>
-													 <div th:text="${request.driver.accountName}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> Account Number</div>
-													 <div th:text="${request.driver.accountNo}"
-														  class="col-6"></div>
-												 </div>
-												 <div class="row">
-													 <div class="col-2"> IFSC Code </div>
-													 <div th:text="${request.driver.ifscCode}"
-														  class="col-6"></div>
-												 </div>
+											<div class="row">
+												<div class="col-2"> Username</div>
+												<div th:text="${request.driver.username}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Driver Id</div>
+												<div th:text="${request.driver.driverId}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> License Number</div>
+												<div th:text="${request.driver.licenseNumber}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Aadhar Number</div>
+												<div th:text="${request.driver.aadharNumber}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Bank Name</div>
+												<div th:text="${request.driver.bankName}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Account Name</div>
+												<div th:text="${request.driver.accountName}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Account Number</div>
+												<div th:text="${request.driver.accountNo}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> IFSC Code </div>
+												<div th:text="${request.driver.ifscCode}"
+													 class="col-6"></div>
+											</div>
 
-											 </td>
-										 </tr>
+										</td>
+									</tr>
 
-									 </div>
-
-
+								</div>
 
 
-									</tbody>
-								</table>
-							</div>
+
+
+								</tbody>
+							</table>
 						</div>
 					</div>
-					<div class="col-lg-12 col-md-12 col-12 mx-auto">
-						<div class="card z-index-0 fadeIn3 fadeInBottom">
-							<div class="card-body bg-gradient-secondary text-center">
-								<h1>All Users</h1>
-								<div th:if="${userList eq null or #lists.size(userList) eq 0}">
-									No Users found! <br />
-								</div>
-								<table
-										class="table table-dark table-striped"
-										th:if="${userList ne null and #lists.size(userList) ne 0}"
-								>
-									<thead class="thead-dark">
-									<tr>
-										<th scope="col">username</th>
-										<th scope="col">dateCreated</th>
-										<th scope="col">lastLoginDate</th>
-										<th scope="col">lastLoginTime</th>
-										<th scope="col">role</th>
-									</tr>
-									</thead>
-									<tbody class="text-white">
-									<div th:each="user:${userList}">
-										<tr>
-											<td th:text="${user.username}"></td>
-											<td th:text="${user.dateCreated}"></td>
-											<td th:text="${user.lastLoginDate}"></td>
-											<td th:text="${user.lastLoginTime}"></td>
-											<td th:if="${user.role eq 'ROLE_ADMIN'}" th:text="ADMIN"></td>
-											<td th:if="${user.role eq 'ROLE_PASSENGER'}" th:text="PASSENGER"></td>
-											<td th:if="${user.role eq 'ROLE_DRIVER'}" th:text="DRIVER"></td>
-											<td>
-												<a class="btn btn-warning" data-bs-toggle="collapse"
-												   th:href="'#collapse'+${user.username}"
-												   role="button"
-												   aria-expanded="false"
-												   th:aria-controls="'collapse'+${user.username}">
-													View Details
-												</a>
-											</td>
-										</tr>
-										<tr class ="collapse" th:id="'collapse'+${user.username}">
-
-											<td colspan="12">
-
-												<div class="row">
-													<div class="col-2"> Username</div>
-													<div th:text="${user.username}"
-														 class="col-6"></div>
-												</div>
-												<div class="row">
-													<div class="col-2"> Name</div>
-													<div th:text="${user.firstName+' '+user.middleName+' '+user.lastName}"
-														 class="col-6"></div>
-												</div>
-												<div class="row">
-													<div class="col-2"> Email</div>
-													<div th:text="${user.email}"
-														 class="col-6"></div>
-												</div>
-												<div class="row">
-													<div class="col-2"> Phone Number</div>
-													<div th:text="${user.phoneNo}"
-														 class="col-6"></div>
-												</div>
-											</td>
-										</tr>
-
-									</div>
-
-
-
-
-									</tbody>
-								</table>
+				</div>
+				<div class="col-lg-12 col-md-12 col-12 mx-auto">
+					<div class="card z-index-0 fadeIn3 fadeInBottom">
+						<div class="card-body bg-gradient-secondary text-center">
+							<h1>All Users</h1>
+							<div th:if="${userList eq null or #lists.size(userList) eq 0}">
+								No Users found! <br />
 							</div>
+							<table
+									class="table table-dark table-striped"
+									th:if="${userList ne null and #lists.size(userList) ne 0}"
+							>
+								<thead class="thead-dark">
+								<tr>
+									<th scope="col">username</th>
+									<th scope="col">dateCreated</th>
+									<th scope="col">lastLoginDate</th>
+									<th scope="col">lastLoginTime</th>
+									<th scope="col">role</th>
+								</tr>
+								</thead>
+								<tbody class="text-white">
+								<div th:each="user:${userList}">
+									<tr>
+										<td th:text="${user.username}"></td>
+										<td th:text="${user.dateCreated}"></td>
+										<td th:text="${user.lastLoginDate}"></td>
+										<td th:text="${user.lastLoginTime}"></td>
+										<td th:if="${user.role eq 'ROLE_ADMIN'}" th:text="ADMIN"></td>
+										<td th:if="${user.role eq 'ROLE_PASSENGER'}" th:text="PASSENGER"></td>
+										<td th:if="${user.role eq 'ROLE_DRIVER'}" th:text="DRIVER"></td>
+										<td>
+											<a class="btn btn-warning" data-bs-toggle="collapse"
+											   th:href="'#collapse'+${user.username}"
+											   role="button"
+											   aria-expanded="false"
+											   th:aria-controls="'collapse'+${user.username}">
+												View Details
+											</a>
+										</td>
+									</tr>
+									<tr class ="collapse" th:id="'collapse'+${user.username}">
+
+										<td colspan="12">
+
+											<div class="row">
+												<div class="col-2"> Username</div>
+												<div th:text="${user.username}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Name</div>
+												<div th:text="${user.firstName+' '+user.middleName+' '+user.lastName}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Email</div>
+												<div th:text="${user.email}"
+													 class="col-6"></div>
+											</div>
+											<div class="row">
+												<div class="col-2"> Phone Number</div>
+												<div th:text="${user.phoneNo}"
+													 class="col-6"></div>
+											</div>
+										</td>
+									</tr>
+
+								</div>
+
+
+
+
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 			<footer th:replace="components/footer :: footer"></footer>
 		</div>
-		<script th:replace="components/toast :: toast"></script>
+	</section>
+	<script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+	<script src="/assets/vendor/aos/aos.js"></script>
+	<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="/assets/vendor/php-email-form/validate.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="/assets/js/main.js"></script>
+	<script th:replace="components/toast :: toast"></script>
+
 	</body>
 </html>

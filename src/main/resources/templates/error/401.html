@@ -2,14 +2,25 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 	<head th:replace="components/head :: head"></head>
 	<body>
-		<div th:replace="components/navbar :: navbar"></div>
-		<div
-			class="page-header align-items-start min-vh-100"
-			th:style="'background-image: url(' + @{/images/back-gradient.jpg} + ');'"
-			loading="lazy"
-		>
-			<span class="mask bg-gradient-dark opacity-6"></span>
-			<div class="container my-auto">
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center justify-content-lg-between">
+
+			<h1 class="logo me-auto me-lg-0"><a th:href="@{/}">IC<span>.</span></a></h1>
+			<!-- Uncomment below if you prefer to use an image logo -->
+			<!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+			<nav id="navbar" class="navbar order-last order-lg-0">
+				<ul>
+					<li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
+					<li><a class="nav-link scrollto" th:href="@{/register/driver/}"> Register as Driver</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav>
+			<a class="get-started-btn scrollto" th:href="@{/login/}">Login</a>
+		</div>
+	</header>
+	<section id="hero" class="d-flex align-items-center justify-content-center">
+	<div class="container my-auto">
 				<div class="row">
 					<div class="col-lg-12 col-md-8 col-12 mx-auto">
 						<div class="card z-index-0 fadeIn3 fadeInBottom">
@@ -22,8 +33,17 @@
 					</div>
 				</div>
 			</div>
-			<footer th:replace="components/footer :: footer"></footer>
-		</div>
+	</section>
+	<script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+	<script src="/assets/vendor/aos/aos.js"></script>
+	<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="/assets/vendor/php-email-form/validate.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="/assets/js/main.js"></script>
 		<script th:replace="components/toast :: toast"></script>
 	</body>
 </html>
