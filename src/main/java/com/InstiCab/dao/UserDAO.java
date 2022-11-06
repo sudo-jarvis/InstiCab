@@ -34,7 +34,7 @@ public class UserDAO {
                 " FROM transaction" +
                 " WHERE status = 1 AND (date_transcation > ?)" +
                 " GROUP BY username" +
-                " HAVING ct > 0" +
+                " HAVING ct > 5" +
                 " LIMIT ?) AS u);";
         try {
 //            Random r = new Random();
