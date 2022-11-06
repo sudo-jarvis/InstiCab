@@ -34,14 +34,14 @@ public class UserDAO {
                 " FROM transaction" +
                 " WHERE status = 1 AND (date_transcation > ?)" +
                 " GROUP BY username" +
-                " HAVING ct > ?" +
+                " HAVING ct > 5" +
                 " LIMIT ?) AS u);";
         try {
 //            Random r = new Random();
 //            int low = 10;
 //            int high = coupon.getMaxDiscount();
 //            float value = r.nextInt(high-low) + low;
-            return jdbcTemplate.query(sql, RowMappers.userRowMapper, sinceDate, 1, numCoupons);
+            return jdbcTemplate.query(sql, RowMappers.userRowMapper, sinceDate, numCoupons);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Error");
         }

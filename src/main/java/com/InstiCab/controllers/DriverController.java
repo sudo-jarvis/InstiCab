@@ -33,6 +33,21 @@ public class DriverController extends BaseController{
         this.earningsHistoryService = earningsHistoryService;
     }
 
+    public double distance(double lat1, double lon1, double lat2, double lon2) {
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            dist = dist * 60 * 1.1515;
+            dist = dist * 1.609344;
+            return (dist);
+        }
+    }
+
     @GetMapping("/driver")
     public String driverhomepage(Model model) throws Exception {
         if(!isLoggedIn()) {
@@ -100,11 +115,13 @@ public class DriverController extends BaseController{
         trip.setEndLatitude(trip.getEndLatitude());
         trip.setEndLongitude(trip.getEndLongitude());
 
+        double distance = distance(trip.getStartLatitude(), trip.getStartLongitude(), trip.getEndLatitude(), trip.getEndLongitude());
+
         Transaction transaction = new Transaction();
         Long passengerId = trip.getPassengerId();
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         transaction.setUsername(passenger.getUsername());
-        transaction.setAmount(70);
+        transaction.setAmount((int) (distance*10));
         transaction.setTripId(trip.getTripId());
         transaction.setStatus(0);
         transaction.setDateTranscation(Date.valueOf(LocalDate.now()));
@@ -113,8 +130,8 @@ public class DriverController extends BaseController{
         EarningsHistory earning = new EarningsHistory();
         Long driverId = driverService.findLoggedInDriver();
         earning.setDriverId(driverId);
-        earning.setCost(70);
-        earning.setDistanceTravelled(7);
+        earning.setCost((float) ((int)(distance*10)));
+        earning.setDistanceTravelled((float) ((int)(distance)));
 
         transactionService.saveTransaction(transaction);
         tripService.endTrip(trip);
