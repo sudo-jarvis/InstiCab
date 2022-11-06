@@ -46,7 +46,6 @@ public class DriverController extends BaseController{
         model.addAttribute("driver",driverService.getDriverByDriverId(driverId));
         model.addAttribute("tripReqList", tripReqList);
         model.addAttribute("tripList", tripList);
-        System.out.println(tripReqList.size());
         return "driver";
     }
 
@@ -106,6 +105,7 @@ public class DriverController extends BaseController{
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         transaction.setUsername(passenger.getUsername());
         transaction.setAmount(70);
+        transaction.setTripId(trip.getTripId());
         transaction.setStatus(0);
         transaction.setDateTranscation(Date.valueOf(LocalDate.now()));
         transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));

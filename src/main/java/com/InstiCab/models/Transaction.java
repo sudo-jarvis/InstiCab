@@ -14,6 +14,7 @@ import java.sql.Time;
 @NoArgsConstructor
 public class Transaction {
     private Long transactionId;
+    private Long tripId;
     private Time timeTransaction;
     private Date dateTranscation;
     private int amount;
