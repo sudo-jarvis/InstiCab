@@ -2,39 +2,31 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="components/head::head"></head>
 <body class="sign-in-basic">
-<nav class="navbar navbar-expand-lg bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-item text-light" href="#">InstiCab</a>
-    <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
-        </li>
-        <li class="nav-item text-light">
-          <a th:href="@{/about/}" class="nav-link text-light">About</a>
-        </li>
-        <li class="nav-item">
-          <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
-        </li>
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center justify-content-lg-between">
+
+    <h1 class="logo me-auto me-lg-0"><a th:href="@{/}">IC<span>.</span></a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar order-last order-lg-0">
+      <ul>
+<!--        <li><a class="nav-link scrollto active" th:href="@{/}">Home</a></li>-->
+<!--        <li><a class="nav-link scrollto" href="#about">About</a></li>-->
+<!--        <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>-->
+        <li><a th:href="@{/register/driver/}">As Driver</a></li>
+<!--        <li class="dropdown"><a th:href="@{/register/passenger/}"><span>Register</span> <i class="bi bi-chevron-down"></i></a>-->
+<!--          <ul>-->
+<!--&lt;!&ndash;            <li><a th:href="@{/register/passenger/}">As Passenger</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;            <li><a th:href="@{/register/driver/}">As Driver</a></li>&ndash;&gt;-->
+<!--          </ul>-->
+<!--        </li>-->
       </ul>
-      <ul class="navbar-nav me-0 mb-2 mb-lg-0">
-        <li class="nav-item ">
-          <a th:href="@{/register/driver}" class="nav-link active text-light" aria-current="page">
-            <button type="button" class="btn btn-info">Register as Driver</button>
-          </a>
-        </li>
-        <li class="nav-item ">
-          <a th:href="@{/login/}" class="nav-link active text-light" aria-current="page">
-            <button type="button" class="btn btn-light">Login</button>
-          </a>
-        </li>
-      </ul>
-    </div>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+    <a class="get-started-btn scrollto" th:href="@{/login/}">Login</a>
   </div>
-</nav>
+</header>
 <div
         class="page-header align-items-start min-vh-100"
         loading="lazy"
