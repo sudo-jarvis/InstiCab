@@ -7,10 +7,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsFileUploadSupport;
 
 import java.sql.Date;
@@ -24,6 +21,10 @@ import java.util.List;
 public class AdminController extends BaseController{
     private CouponService couponService;
     private PassengerService passengerService;
+    private TransactionDisputeService transactionDisputeService;
+    private TransactionService transactionService;
+    private TripService tripService;
+
     @Getter
     @Setter
     static class RequestDetails {
@@ -33,9 +34,14 @@ public class AdminController extends BaseController{
 
     @Autowired
     public AdminController(UserService userService,
-                           DriverService driverService, RegistrationRequestService registrationRequestService, CouponService couponService, PassengerService passengerService) {
+                           DriverService driverService, RegistrationRequestService registrationRequestService,
+                           CouponService couponService,TransactionDisputeService transactionDisputeService,
+                           TransactionService transactionService,TripService tripService, PassengerService passengerService) {
         super(userService,driverService,registrationRequestService);
         this.couponService = couponService;
+        this.transactionDisputeService = transactionDisputeService;
+        this.transactionService = transactionService;
+        this.tripService = tripService;
         this.passengerService = passengerService;
     }
 
@@ -64,7 +70,7 @@ public class AdminController extends BaseController{
         return "admin";
     }
 
-    @GetMapping("/admi![](../../../../resources/static/images/nyc-taxis-gty-rc-200220_hpMain_16x9_992.jpg)n/accept/{driverId}")
+    @GetMapping("/admin/accept/{driverId}")
     public String invalidPage(Model model){
         if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
             return FORBIDDEN_ERROR_PAGE;
@@ -73,7 +79,8 @@ public class AdminController extends BaseController{
 
     @PostMapping("/admin/accept/{driverId}")
     public String acceptRequest(@PathVariable("driverId") Long driverId, Model model){
-
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
         RegistrationRequest req = registrationRequestService.getRequestByDriverId(driverId);
         req.setDateAccepted(Date.valueOf(LocalDate.now()));
         req.setTimeAccepted(Time.valueOf(LocalTime.now()));
@@ -90,6 +97,8 @@ public class AdminController extends BaseController{
 
     @PostMapping("/admin/reject/{driverId}")
     public String rejectRequest(@PathVariable("driverId") Long driverId, Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
         registrationRequestService.rejectRequest(driverId);
         return "redirect:/admin";
     }
@@ -112,5 +121,47 @@ public class AdminController extends BaseController{
             couponService.saveCoupon(coupon);
         }
         return "newCoupon";
+
+    @GetMapping("/admin/disputes")
+    public String showDisputes(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        List <TransactionDispute> transactionDisputes = transactionDisputeService.getDisputes();
+        model.addAttribute("disputesList",transactionDisputes);
+        return "dispute";
+    }
+
+    @PostMapping("/admin/disputes/reject/{disputeId}/{transactionId}")
+    public String rejectDispute(@PathVariable("disputeId") Long disputeId,
+                                @PathVariable("transactionId") Long transactionId,
+                                Model model) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        transactionDisputeService.changeDisputeStatus(disputeId,1);
+        transactionService.changeTransactionStatus(transactionId,3);
+        return "redirect:/admin/disputes";
+    }
+
+    @PostMapping("/admin/disputes/accept/{disputeId}/{transactionId}")
+    public String acceptDispute(@PathVariable("disputeId") Long disputeId,
+                                @PathVariable("transactionId") Long transactionId, Model model) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        transactionDisputeService.changeDisputeStatus(disputeId,2);
+        transactionService.changeTransactionStatus(transactionId,4);
+        Long tripId = transactionService.getTransaction(transactionId).getTripId();
+        tripService.changeTripStatus(tripId,2);
+        return "redirect:/admin/disputes";
+    }
+    @PostMapping("/admin/disputes/raise/{transactionId}")
+    public String raiseDispute(@PathVariable("transactionId") Long transactionId,
+                               @ModelAttribute("dispute") TransactionDispute transactionDispute,
+                               Model model) throws Exception {
+        if(!isLoggedIn())
+            return FORBIDDEN_ERROR_PAGE;
+        transactionDispute.setTransactionId(transactionId);
+        transactionService.changeTransactionStatus(transactionId,2);
+        transactionDisputeService.saveDispute(transactionDispute);
+        return "redirect:/passenger/transaction";
     }
 }

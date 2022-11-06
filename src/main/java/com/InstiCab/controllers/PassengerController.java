@@ -138,8 +138,7 @@ public class PassengerController extends BaseController{
             final Trip t = finalTrip;
             @Override
             public void run(){
-                t.setStatus(0);
-                tripService.updateTrip(t);
+                tripService.changeTripStatus(t.getTripId(),0);
                 try {
                     scheduledTripService.delete(scheduledTrip);
                 } catch (Exception e) {
@@ -180,7 +179,9 @@ public class PassengerController extends BaseController{
         if(!isAuthorized(model,ROLE_PASSENGER)) return FORBIDDEN_ERROR_PAGE;
         Long passengerId = passengerService.getLoggedInPassengerId();
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
+        TransactionDispute transactionDispute = new TransactionDispute();
         model.addAttribute("transactionList",transactionService.getPassengerAllTransactions(passenger.getUsername()));
+        model.addAttribute("dispute",transactionDispute);
         return "transaction";
     }
 
@@ -197,11 +198,10 @@ public class PassengerController extends BaseController{
         Long passengerId = passengerService.getLoggedInPassengerId();
         List<Coupon>allCoupons = couponService.getPassengerAllCoupons(passengerId);
         List<Coupon> availableCoupons = new ArrayList<>();
-        for(int i=0; i<allCoupons.size(); i++){
-            Coupon coupon = allCoupons.get(i);
+        for (Coupon coupon : allCoupons) {
             Date d1 = coupon.getCouponValidity();
             Date d2 = java.sql.Date.valueOf(LocalDate.now());
-            if(d1.compareTo(d2) >= 0){
+            if (d1.compareTo(d2) >= 0) {
                 coupon.setCouponDiscount(amountToPay - coupon.getCouponDiscount());
                 availableCoupons.add(coupon);
             }
