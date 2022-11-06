@@ -12,11 +12,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @Controller
 public class PassengerController extends BaseController{
@@ -31,6 +29,7 @@ public class PassengerController extends BaseController{
     @Setter
     static class TripDetails {
         private FavouriteLocation favouriteLocation;
+        private List<FavouriteLocation> favouriteLocationsList;
         private Trip trip;
         String scheduledTime;
     }
@@ -54,8 +53,6 @@ public class PassengerController extends BaseController{
             return "redirect:/";
         }
         if(!isAuthorized(model,ROLE_PASSENGER)) return FORBIDDEN_ERROR_PAGE;
-        TripDetails tripDetails = new TripDetails();
-        tripDetails.setTrip(new Trip());
         if(tripService.tripAlreadyExists()){
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Trip Already Exists !");
             return "redirect:/passenger/newTripStatus";
@@ -64,15 +61,15 @@ public class PassengerController extends BaseController{
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Transaction Exists !");
             return "redirect:/passenger/transaction";
         }
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setTrip(new Trip());
+        tripDetails.setFavouriteLocationsList(favouriteLocationService.getFavLocations(passengerService.getLoggedInPassengerId()));
         model.addAttribute("tripDetails", tripDetails);
         return "newTrip";
     }
 
     @GetMapping("/passenger/newScheduledTrip")
     public String newScheduledTrip(Model model,RedirectAttributes redirectAttributes){
-        TripDetails tripDetails = new TripDetails();
-        tripDetails.setTrip(new Trip());
-
         if(!isLoggedIn()){
             return "redirect:/";
         }
@@ -84,6 +81,9 @@ public class PassengerController extends BaseController{
             redirectAttributes.addFlashAttribute("errorMsg", "Pending Transaction Exists !");
             return "redirect:/passenger/transaction";
         }
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setTrip(new Trip());
+        tripDetails.setFavouriteLocationsList(favouriteLocationService.getFavLocations(passengerService.getLoggedInPassengerId()));
         model.addAttribute("tripDetails", tripDetails);
         return "newScheduledTrip";
     }
@@ -102,6 +102,7 @@ public class PassengerController extends BaseController{
             favouriteLocation.setLatitudeLocation(trip.getEndLatitude());
             favouriteLocation.setLongitudeLocation(trip.getEndLongitude());
             favouriteLocation.setPassengerId(passengerId);
+            favouriteLocation.setLabel("Hello");
             favouriteLocationService.saveFavouriteLocation(favouriteLocation);
         }
         return "redirect:/passenger/newTripStatus";
@@ -150,6 +151,7 @@ public class PassengerController extends BaseController{
             favouriteLocation.setLatitudeLocation(trip.getEndLatitude());
             favouriteLocation.setLongitudeLocation(trip.getEndLongitude());
             favouriteLocation.setPassengerId(passengerId);
+            favouriteLocation.setLabel("Hello");
             favouriteLocationService.saveFavouriteLocation(favouriteLocation);
         }
         return "redirect:/passenger/newTripStatus";
