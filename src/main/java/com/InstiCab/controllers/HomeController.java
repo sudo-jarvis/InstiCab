@@ -36,6 +36,7 @@ public class HomeController extends BaseController{
             model.addAttribute("isPassenger",true);
             return "home";
         }
-        return "redirect:/login/";
+
+        return "index";
     }
 }
