@@ -435,6 +435,8 @@ h6 {
   position: relative;
   padding-top: 74px;
   text-align: center;
+  height: 95%;
+  overflow-y: scroll;
 }
 
 #hero h1 {
@@ -1571,4 +1573,6 @@ section {
   font-size: 13px;
   color: #fff;
 }
+
+
 
