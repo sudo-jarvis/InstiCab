@@ -134,23 +134,21 @@ public class AdminController extends BaseController{
             return "dispute";
         }
 
-        @PostMapping("/admin/disputes/reject/{disputeId}/{transactionId}")
-        public String rejectDispute(@PathVariable("disputeId") Long disputeId,
-                @PathVariable("transactionId") Long transactionId,
+        @PostMapping("/admin/disputes/reject/{transactionId}")
+        public String rejectDispute(@PathVariable("transactionId") Long transactionId,
                 Model model) throws Exception {
             if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
                 return FORBIDDEN_ERROR_PAGE;
-            transactionDisputeService.changeDisputeStatus(disputeId,1);
+            transactionDisputeService.changeDisputeStatus(transactionId,1);
             transactionService.changeTransactionStatus(transactionId,3);
             return "redirect:/admin/disputes";
         }
 
-        @PostMapping("/admin/disputes/accept/{disputeId}/{transactionId}")
-        public String acceptDispute(@PathVariable("disputeId") Long disputeId,
-                @PathVariable("transactionId") Long transactionId, Model model) throws Exception {
+        @PostMapping("/admin/disputes/accept/{transactionId}")
+        public String acceptDispute(@PathVariable("transactionId") Long transactionId, Model model) throws Exception {
             if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
                 return FORBIDDEN_ERROR_PAGE;
-            transactionDisputeService.changeDisputeStatus(disputeId,2);
+            transactionDisputeService.changeDisputeStatus(transactionId,2);
             transactionService.changeTransactionStatus(transactionId,4);
             Long tripId = transactionService.getTransaction(transactionId).getTripId();
             tripService.changeTripStatus(tripId,2);

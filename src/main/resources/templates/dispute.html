@@ -36,7 +36,6 @@
             >
               <thead class="thead-dark">
               <tr>
-                <th scope="col">disputeId</th>
                 <th scope="col">transactionId</th>
                 <th scope="col">Description</th>
                 <th scope="col">Action</th>
@@ -45,17 +44,16 @@
               <tbody class="text-white">
               <div th:each="request:${disputesList}">
                 <tr>
-                  <td th:text="${request.disputeId}"></td>
                   <td th:text="${request.transactionId}"></td>
                   <td th:text="${request.description}"></td>
                   <td>
 
                     <form th:if="${request.status eq 0}" method="POST"
-                          th:action="@{/admin/disputes/accept/__${request.disputeId}__/__${request.transactionId}__/}">
+                          th:action="@{/admin/disputes/accept/__${request.transactionId}__/}">
                       <button type="submit" class="btn btn-success" >Accept</button>
                     </form>
                     <form th:if="${request.status eq 0}" method="POST"
-                          th:action="@{/admin/disputes/reject/__${request.disputeId}__/__${request.transactionId}__/}">
+                          th:action="@{/admin/disputes/reject/__${request.transactionId}__/}">
                       <button type="submit" class="btn btn-danger" >Reject</button>
                     </form>
 

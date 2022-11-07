@@ -40,10 +40,10 @@ public class TransactionDisputeDAO {
 
     }
 
-    public void changeDisputeStatus(Long disputeId, Integer status) {
-        final String sql = "UPDATE transaction_dispute SET status = ? WHERE dispute_id = ?";
+    public void changeDisputeStatus(Long transactionId, Integer status) {
+        final String sql = "UPDATE transaction_dispute SET status = ? WHERE transaction_id = ?";
         try {
-            jdbcTemplate.update(sql,status,disputeId);
+            jdbcTemplate.update(sql,status,transactionId);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Error");
         }

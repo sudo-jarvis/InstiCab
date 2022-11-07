@@ -175,7 +175,6 @@ public final class RowMappers {
         public TransactionDispute mapRow(ResultSet row, int i) throws SQLException {
             TransactionDispute transactionDispute = new TransactionDispute();
             transactionDispute.setStatus(row.getInt("status"));
-            transactionDispute.setDisputeId(row.getLong("dispute_id"));
             transactionDispute.setTransactionId(row.getLong("transaction_id"));
             transactionDispute.setDescription(row.getString("description"));
             return transactionDispute;
