@@ -24,10 +24,12 @@ public class CheckoutController {
     }
 
     @RequestMapping("/checkout")
-    public String checkout(@RequestParam(name = "amountToPay") String amountToPay, @RequestParam(name = "couponId", required = false) Long couponId, Model model) {
-        model.addAttribute("amount", Integer.parseInt(amountToPay) * 100); // in cents
+    public String checkout(@RequestParam(name = "transactionId") String transactionId,
+                           @RequestParam(name = "amountToPay") String amountToPay, @RequestParam(name = "couponId", required = false) Long couponId, Model model) {
+        model.addAttribute("amount", Integer.parseInt(amountToPay) * 100);
         model.addAttribute("stripePublicKey", stripePublicKey);
         model.addAttribute("currency", ChargeRequest.Currency.INR);
+        model.addAttribute("transactionId",transactionId);
         if(couponId != null) couponService.deleteCoupon(couponId);
         return "checkout";
     }

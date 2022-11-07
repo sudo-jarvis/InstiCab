@@ -21,9 +21,11 @@ public class EarningsHistoryDAO {
 
 
     public void saveEarning(EarningsHistory earning) {
-        final String sql = "INSERT INTO earning_history(driver_id, cost, distance_travelled) VALUES(?, ?, ?)";
+        final String sql = "INSERT INTO earning_history(trip_id,driver_id, cost, distance_travelled) VALUES(?, ?, ?, " +
+                "?)";
         try {
-            jdbcTemplate.update(sql,earning.getDriverId(),earning.getCost(),earning.getDistanceTravelled());
+            jdbcTemplate.update(sql,earning.getTripId(),earning.getDriverId(),earning.getCost(),
+                    earning.getDistanceTravelled());
         } catch (Exception e) {
             System.out.println(e);
             throw new DuplicateKeyException("Earning Already Exists ! !");
@@ -31,10 +33,7 @@ public class EarningsHistoryDAO {
     }
 
     public List<EarningsHistory> getEarningHistory(Long driverId) {
-        final String sql = "SELECT e.earning_id, e.cost, e.distance_travelled, e.driver_id" +
-                " FROM " +
-                "earning_history as e WHERE" +
-                " e.driver_id = ? order by e.earning_id";
+        final String sql = "SELECT * FROM earning_history as e WHERE e.driver_id = ? order by e.earning_id";
         try {
             return jdbcTemplate.query(sql, RowMappers.earningsHistoryRowMapper, driverId);
         } catch (Exception e) {

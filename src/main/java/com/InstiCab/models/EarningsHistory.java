@@ -10,9 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EarningsHistory {
-    private Long earningId;
+    private Long tripId;
     private float cost;
     private float distanceTravelled;
     private Long driverId;
-
 }

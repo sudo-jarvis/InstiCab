@@ -8,7 +8,7 @@
             <div>Id.: <span th:text='${id}' /></div>
             <div>Status: <span th:text='${status}' /></div>
             <div>Charge id.: <span th:text='${chargeId}' /></div>
-            <div>Balance transaction id.: <span th:text='${balance_transaction}' /></div>
+            <div>Transaction id.: <span th:text='${transactionId}' /></div>
         </div>
         <form method="POST"
               th:action="@{/endTransaction/}">

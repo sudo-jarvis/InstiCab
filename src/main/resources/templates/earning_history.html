@@ -36,7 +36,7 @@
                         >
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col">earningId</th>
+                                <th scope="col">tripId</th>
                                 <th scope="col">cost</th>
                                 <th scope="col">distanceTravelled</th>
                             </tr>
@@ -44,15 +44,12 @@
                             <tbody class="text-white">
                             <div th:each="earning:${earningHistory}">
                                 <tr>
-                                    <td th:text="${earning.earningId}"></td>
+                                    <td th:text="${earning.tripId}"></td>
                                     <td th:text="${earning.cost}"></td>
                                     <td th:text="${earning.distanceTravelled}"></td>
 
                                 </tr>
                             </div>
-
-
-
 
                             </tbody>
                         </table>

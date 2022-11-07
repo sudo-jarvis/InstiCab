@@ -121,21 +121,14 @@ public class DriverController extends BaseController{
         Long passengerId = trip.getPassengerId();
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         transaction.setUsername(passenger.getUsername());
-        transaction.setAmount((int) (distance*10));
+        transaction.setAmount((int) (distance*40));
         transaction.setTripId(trip.getTripId());
         transaction.setStatus(0);
         transaction.setDateTransaction(Date.valueOf(LocalDate.now()));
         transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
 
-        EarningsHistory earning = new EarningsHistory();
-        Long driverId = driverService.findLoggedInDriver();
-        earning.setDriverId(driverId);
-        earning.setCost((float) ((int)(distance*10)));
-        earning.setDistanceTravelled((float) ((int)(distance)));
-
         transactionService.saveTransaction(transaction);
-        tripService.endTrip(trip);
-        earningsHistoryService.saveEarning(earning);
+        tripService.changeTripStatus(trip.getTripId(),3);
         return "redirect:/driver";
     }
 
