@@ -25,7 +25,7 @@ public class InstiCabApplication implements CommandLineRunner {
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
+	}	
 
 	@Override
 	public void run(String... args) {
