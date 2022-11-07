@@ -44,7 +44,7 @@ public class CouponDAO {
         final String sql = "INSERT INTO coupon(coupon_id, coupon_discount, coupon_validity, max_discount, passenger_id) VALUES(?, ?, ?, ?, ?)";
         try {
             Random r = new Random();
-            int low = 10;
+            int low = 5;
             int high = coupon.getMaxDiscount();
             float value = r.nextInt(high-low) + low;
             jdbcTemplate.update(sql,coupon.getCouponId(),value,coupon.getCouponValidity(),coupon.getMaxDiscount(),coupon.getPassengerId());
