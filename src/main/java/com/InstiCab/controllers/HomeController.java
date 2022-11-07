@@ -52,6 +52,7 @@ public class HomeController extends BaseController{
         model.addAttribute("status", 0);
         model.addAttribute("chargeId", 0);
         model.addAttribute("transactionId",0);
+        model.addAttribute("error", "ok");
         return "result";
     }
 }
