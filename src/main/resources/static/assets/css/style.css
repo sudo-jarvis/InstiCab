@@ -1571,3 +1571,14 @@ section {
   font-size: 13px;
   color: #fff;
 }
+
+.my-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.my-auto{
+  height: 95%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+ }

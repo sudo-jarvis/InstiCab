@@ -17181,6 +17181,8 @@ fieldset:disabled .btn {
 	position: relative;
 	overflow: hidden;
 }
+
+
 .btn:not([class*="btn-outline-"]) {
 	border: 0;
 }

@@ -145,6 +145,7 @@
   left: 0;
   right: 0;
   z-index: 1030;
+  opacity:100%;
 }
 
 .fixed-bottom {
