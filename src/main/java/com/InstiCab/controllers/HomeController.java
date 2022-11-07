@@ -43,7 +43,15 @@ public class HomeController extends BaseController{
 
     @GetMapping({"/test"})
     public String test(Model model, RedirectAttributes redirectAttributes) {
-        System.out.println("adfdadad");
         return "emergencyServices";
+    }
+
+    @GetMapping({"/test2"})
+    public String test2(Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("id", 00);
+        model.addAttribute("status", 0);
+        model.addAttribute("chargeId", 0);
+        model.addAttribute("transactionId",0);
+        return "result";
     }
 }
