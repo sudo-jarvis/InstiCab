@@ -29,4 +29,5 @@ public interface TripService {
     void changeTripStatus(Long tripId, int status);
 
     void cancelTrip(Long tripId);
+    boolean checkValidTrip(Trip trip);
 }

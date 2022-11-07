@@ -95,6 +95,10 @@ public class PassengerController extends BaseController{
     @PostMapping("/passenger/newTrip")
     public String createTrip(@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Trip trip = tripDetails.getTrip();
+        if(!tripService.checkValidTrip(trip)) {
+            redirectAttributes.addFlashAttribute("errorMsg", "Invalid Location!");
+            return "redirect:/passenger/newTripStatus";
+        }
         Long passengerId = passengerService.getLoggedInPassengerId();
         trip.setPassengerId(passengerId);
         trip.setStatus(0);
