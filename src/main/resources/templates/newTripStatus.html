@@ -64,6 +64,12 @@
                           View Details
                         </a>
                       </td>
+                      <td>
+                        <form method="POST" th:if="${passengerTrip.status ne 0 and passengerTrip.status ne 2}"
+                              th:action="@{/passenger/cancel/__${passengerTrip.tripId}__/}">
+                          <button type="submit" class="btn btn-danger" >Cancel</button>
+                        </form>
+                      </td>
                     </tr>
                     <tr class ="collapse" th:id="'collapse'+${passengerTrip.tripId}">
 

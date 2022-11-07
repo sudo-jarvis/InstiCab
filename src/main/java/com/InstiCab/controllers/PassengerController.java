@@ -215,4 +215,17 @@ public class PassengerController extends BaseController{
         model.addAttribute("couponList",availableCoupons);
         return "coupon";
     }
+
+    @GetMapping("/passenger/cancel/{tripId}")
+    public String invalidPage(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER))
+            return FORBIDDEN_ERROR_PAGE;
+        return "redirect:/";
+    }
+
+    @PostMapping("/passenger/cancel/{tripId}")
+    public String cancelTrip(@PathVariable("tripId") Long tripId, Model model,RedirectAttributes redirectAttributes) throws Exception {
+        tripService.cancelTrip(tripId);
+        return "redirect:/";
+    }
 }

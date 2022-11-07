@@ -27,4 +27,6 @@ public interface TripService {
     Trip getScheduledTrip(Long passengerId);
 
     void changeTripStatus(Long tripId, int status);
+
+    void cancelTrip(Long tripId);
 }

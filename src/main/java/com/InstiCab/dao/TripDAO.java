@@ -145,4 +145,14 @@ public class TripDAO {
             throw new DuplicateKeyException("Trip Request doesnt exist ! !");
         }
     }
+
+    public void cancelTrip(Long tripId) {
+        final String sql = "UPDATE trip SET status = 2 WHERE trip_id = ?";
+        try {
+            jdbcTemplate.update(sql, tripId);
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip doesnt exist ! !");
+        }
+    }
 }
