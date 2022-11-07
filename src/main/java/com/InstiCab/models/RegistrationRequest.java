@@ -13,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegistrationRequest {
-    private Long requestId;
     private Time timeApplied;
     private Date dateApplied;
     private int status;

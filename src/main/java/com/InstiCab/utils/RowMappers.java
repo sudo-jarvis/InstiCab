@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.RowMapper;
 public final class RowMappers {
 
 
-
     private static boolean isValid(String s) {
         return ((s != null) && (s != ""));
     }
@@ -57,7 +56,6 @@ public final class RowMappers {
         @Override
         public RegistrationRequest mapRow(ResultSet row, int i) throws SQLException {
             RegistrationRequest registrationRequest = new RegistrationRequest();
-            registrationRequest.setRequestId(row.getLong("request_id"));
             registrationRequest.setTimeApplied(row.getTime("time_applied"));
             registrationRequest.setDateApplied(row.getDate("date_applied"));
             registrationRequest.setStatus(row.getInt("status"));
@@ -106,7 +104,7 @@ public final class RowMappers {
             transaction.setTripId(row.getLong("trip_id"));
             transaction.setTransactionId(row.getLong("transaction_id"));
             transaction.setTimeTransaction(row.getTime("time_transaction"));
-            transaction.setDateTranscation(row.getDate("date_transcation"));
+            transaction.setDateTransaction(row.getDate("date_transaction"));
             transaction.setAmount(row.getInt("amount"));
             transaction.setStatus(row.getInt("status"));
             transaction.setUsername(row.getString("username"));
@@ -139,15 +137,26 @@ public final class RowMappers {
         }
     };
 
-    public static RowMapper<FavouriteLocation> favouriteLocationRowMapper = new RowMapper<FavouriteLocation>() {
+
+    public static RowMapper<FavlocationJoinLocation> favouriteLocationRowMapper = new RowMapper<FavlocationJoinLocation>() {
         @Override
-        public FavouriteLocation mapRow(ResultSet row, int i) throws SQLException {
-            FavouriteLocation favouriteLocation = new FavouriteLocation();
-            favouriteLocation.setLocationId(row.getLong("location_id"));
+        public FavlocationJoinLocation mapRow(ResultSet row, int i) throws SQLException {
+            FavlocationJoinLocation favouriteLocation = new FavlocationJoinLocation();
+            favouriteLocation.setLabel(row.getString("label"));
             favouriteLocation.setLatitudeLocation(row.getFloat("latitude_location"));
             favouriteLocation.setLongitudeLocation(row.getFloat("longitude_location"));
-            favouriteLocation.setLabel(row.getString("label"));
             return favouriteLocation;
+        }
+    };
+
+    public static RowMapper<Location> LocationRowMapper = new RowMapper<Location>() {
+        @Override
+        public Location mapRow(ResultSet row, int rowNum) throws SQLException {
+            Location location = new Location();
+            location.setLocationId(row.getLong("location_id"));
+            location.setLatitudeLocation(row.getFloat("latitude"));
+            location.setLongitudeLocation(row.getFloat("longitude"));
+            return location;
         }
     };
 

@@ -31,8 +31,8 @@ public class PassengerController extends BaseController{
     @Getter
     @Setter
     static class TripDetails {
-        private FavouriteLocation favouriteLocation;
-        private List<FavouriteLocation> favouriteLocationsList;
+        private FavlocationJoinLocation favouriteLocation;
+        private List<FavlocationJoinLocation> favouriteLocationsList;
         private Trip trip;
         String scheduledTime;
     }
@@ -101,13 +101,16 @@ public class PassengerController extends BaseController{
         tripService.saveTrip(trip);
 
         if(addFavouriteLocation){
-            tripDetails.setFavouriteLocation(new FavouriteLocation());
-            FavouriteLocation favouriteLocation = tripDetails.getFavouriteLocation();
-            favouriteLocation.setLatitudeLocation(trip.getEndLatitude());
-            favouriteLocation.setLongitudeLocation(trip.getEndLongitude());
-            favouriteLocation.setPassengerId(passengerId);
-            favouriteLocation.setLabel("Hello");
-            favouriteLocationService.saveFavouriteLocation(favouriteLocation);
+            FavlocationJoinLocation favouriteLocation = tripDetails.getFavouriteLocation();
+            FavouriteLocation favLoc = new FavouriteLocation();
+            Location location=new Location();
+            location.setLatitudeLocation(trip.getEndLatitude());
+            location.setLongitudeLocation(trip.getEndLongitude());
+            favLoc.setPassengerId(passengerId);
+            favLoc.setLabel("Hello");
+            location = favouriteLocationService.saveLocation(location);
+            favLoc.setLocationId(location.getLocationId());
+            favouriteLocationService.saveFavouriteLocation(favLoc);
         }
         return "redirect:/passenger/newTripStatus";
     }
@@ -149,13 +152,16 @@ public class PassengerController extends BaseController{
         timer.schedule(scheduleTripInsert, d);
 
         if(addFavouriteLocation){
-            tripDetails.setFavouriteLocation(new FavouriteLocation());
-            FavouriteLocation favouriteLocation = tripDetails.getFavouriteLocation();
-            favouriteLocation.setLatitudeLocation(trip.getEndLatitude());
-            favouriteLocation.setLongitudeLocation(trip.getEndLongitude());
-            favouriteLocation.setPassengerId(passengerId);
-            favouriteLocation.setLabel("Hello");
-            favouriteLocationService.saveFavouriteLocation(favouriteLocation);
+            FavlocationJoinLocation favouriteLocation = tripDetails.getFavouriteLocation();
+            FavouriteLocation favLoc = new FavouriteLocation();
+            Location location=new Location();
+            location.setLatitudeLocation(trip.getEndLatitude());
+            location.setLongitudeLocation(trip.getEndLongitude());
+            favLoc.setPassengerId(passengerId);
+            favLoc.setLabel("Hello");
+            location = favouriteLocationService.saveLocation(location);
+            favLoc.setLocationId(location.getLocationId());
+            favouriteLocationService.saveFavouriteLocation(favLoc);
         }
         return "redirect:/passenger/newTripStatus";
     }

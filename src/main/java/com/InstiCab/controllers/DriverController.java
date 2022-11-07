@@ -124,7 +124,7 @@ public class DriverController extends BaseController{
         transaction.setAmount((int) (distance*10));
         transaction.setTripId(trip.getTripId());
         transaction.setStatus(0);
-        transaction.setDateTranscation(Date.valueOf(LocalDate.now()));
+        transaction.setDateTransaction(Date.valueOf(LocalDate.now()));
         transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
 
         EarningsHistory earning = new EarningsHistory();

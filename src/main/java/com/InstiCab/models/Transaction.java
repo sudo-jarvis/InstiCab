@@ -16,7 +16,7 @@ public class Transaction {
     private Long transactionId;
     private Long tripId;
     private Time timeTransaction;
-    private Date dateTranscation;
+    private Date dateTransaction;
     private int amount;
     private int status;
     private String username;
