@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransactionDispute {
     private Integer status;
-    private Long disputeId;
     private Long transactionId;
     private String description;
 }

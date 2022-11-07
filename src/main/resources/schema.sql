@@ -157,11 +157,10 @@ CREATE TABLE IF NOT EXISTS trip_request(
 );
 
 CREATE TABLE IF NOT EXISTS transaction_dispute(
+    transaction_id BIGINT NOT NULL AUTO_INCREMENT,
     status INT NOT NULL DEFAULT 0,
-    dispute_id INT NOT NULL AUTO_INCREMENT,
-    transaction_id BIGINT NOT NULL,
     description VARCHAR(255) NOT NULL,
-    PRIMARY KEY (dispute_id),
+    PRIMARY KEY (transaction_id),
     FOREIGN KEY (transaction_id) REFERENCES transaction(transaction_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

@@ -28,7 +28,7 @@ public class TransactionDisputeServiceImpl implements TransactionDisputeService 
     }
 
     @Override
-    public void changeDisputeStatus(Long disputeId, Integer status) {
-        transactionDisputeDAO.changeDisputeStatus(disputeId,status);
+    public void changeDisputeStatus(Long transactionId, Integer status) {
+        transactionDisputeDAO.changeDisputeStatus(transactionId,status);
     }
 }

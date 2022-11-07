@@ -47,8 +47,8 @@
                                     <td th:if="${transaction.status eq 0}" th:text="Pending"></td>
                                     <td th:if="${transaction.status eq 1}" th:text="Completed"></td>
                                     <td th:if="${transaction.status eq 2}" th:text="Disputed"></td>
-                                    <td th:if="${transaction.status eq 4}" th:text="Dispute_Accepted"></td>
                                     <td th:if="${transaction.status eq 3}" th:text="Dispute_Rejected"></td>
+                                    <td th:if="${transaction.status eq 4}" th:text="Dispute_Accepted"></td>
                                     <td>
                                         <a class="btn btn-warning" data-bs-toggle="collapse"
                                            th:href="'#collapse'+${transaction.transactionId}"
