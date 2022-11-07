@@ -61,7 +61,7 @@ public class RegisterController extends BaseController {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public String handleDuplicateKeyException(Model model, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("errorMsg", "Username not available!");
+        redirectAttributes.addFlashAttribute("errorMsg", "Error Occured. Kindly enter valid details");
         return "redirect:/login/";
     }
 
