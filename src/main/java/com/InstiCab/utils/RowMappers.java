@@ -116,7 +116,7 @@ public final class RowMappers {
         @Override
         public EarningsHistory mapRow(ResultSet row, int i) throws SQLException {
             EarningsHistory earning = new EarningsHistory();
-            earning.setEarningId(row.getLong("earning_id"));
+            earning.setTripId(row.getLong("trip_id"));
             earning.setCost(row.getFloat("cost"));
             earning.setDistanceTravelled(row.getFloat("distance_travelled"));
             earning.setDriverId(row.getLong("driver_id"));

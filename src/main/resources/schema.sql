@@ -47,12 +47,13 @@ CREATE TABLE IF NOT EXISTS coupon (
 );
 
 CREATE TABLE IF NOT EXISTS earning_history(
-    earning_id BIGINT NOT NULL AUTO_INCREMENT,
+    trip_id BIGINT NOT NULL AUTO_INCREMENT,
     cost FLOAT NOT NULL,
     distance_travelled FLOAT NOT NULL,
     driver_id BIGINT NOT NULL,
-    PRIMARY KEY(earning_id),
-    FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE
+    PRIMARY KEY(trip_id),
+    FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (trip_id) REFERENCES trip(trip_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS location(

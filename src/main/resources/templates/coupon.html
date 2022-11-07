@@ -48,6 +48,8 @@
                   <td>
                     <form method="POST"
                           th:action="@{/checkout/}">
+                      <input type="hidden"
+                             name="transactionId" th:value="transactionId" />
                       <input type="hidden" name="couponId" th:value="${coupon.couponId}" />
                       <input type="hidden" name="amountToPay" th:value="${coupon.couponDiscount}" />
                       <button type="submit" class="btn btn-success" >Redeem</button>
