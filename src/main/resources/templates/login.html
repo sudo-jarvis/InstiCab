@@ -12,7 +12,12 @@
 			<nav id="navbar" class="navbar order-last order-lg-0">
 				<ul>
 					<li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
-					<li><a class="nav-link scrollto" th:href="@{/register/driver/}"> Register as Driver</a></li>
+					<li class="dropdown"><a th:href="@{/register/passenger/}"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
+						<ul>
+							<li><a th:href="@{/register/passenger/}">As Passenger</a></li>
+							<li><a th:href="@{/register/driver/}">As Driver</a></li>
+						</ul>
+					</li>
 				</ul>
 				<i class="bi bi-list mobile-nav-toggle"></i>
 			</nav>
