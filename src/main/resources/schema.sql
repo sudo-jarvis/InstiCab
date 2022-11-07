@@ -46,6 +46,24 @@ CREATE TABLE IF NOT EXISTS coupon (
     FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS trip(
+    trip_id BIGINT NOT NULL AUTO_INCREMENT,
+    start_date date,
+    start_time time,
+    end_date date,
+    end_time time,
+    status INT NOT NULL,
+    start_latitude FLOAT NOT NULL,
+    start_longitude FLOAT NOT NULL,
+    end_latitude FLOAT NOT NULL,
+    end_longitude FLOAT NOT NULL,
+    driver_id BIGINT,
+    passenger_id BIGINT NOT NULL,
+    PRIMARY KEY (trip_id),
+    FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS earning_history(
     trip_id BIGINT NOT NULL AUTO_INCREMENT,
     cost FLOAT NOT NULL,
@@ -81,24 +99,6 @@ CREATE TABLE IF NOT EXISTS registration_request(
     date_accepted date DEFAULT NULL,
     PRIMARY KEY (driver_id),
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS trip(
-    trip_id BIGINT NOT NULL AUTO_INCREMENT,
-    start_date date,
-    start_time time,
-    end_date date,
-    end_time time,
-    status INT NOT NULL,
-    start_latitude FLOAT NOT NULL,
-    start_longitude FLOAT NOT NULL,
-    end_latitude FLOAT NOT NULL,
-    end_longitude FLOAT NOT NULL,
-    driver_id BIGINT,
-    passenger_id BIGINT NOT NULL,
-    PRIMARY KEY (trip_id),
-    FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS scheduled_trip(
