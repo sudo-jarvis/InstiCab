@@ -23,12 +23,12 @@ public class TransactionDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public void saveTransaction(Transaction transaction) throws Exception {
-        final String sql = "INSERT INTO transaction(trip_id,status,amount,username,date_transcation,time_transaction)" +
+        final String sql = "INSERT INTO transaction(trip_id,status,amount,username,date_transaction,time_transaction)" +
                 " VALUES (?,?, ?, ?, ?, ?)";
         try {
             jdbcTemplate.update(sql,transaction.getTripId(),transaction.getStatus(),transaction.getAmount(),
                     transaction.getUsername(),
-                    transaction.getDateTranscation(), transaction.getTimeTransaction());
+                    transaction.getDateTransaction(), transaction.getTimeTransaction());
         } catch (Exception e) {
             throw new Exception(e);
         }
@@ -56,7 +56,8 @@ public class TransactionDAO {
     }
 
     public void endTransaction(String username) throws Exception {
-        final String sql = "UPDATE transaction SET status = 1, time_transaction = ?, date_transcation = ? WHERE username = ?";
+        final String sql = "UPDATE transaction SET status = 1, time_transaction = ?, date_transaction = ? WHERE " +
+                "username = ?";
         try {
             jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
         } catch (Exception e) {

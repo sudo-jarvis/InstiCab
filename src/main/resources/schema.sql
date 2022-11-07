@@ -55,25 +55,30 @@ CREATE TABLE IF NOT EXISTS earning_history(
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS location(
+    location_id BIGINT NOT NULL AUTO_INCREMENT,
+    latitude FLOAT NOT NULL,
+    longitude FLOAT NOT NULL,
+    PRIMARY KEY (location_id)
+);
+
 CREATE TABLE IF NOT EXISTS favourite_location(
     location_id BIGINT NOT NULL AUTO_INCREMENT,
     label VARCHAR(255) NOT NULL,
-    latitude_location FLOAT NOT NULL,
-    longitude_location FLOAT NOT NULL,
     passenger_id BIGINT NOT NULL,
-    PRIMARY KEY (location_id),
-    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE
+    PRIMARY KEY (location_id,passenger_id),
+    FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (location_id) REFERENCES location(location_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS registration_request(
-    request_id BIGINT NOT NULL AUTO_INCREMENT,
+    driver_id BIGINT NOT NULL AUTO_INCREMENT,
     time_applied time NOT NULL,
     date_applied date NOT NULL,
     status INT NOT NULL,
     time_accepted time DEFAULT NULL,
     date_accepted date DEFAULT NULL,
-    driver_id BIGINT NOT NULL,
-    PRIMARY KEY (request_id),
+    PRIMARY KEY (driver_id),
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -130,7 +135,7 @@ CREATE TABLE IF NOT EXISTS transaction(
     transaction_id BIGINT NOT NULL AUTO_INCREMENT,
     trip_id BIGINT NOT NULL,
     time_transaction time NOT NULL,
-    date_transcation date NOT NULL,
+    date_transaction date NOT NULL,
     amount INT NOT NULL,
     status INT NOT NULL,
     username VARCHAR(255) NOT NULL,
@@ -158,3 +163,13 @@ CREATE TABLE IF NOT EXISTS transaction_dispute(
     PRIMARY KEY (dispute_id),
     FOREIGN KEY (transaction_id) REFERENCES transaction(transaction_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(1,25.260220092673407,82.99086984049433);
+
+INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(2,25.26203299523337,82.99381735939455);
+
+INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(3,25.258980826409978,82.99280814420261);
+
+INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(4,25.266216084701153,82.98792913561284);
+
+INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(5,25.261953268672897,82.9895353508379);

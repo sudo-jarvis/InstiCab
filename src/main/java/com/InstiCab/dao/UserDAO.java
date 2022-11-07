@@ -32,7 +32,7 @@ public class UserDAO {
                 "SELECT u.username FROM" +
                 " (SELECT username,COUNT(*) as ct" +
                 " FROM transaction" +
-                " WHERE status = 1 AND (date_transcation > ?)" +
+                " WHERE status = 1 AND (date_transaction > ?)" +
                 " GROUP BY username" +
                 " HAVING ct > 5" +
                 " LIMIT ?) AS u);";

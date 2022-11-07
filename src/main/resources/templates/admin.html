@@ -33,7 +33,6 @@
 							>
 								<thead class="thead-dark">
 								<tr>
-									<th scope="col">requestId</th>
 									<th scope="col">timeApplied</th>
 									<th scope="col">dateApplied</th>
 									<th scope="col">driverId</th>
@@ -42,7 +41,6 @@
 								<tbody class="text-white">
 								<div th:each="request:${requestDetailsList}">
 									<tr>
-										<td th:text="${request.registrationRequest.requestId}"></td>
 										<td th:text="${request.registrationRequest.timeApplied}"></td>
 										<td th:text="${request.registrationRequest.dateApplied}"></td>
 										<td th:text="${request.registrationRequest.driverId}"></td>

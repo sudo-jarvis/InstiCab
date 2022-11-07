@@ -2,7 +2,9 @@ package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.FavouriteLocationDAO;
 import com.InstiCab.dao.VehicleDAO;
+import com.InstiCab.models.FavlocationJoinLocation;
 import com.InstiCab.models.FavouriteLocation;
+import com.InstiCab.models.Location;
 import com.InstiCab.service.FavouriteLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,41 +32,42 @@ public class FavouriteLocationServiceImpl implements FavouriteLocationService {
         FavouriteLocation vt = new FavouriteLocation();
         FavouriteLocation lib = new FavouriteLocation();
 
-        l1.setLatitudeLocation((float) 25.260220092673407);
-        l1.setLongitudeLocation((float) 82.99086984049433);
         l1.setPassengerId(passengerId);
         l1.setLabel("LT-1");
+        l1.setLocationId(1L);
         favouriteLocationDAO.saveFavouriteLocation(l1);
 
-        l2.setLatitudeLocation((float) 25.26203299523337);
-        l2.setLongitudeLocation((float) 82.99381735939455);
         l2.setPassengerId(passengerId);
         l2.setLabel("LT-2");
+        l2.setLocationId(2L);
         favouriteLocationDAO.saveFavouriteLocation(l2);
 
-        l3.setLatitudeLocation((float) 25.258980826409978);
-        l3.setLongitudeLocation((float) 82.99280814420261);
         l3.setPassengerId(passengerId);
         l3.setLabel("LT-3");
+        l3.setLocationId(3L);
         favouriteLocationDAO.saveFavouriteLocation(l3);
 
-        vt.setLatitudeLocation((float) 25.266216084701153);
-        vt.setLongitudeLocation((float) 82.98792913561284);
         vt.setPassengerId(passengerId);
         vt.setLabel("VT");
+        vt.setLocationId(4L);
         favouriteLocationDAO.saveFavouriteLocation(vt);
 
-        lib.setLatitudeLocation((float) 25.261953268672897);
-        lib.setLongitudeLocation((float) 82.9895353508379);
         lib.setPassengerId(passengerId);
         lib.setLabel("Library");
-
+        lib.setLocationId(5L);
         favouriteLocationDAO.saveFavouriteLocation(lib);
-
     }
 
     @Override
-    public List<FavouriteLocation> getFavLocations(Long passengerId) {
+    public List<FavlocationJoinLocation> getFavLocations(Long passengerId) {
         return favouriteLocationDAO.getFavLocations(passengerId);
+    }
+
+    @Override
+    public Location saveLocation(Location location) {
+        if(!favouriteLocationDAO.existsLocation(location)){
+            favouriteLocationDAO.saveLocation(location);
+        }
+        return favouriteLocationDAO.getLocation(location);
     }
 }

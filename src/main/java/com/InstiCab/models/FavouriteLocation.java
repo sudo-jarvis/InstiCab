@@ -12,8 +12,6 @@ import lombok.Setter;
 public class FavouriteLocation {
     private Long locationId;
     private String label;
-    private float latitudeLocation;
-    private float longitudeLocation;
     private Long passengerId;
 
 }

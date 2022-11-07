@@ -1,6 +1,8 @@
 package com.InstiCab.dao;
 
+import com.InstiCab.models.FavlocationJoinLocation;
 import com.InstiCab.models.FavouriteLocation;
+import com.InstiCab.models.Location;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -19,11 +21,10 @@ public class FavouriteLocationDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public void saveFavouriteLocation(FavouriteLocation favouriteLocation) {
-        final String sql = "INSERT INTO favourite_location(label,latitude_location, longitude_location, passenger_id)" +
-                " VALUES (?,?,?,?)";
+        final String sql = "INSERT INTO favourite_location(label,location_id, passenger_id)" +
+                " VALUES (?,?,?)";
         try {
-            jdbcTemplate.update(sql,favouriteLocation.getLabel(),favouriteLocation.getLatitudeLocation(),
-                    favouriteLocation.getLongitudeLocation()
+            jdbcTemplate.update(sql,favouriteLocation.getLabel(),favouriteLocation.getLocationId()
                     ,favouriteLocation.getPassengerId());
         } catch (Exception e){
             System.out.println(e);
@@ -31,12 +32,46 @@ public class FavouriteLocationDAO {
         }
     }
 
-    public List<FavouriteLocation> getFavLocations(Long passengerId) {
-        final String sql = "SELECT f.location_id, f.label,f.latitude_location,f.longitude_location FROM favourite_location as f WHERE passenger_id = ?";
+    public boolean existsLocation(Location location){
+        final String sql = "SELECT * FROM location WHERE latitude = ? AND longitude = ?" ;
+        try {
+            return !(jdbcTemplate.query(sql, RowMappers.LocationRowMapper,location.getLatitudeLocation(),
+                    location.getLongitudeLocation()).isEmpty());
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Error");
+        }
+    }
+
+    public List<FavlocationJoinLocation> getFavLocations(Long passengerId) {
+        final String sql = "SELECT f.label as label,l.latitude as latitude_location,l.longitude as " +
+                "longitude_location FROM favourite_location as f, " +
+                "location as l WHERE passenger_id = ? AND l.location_id = f.location_id" ;
         try {
             return jdbcTemplate.query(sql, RowMappers.favouriteLocationRowMapper,passengerId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
+        }
+    }
+
+    public void saveLocation(Location location) {
+        final String sql = "INSERT INTO location(location_id, latitude,longitude) VALUES(?,?,?)";
+        try{
+            jdbcTemplate.update(sql,location.getLocationId(),location.getLatitudeLocation(),
+                    location.getLongitudeLocation());
+        }
+        catch(Exception e){
+            throw new UsernameNotFoundException("Error");
+        }
+    }
+
+    public Location getLocation(Location location){
+        final String sql = "SELECT * FROM location WHERE latitude=? AND longitude=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, RowMappers.LocationRowMapper, location.getLatitudeLocation(),
+                    location.getLongitudeLocation());
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Driver not found ! !");
         }
     }
 }
