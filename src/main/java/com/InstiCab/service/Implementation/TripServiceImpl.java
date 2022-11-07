@@ -84,4 +84,9 @@ public class TripServiceImpl implements TripService {
         tripDAO.changeTripStatus(tripId,status);
     }
 
+    @Override
+    public void cancelTrip(Long tripId) {
+        tripDAO.cancelTrip(tripId);
+    }
+
 }
