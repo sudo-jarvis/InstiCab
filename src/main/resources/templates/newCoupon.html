@@ -38,7 +38,7 @@
                     autocomplete="off"
                     class="text-start"
                     method="POST"
-                    th:action="@{/admin}"
+                    th:action="@{/admin/grantCoupon}"
             >
               <div class="input-group input-group-outline my-3">
                 <label class="form-label">Max Discount *</label>
@@ -58,6 +58,25 @@
                         required
                 />
               </div>
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">Since Date *</label>
+                <input
+                        type="date"
+                        class="form-control"
+                        name="sinceDate"
+                        required
+                />
+              </div>
+              <div class="input-group input-group-outline my-3">
+                <label class="form-label">No. of Coupons *</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        name="numCoupons"
+                        required
+                />
+              </div>
+
               <div class="text-center">
                 <input type="submit" value="Add Coupon" class="btn bg-gradient-primary w-100 my-4 mb-2" />
               </div>

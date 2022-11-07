@@ -128,13 +128,15 @@ CREATE TABLE IF NOT EXISTS service(
 
 CREATE TABLE IF NOT EXISTS transaction(
     transaction_id BIGINT NOT NULL AUTO_INCREMENT,
+    trip_id BIGINT NOT NULL,
     time_transaction time NOT NULL,
     date_transcation date NOT NULL,
     amount INT NOT NULL,
     status INT NOT NULL,
     username VARCHAR(255) NOT NULL,
     PRIMARY KEY (transaction_id),
-    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (trip_id) REFERENCES trip(trip_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS trip_request(
@@ -146,4 +148,13 @@ CREATE TABLE IF NOT EXISTS trip_request(
     FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (trip_id) REFERENCES trip(trip_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS transaction_dispute(
+    status INT NOT NULL DEFAULT 0,
+    dispute_id INT NOT NULL AUTO_INCREMENT,
+    transaction_id BIGINT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    PRIMARY KEY (dispute_id),
+    FOREIGN KEY (transaction_id) REFERENCES transaction(transaction_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

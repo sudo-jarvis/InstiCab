@@ -17,13 +17,34 @@ import java.util.List;
 
 @Repository
 public class UserDAO {
-    private JdbcTemplate jdbcTemplate;
+    private static JdbcTemplate jdbcTemplate;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserDAO(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jdbcTemplate = jdbcTemplate;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    public List<User> getCouponBeneficiaries(Date sinceDate, Integer numCoupons) {
+        final String sql = "SELECT * FROM user" +
+                " WHERE username IN (" +
+                "SELECT u.username FROM" +
+                " (SELECT username,COUNT(*) as ct" +
+                " FROM transaction" +
+                " WHERE status = 1 AND (date_transcation > ?)" +
+                " GROUP BY username" +
+                " HAVING ct > 5" +
+                " LIMIT ?) AS u);";
+        try {
+//            Random r = new Random();
+//            int low = 10;
+//            int high = coupon.getMaxDiscount();
+//            float value = r.nextInt(high-low) + low;
+            return jdbcTemplate.query(sql, RowMappers.userRowMapper, sinceDate, numCoupons);
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("Error");
+        }
     }
 
     public void createUser(User user) {

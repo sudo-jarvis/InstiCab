@@ -47,6 +47,9 @@
                                     <td th:text="${transaction.amount}"></td>
                                     <td th:if="${transaction.status eq 0}" th:text="Pending"></td>
                                     <td th:if="${transaction.status eq 1}" th:text="Completed"></td>
+                                    <td th:if="${transaction.status eq 2}" th:text="Disputed"></td>
+                                    <td th:if="${transaction.status eq 4}" th:text="Dispute_Accepted"></td>
+                                    <td th:if="${transaction.status eq 3}" th:text="Dispute_Rejected"></td>
                                     <td>
                                         <a class="btn btn-warning" data-bs-toggle="collapse"
                                            th:href="'#collapse'+${transaction.transactionId}"
@@ -57,7 +60,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form method="POST"
+                                        <form th:if="${transaction.status eq 0  }" method="POST"
+                                              th:action="@{/passenger/coupon/}">
+                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
+                                            <button type="submit" class="btn btn-info" >Use Coupon</button>
+                                        </form>
+                                        <form th:if="${transaction.status eq 3  }" method="POST"
                                               th:action="@{/passenger/coupon/}">
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-info" >Use Coupon</button>
@@ -65,11 +73,40 @@
 <!--                                        <a th:href="@{/passenger/coupon/}" class="btn bg-gradient-primary w-auto me-2">Use Coupon</a>-->
                                     </td>
                                     <td>
-                                        <form method="POST"
+                                        <form th:if="${transaction.status eq 0}" method="POST"
                                               th:action="@{/checkout/}">
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-success" >Pay</button>
                                         </form>
+                                        <form th:if="${transaction.status eq 3}" method="POST"
+                                              th:action="@{/checkout/}">
+                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
+                                            <button type="submit" class="btn btn-success" >Pay</button>
+                                        </form>
+                                        <a th:if="${transaction.status eq 0}" class="btn btn-warning"
+                                           data-bs-toggle="collapse"
+                                           th:href="'#collapse2'+${transaction.transactionId}"
+                                           role="button"
+                                           aria-expanded="false"
+                                           th:aria-controls="'collapse2'+${transaction.transactionId}">
+                                            Raise Dispute
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class ="collapse" th:id="'collapse2'+${transaction.transactionId}">
+
+                                    <td colspan="12">
+
+                                        <form method="POST"
+                                              th:action="@{/admin/disputes/raise/__${transaction.transactionId}__/}">
+                                            <div class="input-group input-group-outline my-3">
+                                                <label class="form-label">Dispute Description *</label>
+                                                <input type="text" class="form-control" name="description"
+                                                       th:value="${dispute.description}" required />
+                                            </div>
+                                            <button type="submit" class="btn btn-danger" >Raise Dispute</button>
+                                        </form>
+
                                     </td>
                                 </tr>
                                 <tr class ="collapse" th:id="'collapse'+${transaction.transactionId}">
@@ -84,6 +121,12 @@
                                         <div class="row">
                                             <div class="col-2"> Transaction Time</div>
                                             <div th:text="${transaction.timeTransaction}"
+                                                 class="col-6"></div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-2"> Transaction Status</div>
+                                            <div th:text="${transaction.status}"
                                                  class="col-6"></div>
                                         </div>
 

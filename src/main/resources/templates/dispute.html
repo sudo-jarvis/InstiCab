@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="components/head :: head"></head>
+<body loading="lazy">
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-item text-light" href="#">InstiCab</a>
+    <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+        </li>
+        <li class="nav-item text-light">
+          <a th:href="@{/about/}" class="nav-link text-light">About</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+
+        <li class="nav-item ">
+          <a th:href="@{/logout/}" class="nav-link active text-light" aria-current="page">
+            <button type="button" class="btn btn-light">Logout</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br />
+<div class="page-header align-items-start min-vh-100 mt-7" loading="lazy">
+  <div class="container my-auto">
+    <div class="row g-7">
+      <div class="col-lg-12 col-md-12 col-12 mx-auto">
+        <div class="card z-index-0 fadeIn3 fadeInBottom">
+          <div class="card-body bg-gradient-secondary text-center">
+            <h1>Disputes</h1>
+            <div th:if="${disputesList eq null or #lists.size(disputesList) eq 0}">
+              No Disputes found ! <br />
+            </div>
+            <table
+                    class="table table-dark table-striped"
+                    th:if="${disputesList ne null and #lists.size(disputesList) ne 0}"
+            >
+              <thead class="thead-dark">
+              <tr>
+                <th scope="col">disputeId</th>
+                <th scope="col">transactionId</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody class="text-white">
+              <div th:each="request:${disputesList}">
+                <tr>
+                  <td th:text="${request.disputeId}"></td>
+                  <td th:text="${request.transactionId}"></td>
+                  <td th:text="${request.description}"></td>
+                  <td>
+
+                    <form th:if="${request.status eq 0}" method="POST"
+                          th:action="@{/admin/disputes/accept/__${request.disputeId}__/__${request.transactionId}__/}">
+                      <button type="submit" class="btn btn-success" >Accept</button>
+                    </form>
+                    <form th:if="${request.status eq 0}" method="POST"
+                          th:action="@{/admin/disputes/reject/__${request.disputeId}__/__${request.transactionId}__/}">
+                      <button type="submit" class="btn btn-danger" >Reject</button>
+                    </form>
+
+                  </td>
+
+                </tr>
+              </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer th:replace="components/footer :: footer"></footer>
+</div>
+<script th:replace="components/toast :: toast"></script>
+</body>
+</html>

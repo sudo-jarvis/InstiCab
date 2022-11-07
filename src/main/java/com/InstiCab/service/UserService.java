@@ -4,6 +4,7 @@ import com.InstiCab.models.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 @Service
 public interface UserService {
@@ -16,4 +17,6 @@ public interface UserService {
     UserDetails loadUserByUsername(String username);
 
     void updateLoginDetails(String username) throws Exception;
+
+    List<User> getCouponBeneficiaries(Date sinceDate, Integer numCoupons);
 }
