@@ -89,4 +89,12 @@ public class TripServiceImpl implements TripService {
         tripDAO.cancelTrip(tripId);
     }
 
+    @Override
+    public boolean checkValidTrip(Trip trip) {
+        if(trip.getEndLongitude()== trip.getStartLongitude() && trip.getStartLatitude() == trip.getEndLatitude())
+            return false;
+        if(trip.getEndLatitude() == 0.0 || trip.getEndLongitude() == 0.0 || trip.getStartLatitude() == 0.0 || trip.getStartLongitude() == 0.0)
+            return false;
+        return true;
+    }
 }
