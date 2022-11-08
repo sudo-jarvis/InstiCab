@@ -97,4 +97,9 @@ public class TripServiceImpl implements TripService {
             return false;
         return true;
     }
+
+    @Override
+    public void saveFeedback(String feedback, Long tripId) {
+        tripDAO.saveFeedback(feedback, tripId);
+    }
 }

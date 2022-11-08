@@ -33,9 +33,10 @@
                         <div>Status: <span th:text='${status}' /></div>
                         <div>Charge id.: <span th:text='${chargeId}' /></div>
                         <div>Transaction id.: <span th:text='${transactionId}' /></div>
-                        <form method="POST"
-                              th:action="@{/feedback/}">
-                            <button type="submit" class="btn btn-primary" >Give Feedback</button>
+                        <form method="POST" th:action="@{/feedback/}">
+                            <input type="hidden"
+                                   name="tripId" th:value="${tripId}" />
+                            <button type="submit" class="btn btn-warning" >Give Feedback</button>
                         </form>
                         <form method="POST"
                               th:action="@{/endTransaction/}">

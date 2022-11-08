@@ -35,7 +35,7 @@ public class TripDAO {
 
 
     public boolean tripAlreadyExists(Long passengerId) {
-        final String sql = "SELECT * FROM trip WHERE (status!=3 AND status!=2) AND passenger_id=?";
+        final String sql = "SELECT * FROM trip WHERE (status=0 AND status=1) AND passenger_id=?";
         try {
             return !jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId).isEmpty();
         } catch (Exception e) {
@@ -153,6 +153,17 @@ public class TripDAO {
         } catch (Exception e){
             System.out.println(e);
             throw new DuplicateKeyException("Trip doesnt exist ! !");
+        }
+    }
+
+    public void saveFeedback(String feedback, Long tripId) {
+        final String sql = "UPDATE trip SET feedback = ? WHERE " +
+                "trip_id = ?";
+        try {
+            jdbcTemplate.update(sql,feedback,tripId);
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip Request doesnt exist ! !");
         }
     }
 }

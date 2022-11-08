@@ -30,4 +30,6 @@ public interface TripService {
 
     void cancelTrip(Long tripId);
     boolean checkValidTrip(Trip trip);
+
+    void saveFeedback(String feedback, Long tripId);
 }

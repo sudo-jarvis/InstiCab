@@ -55,7 +55,7 @@ public class ChargeController {
     }
 
     @PostMapping("/charge")
-    public String charge(@RequestParam(name = "transactionId") String transactionId, ChargeRequest chargeRequest,
+    public String charge(@RequestParam(name = "transactionId") String transactionId, @RequestParam(name = "tripId") String tripId, ChargeRequest chargeRequest,
                          Model model) throws Exception {
         chargeRequest.setDescription("Example charge");
         chargeRequest.setCurrency(ChargeRequest.Currency.INR);
@@ -64,6 +64,7 @@ public class ChargeController {
         model.addAttribute("status", charge.getStatus());
         model.addAttribute("chargeId", charge.getId());
         model.addAttribute("transactionId", Long.valueOf(transactionId));
+        model.addAttribute("tripId", Long.valueOf(tripId));
         System.out.println(transactionId);
         Transaction transaction = transactionService.getTransaction(Long.valueOf(transactionId));
         transaction.setDateTransaction(Date.valueOf(LocalDate.now()));

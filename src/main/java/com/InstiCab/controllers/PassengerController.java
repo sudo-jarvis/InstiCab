@@ -201,6 +201,18 @@ public class PassengerController extends BaseController{
         return "transaction";
     }
 
+    @PostMapping("/feedback")
+    public String feedback(@RequestParam(name = "tripId") String tripId, Model model) throws Exception {
+        model.addAttribute("tripId", tripId);
+        return "feedback";
+    }
+
+    @PostMapping("/saveFeedback")
+    public String saveFeedback(@RequestParam(name = "feedback") String feedback, @RequestParam(name = "tripId") String tripId, Model model) throws Exception {
+        tripService.saveFeedback(feedback, Long.valueOf(tripId));
+        return "redirect:/";
+    }
+
     @PostMapping("/endTransaction")
     public String endTransaction(Model model,RedirectAttributes redirectAttributes) throws Exception {
         Long passengerId = passengerService.getLoggedInPassengerId();
@@ -211,7 +223,8 @@ public class PassengerController extends BaseController{
 
     @PostMapping("/passenger/coupon")
     public String useCoupon(@RequestParam(name = "amountToPay") Integer amountToPay, @RequestParam(name =
-            "transactionId") String transactionId, Model model,RedirectAttributes redirectAttributes) throws ParseException {
+            "transactionId") String transactionId, @RequestParam(name =
+            "tripId") String tripId, Model model,RedirectAttributes redirectAttributes) throws ParseException {
 
         Long passengerId = passengerService.getLoggedInPassengerId();
         List<Coupon>allCoupons = couponService.getPassengerAllCoupons(passengerId);
@@ -226,6 +239,7 @@ public class PassengerController extends BaseController{
         }
         model.addAttribute("couponList",availableCoupons);
         model.addAttribute("transactionId",transactionId);
+        model.addAttribute("tripId",tripId);
         return "coupon";
     }
 

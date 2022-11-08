@@ -28,6 +28,8 @@
 <form role="form" action='/charge' method='POST' id='checkout-form'>
     <input type="hidden"
            name="transactionId" th:value="${transactionId}" />
+    <input type="hidden"
+           name="tripId" th:value="${tripId}" />
     <input type='hidden' th:value='${amount}' name='amount' />
     <label>Price:<span th:text='${amount/100}' /></label>
     <script

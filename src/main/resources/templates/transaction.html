@@ -64,6 +64,8 @@
                                               th:action="@{/passenger/coupon/}">
                                             <input type="hidden"
                                                    name="transactionId" th:value="${transaction.transactionId}" />
+                                            <input type="hidden"
+                                                   name="tripId" th:value="${transaction.tripId}" />
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-info" >Use Coupon</button>
                                         </form>
@@ -82,6 +84,8 @@
                                               th:action="@{/checkout/}">
                                             <input type="hidden"
                                                    name="transactionId" th:value="${transaction.transactionId}" />
+                                            <input type="hidden"
+                                                   name="tripId" th:value="${transaction.tripId}" />
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-success" >Pay</button>
                                         </form>
