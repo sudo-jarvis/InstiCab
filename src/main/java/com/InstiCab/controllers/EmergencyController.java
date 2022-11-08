@@ -58,7 +58,7 @@ public class EmergencyController extends BaseController {
 
     }
 
-    @GetMapping("/ViewEmergencyRequest")
+    @GetMapping("/admin/ViewEmergencyRequest")
     public String ViewEmergencyRequests(Model model){
         if(!isAuthorized(model,ROLE_ADMIN)){
             return FORBIDDEN_ERROR_PAGE;
