@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsFileUploadSupport;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -104,23 +105,38 @@ public class AdminController extends BaseController{
     }
 
     @GetMapping("/admin/newCoupon")
-    public String newCoupon(Model model) {
+    public String newCoupon(Model model,RedirectAttributes redirectAttributes) {
         return "newCoupon";
     }
 
     @PostMapping({"/admin/grantCoupon"})
-    public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name = "couponValidity") Date couponValidity, @RequestParam(name = "sinceDate") Date sinceDate, @RequestParam(name = "numCoupons") Integer numCoupons, Model model) {
+    public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name =
+            "couponValidity") Date couponValidity, @RequestParam(name = "sinceDate") Date sinceDate,
+                              @RequestParam(name = "numCoupons") Integer numCoupons, Model model,
+                              RedirectAttributes redirectAttributes) {
+        Date today = Date.valueOf(LocalDate.now());
+        if(today.compareTo(couponValidity) > 0 ){
+            redirectAttributes.addFlashAttribute("errorMsg",
+                    "Coupon Validity Cannot be in past ! !");
+            return "redirect:/admin/newCoupon";
+        }
+        if(sinceDate.compareTo(today) > 0 ){
+            redirectAttributes.addFlashAttribute("errorMsg",
+                    "Since Date Cannot be In future ! !");
+            return "redirect:/admin/newCoupon";
+        }
+
+
         List<User> couponBeneficiaries = userService.getCouponBeneficiaries(sinceDate, numCoupons);
-        if(couponBeneficiaries.size() >= numCoupons){
-            for (int i = 0; i < numCoupons; i++) {
-                String username = couponBeneficiaries.get(i).getUsername();
-                Long passengerId = passengerService.getLoggedPassengerIdByUsername(username);
-                Coupon coupon = new Coupon();
-                coupon.setMaxDiscount(maxDiscount);
-                coupon.setCouponValidity(couponValidity);
-                coupon.setPassengerId(passengerId);
-                couponService.saveCoupon(coupon);
-            }
+        numCoupons = numCoupons > couponBeneficiaries.size() ? couponBeneficiaries.size() : numCoupons;
+        for (int i = 0; i < numCoupons; i++) {
+            String username = couponBeneficiaries.get(i).getUsername();
+            Long passengerId = passengerService.getLoggedPassengerIdByUsername(username);
+            Coupon coupon = new Coupon();
+            coupon.setMaxDiscount(maxDiscount);
+            coupon.setCouponValidity(couponValidity);
+            coupon.setPassengerId(passengerId);
+            couponService.saveCoupon(coupon);
         }
         return "newCoupon";
     }

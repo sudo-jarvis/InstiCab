@@ -59,33 +59,39 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form th:if="${transaction.status eq 0  }" method="POST"
-                                              th:action="@{/passenger/coupon/}">
-                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
-                                            <button type="submit" class="btn btn-info" >Use Coupon</button>
-                                        </form>
-                                        <form th:if="${transaction.status eq 3  }" method="POST"
+                                        <form th:if="${transaction.status eq 0 or transaction.status eq 3 }"
+                                              method="POST"
                                               th:action="@{/passenger/coupon/}">
                                             <input type="hidden"
                                                    name="transactionId" th:value="${transaction.transactionId}" />
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-info" >Use Coupon</button>
                                         </form>
+<!--                                        <form th:if="${transaction.status eq 3  }" method="POST"-->
+<!--                                              th:action="@{/passenger/coupon/}">-->
+<!--                                            <input type="hidden"-->
+<!--                                                   name="transactionId" th:value="${transaction.transactionId}" />-->
+<!--                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />-->
+<!--                                            <button type="submit" class="btn btn-info" >Use Coupon</button>-->
+<!--                                        </form>-->
 <!--                                        <a th:href="@{/passenger/coupon/}" class="btn bg-gradient-primary w-auto me-2">Use Coupon</a>-->
                                     </td>
                                     <td>
-                                        <form th:if="${transaction.status eq 0}" method="POST"
+                                        <form th:if="${transaction.status eq 0 or transaction.status eq 3}"
+                                              method="POST"
                                               th:action="@{/checkout/}">
                                             <input type="hidden"
                                                    name="transactionId" th:value="${transaction.transactionId}" />
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
                                             <button type="submit" class="btn btn-success" >Pay</button>
                                         </form>
-                                        <form th:if="${transaction.status eq 3}" method="POST"
-                                              th:action="@{/checkout/}">
-                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
-                                            <button type="submit" class="btn btn-success" >Pay</button>
-                                        </form>
+<!--                                        <form th:if="${transaction.status eq 3}" method="POST"-->
+<!--                                              th:action="@{/checkout/}">-->
+<!--                                            <input type="hidden"-->
+<!--                                                   name="transactionId" th:value="${transaction.transactionId}" />-->
+<!--                                            <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />-->
+<!--                                            <button type="submit" class="btn btn-success" >Pay</button>-->
+<!--                                        </form>-->
                                         <a th:if="${transaction.status eq 0}" class="btn btn-warning"
                                            data-bs-toggle="collapse"
                                            th:href="'#collapse2'+${transaction.transactionId}"

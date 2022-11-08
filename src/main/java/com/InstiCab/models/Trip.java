@@ -26,3 +26,10 @@ public class Trip {
     private Long driverId;
     private Long passengerId;
 }
+
+
+// 0 - PENDING
+// 1 - ACCEPTED/ RUNNING
+// 2 - CANCELLED
+// 3 - TRIP COMPLETE WITHOUT PAYMENT
+// 4 - TRIP COMPLETE WITH PAYMENT

@@ -52,8 +52,9 @@
                       <td th:text="${passengerTrip.endLongitude}"></td>
                       <td th:if="${passengerTrip.status eq 0}" th:text="Pending"></td>
                       <td th:if="${passengerTrip.status eq 1}" th:text="Running"></td>
-                      <td th:if="${passengerTrip.status eq 2}" th:text="Rejected"></td>
-                      <td th:if="${passengerTrip.status eq 3}" th:text="Completed"></td>
+                      <td th:if="${passengerTrip.status eq 2}" th:text="Cancelled"></td>
+                      <td th:if="${passengerTrip.status eq 3}" th:text="Payment_Pending"></td>
+                      <td th:if="${passengerTrip.status eq 4}" th:text="Completed"></td>
                       <td>
                         <a class="btn btn-warning" data-bs-toggle="collapse"
                            th:href="'#collapse'+${passengerTrip.tripId}"
@@ -64,7 +65,7 @@
                         </a>
                       </td>
                       <td>
-                        <form method="POST" th:if="${passengerTrip.status ne 0 and passengerTrip.status ne 2}"
+                        <form method="POST" th:if="${passengerTrip.status eq 0}"
                               th:action="@{/passenger/cancel/__${passengerTrip.tripId}__/}">
                           <button type="submit" class="btn btn-danger" >Cancel</button>
                         </form>

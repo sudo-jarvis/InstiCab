@@ -147,7 +147,7 @@ public class TripDAO {
     }
 
     public void cancelTrip(Long tripId) {
-        final String sql = "UPDATE trip SET status = 2 WHERE trip_id = ?";
+        final String sql = "UPDATE trip SET status = 2 WHERE trip_id = ? AND status=0";
         try {
             jdbcTemplate.update(sql, tripId);
         } catch (Exception e){

@@ -206,6 +206,7 @@ public class PassengerController extends BaseController{
     @PostMapping("/passenger/coupon")
     public String useCoupon(@RequestParam(name = "amountToPay") Integer amountToPay, @RequestParam(name =
             "transactionId") String transactionId, Model model,RedirectAttributes redirectAttributes) throws ParseException {
+
         Long passengerId = passengerService.getLoggedInPassengerId();
         List<Coupon>allCoupons = couponService.getPassengerAllCoupons(passengerId);
         List<Coupon> availableCoupons = new ArrayList<>();
@@ -218,15 +219,13 @@ public class PassengerController extends BaseController{
             }
         }
         model.addAttribute("couponList",availableCoupons);
-        model.addAttribute(transactionId);
+        model.addAttribute("transactionId",transactionId);
         return "coupon";
     }
 
     @GetMapping("/passenger/cancel/{tripId}")
     public String invalidPage(Model model){
-        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER))
-            return FORBIDDEN_ERROR_PAGE;
-        return "redirect:/";
+        return FORBIDDEN_ERROR_PAGE;
     }
 
     @PostMapping("/passenger/cancel/{tripId}")
