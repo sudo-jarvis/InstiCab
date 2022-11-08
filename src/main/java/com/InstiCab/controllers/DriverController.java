@@ -148,7 +148,7 @@ public class DriverController extends BaseController{
         return "allTrips";
     }        
 
-    @GetMapping("/driver/myprofile")
+    @GetMapping("/driver/profile")
     public String driverProfile(Model model) {
         if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
             return FORBIDDEN_ERROR_PAGE;
