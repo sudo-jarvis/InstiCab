@@ -109,6 +109,7 @@ public class AdminController extends BaseController{
         return "newCoupon";
     }
 
+
     @PostMapping({"/admin/grantCoupon"})
     public String grantCoupon(@RequestParam(name = "maxDiscount") Integer maxDiscount, @RequestParam(name =
             "couponValidity") Date couponValidity, @RequestParam(name = "sinceDate") Date sinceDate,
@@ -149,7 +150,30 @@ public class AdminController extends BaseController{
             model.addAttribute("disputesList",transactionDisputes);
             return "dispute";
         }
-
+    @GetMapping("/admin/allUsers")
+    public String showUsers(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        List <User> allUsers = userService.getAllUsers();
+        model.addAttribute("userList",allUsers);
+        return "allUsers";
+    }
+    @GetMapping("/admin/allPendingRequest")
+    public String showPendingRequest(Model model){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_ADMIN))
+            return FORBIDDEN_ERROR_PAGE;
+        List<RegistrationRequest>requestList = registrationRequestService.getPendingRequest();
+        List<Driver>driverList = driverService.getPendingDrivers();
+        List<RequestDetails>requestDetailsList = new ArrayList<>();
+        for(int i = 0; i < requestList.size(); i++) {
+            RequestDetails requestDetails = new RequestDetails();
+            requestDetails.setRegistrationRequest(requestList.get(i));
+            requestDetails.setDriver(driverList.get(i));
+            requestDetailsList.add(requestDetails);
+        }
+        model.addAttribute("requestDetailsList",requestDetailsList);
+        return "allPendingRequest";
+    }
         @PostMapping("/admin/disputes/reject/{transactionId}")
         public String rejectDispute(@PathVariable("transactionId") Long transactionId,
                 Model model) throws Exception {

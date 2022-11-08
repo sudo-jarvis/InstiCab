@@ -23,18 +23,25 @@
         </div>
     </header>
     <section id="hero" class="d-flex align-items-center justify-content-center">
-        <h3 th:if='${error}' th:text='${error}' style='color: red;'></h3>
-        <div th:unless='${error}'>
-            <h3 style='color: green;'>Success!</h3>
-            <div>Id.: <span th:text='${id}' /></div>
-            <div>Status: <span th:text='${status}' /></div>
-            <div>Charge id.: <span th:text='${chargeId}' /></div>
-            <div>Transaction id.: <span th:text='${transactionId}' /></div>
-            <form method="POST"
-                  th:action="@{/endTransaction/}">
-                <button type="submit" class="btn btn-primary" >Return to Homepage</button>
-            </form>
+        <div class="card">
+            <div class="card-body bg-gradient-secondary text-center">
+                <div>
+                    <h3 th:if='${error}' th:text='${error}' style='color: red;'></h3>
+                    <div th:unless='${error}'>
+                        <h3 style='color: green;'>Success!</h3>
+                        <div>Id.: <span th:text='${id}' /></div>
+                        <div>Status: <span th:text='${status}' /></div>
+                        <div>Charge id.: <span th:text='${chargeId}' /></div>
+                        <div>Transaction id.: <span th:text='${transactionId}' /></div>
+                        <form method="POST"
+                              th:action="@{/endTransaction/}">
+                            <button type="submit" class="btn btn-primary" >Return to Homepage</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </section>
         <script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
         <script src="/assets/vendor/aos/aos.js"></script>

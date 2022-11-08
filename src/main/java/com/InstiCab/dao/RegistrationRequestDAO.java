@@ -1,6 +1,7 @@
 package com.InstiCab.dao;
 
 import com.InstiCab.models.RegistrationRequest;
+import com.InstiCab.models.User;
 import com.InstiCab.utils.RowMappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Repository
 public class RegistrationRequestDAO {
-    private JdbcTemplate jdbcTemplate;
+    private static JdbcTemplate jdbcTemplate;
 
     @Autowired
     public RegistrationRequestDAO(JdbcTemplate jdbcTemplate) {
