@@ -45,9 +45,9 @@ public class TripDAO {
         }
     }
     public List<Trip> getTripReqList() throws Exception {
-        final String sql = "SELECT * from trip WHERE status = ? order by trip_id";
+        final String sql = "SELECT * from trip WHERE status = 0 order by trip_id";
         try {
-            return jdbcTemplate.query(sql,RowMappers.tripRowMapper,0);
+            return jdbcTemplate.query(sql,RowMappers.tripRowMapper);
         }catch (Exception e) {
             System.out.println(e);
             throw new Exception("error in getting trip request list");

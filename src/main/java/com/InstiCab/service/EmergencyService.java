@@ -14,4 +14,6 @@ public interface EmergencyService {
     public void createHospitalRequest();
 
     List<Emergency> getEmergencyRequests();
+
+    void deleteRequest();
 }
