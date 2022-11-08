@@ -1,6 +1,9 @@
 package com.InstiCab.service;
 
+import com.InstiCab.models.Emergency;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface EmergencyService {
@@ -9,4 +12,6 @@ public interface EmergencyService {
     public void createPoliceRequest();
 
     public void createHospitalRequest();
+
+    List<Emergency> getEmergencyRequests();
 }

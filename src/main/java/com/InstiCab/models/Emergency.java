@@ -14,7 +14,7 @@ import java.sql.Time;
 public class Emergency {
     private Long requestId;
     private Time requestTime;
-    private String type;
+    private Integer type;
     private String username;
 
 
