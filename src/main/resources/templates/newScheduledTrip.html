@@ -183,10 +183,13 @@
                 <label class="form-check-label mb-0 ms-2" for="addFavLoc">Add destination to your Favourite locations</label>
               </div>
 
+
               <div class="col input-group input-group-outline my-3 d-none" id="destination1">
                 <label for="addLabel" class="form-label">Add label: </label>
-                <input id="addLabelName" type="text" class="form-control" required>
-              </div>
+                <input id="addLabelFav" name="favLocLabel" type="text" class="form-control"
+                       th:value="${tripDetails.favouriteLocation.label}"
+                       required>
+              </div>>
 
 
               <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">

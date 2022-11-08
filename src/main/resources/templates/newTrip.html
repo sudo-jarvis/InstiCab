@@ -188,7 +188,9 @@
 
               <div class="col input-group input-group-outline my-3 d-none" id="destination1">
                 <label for="addLabel" class="form-label">Add label: </label>
-                <input id="addLabelName" type="text" class="form-control" required>
+                <input id="addLabelFav" name="favLocLabel" type="text" class="form-control"
+                       th:value="${tripDetails.favouriteLocation.label}"
+                       required>
               </div>
 
 

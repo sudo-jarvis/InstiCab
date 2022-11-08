@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Repository
@@ -33,11 +34,16 @@ public class FavouriteLocationDAO {
     }
 
     public boolean existsLocation(Location location){
-        final String sql = "SELECT * FROM location WHERE latitude = ? AND longitude = ?" ;
+        final String sql = "SELECT * FROM location WHERE ABS(latitude-?)<0.0001 AND (longitude-?)<0.0001" ;
         try {
-            return !(jdbcTemplate.query(sql, RowMappers.LocationRowMapper,location.getLatitudeLocation(),
-                    location.getLongitudeLocation()).isEmpty());
+            DecimalFormat df = new DecimalFormat("#.####");
+            Float n1 = location.getLatitudeLocation();
+            Float n2 = location.getLongitudeLocation();
+
+            return !(jdbcTemplate.query(sql, RowMappers.LocationRowMapper,df.format(n1),
+                    df.format(n2)).isEmpty());
         } catch (Exception e) {
+            System.out.println("1"+ e);
             throw new UsernameNotFoundException("Error");
         }
     }
@@ -61,16 +67,21 @@ public class FavouriteLocationDAO {
                     location.getLongitudeLocation());
         }
         catch(Exception e){
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }
 
     public Location getLocation(Location location){
-        final String sql = "SELECT * FROM location WHERE latitude=? AND longitude=?";
+        final String sql = "SELECT * FROM location WHERE ABS(latitude-?)<0.0001 AND (longitude-?)<0.0001";
         try {
-            return jdbcTemplate.queryForObject(sql, RowMappers.LocationRowMapper, location.getLatitudeLocation(),
-                    location.getLongitudeLocation());
+            DecimalFormat df = new DecimalFormat("#.####");
+            Float n1 = location.getLatitudeLocation();
+            Float n2 = location.getLongitudeLocation();
+            System.out.println(df.format(n1)+" "+df.format(n2));
+            return jdbcTemplate.queryForObject(sql, RowMappers.LocationRowMapper, df.format(n1),df.format(n2));
         } catch (Exception e) {
+            System.out.println("2 "+location.getLatitudeLocation()+" "+location.getLongitudeLocation()+" " + e);
             throw new UsernameNotFoundException("Driver not found ! !");
         }
     }

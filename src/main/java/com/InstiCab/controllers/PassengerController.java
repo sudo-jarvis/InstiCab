@@ -2,7 +2,9 @@ package com.InstiCab.controllers;
 
 import com.InstiCab.models.*;
 import com.InstiCab.service.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,9 @@ public class PassengerController extends BaseController{
 
     @Getter
     @Setter
-    static class TripDetails {
+    @AllArgsConstructor
+    @NoArgsConstructor
+   static class TripDetails {
         private FavlocationJoinLocation favouriteLocation;
         private List<FavlocationJoinLocation> favouriteLocationsList;
         private Trip trip;
@@ -67,6 +71,7 @@ public class PassengerController extends BaseController{
         }
         TripDetails tripDetails = new TripDetails();
         tripDetails.setTrip(new Trip());
+        tripDetails.setFavouriteLocation(new FavlocationJoinLocation());
         tripDetails.setFavouriteLocationsList(favouriteLocationService.getFavLocations(passengerService.getLoggedInPassengerId()));
         model.addAttribute("tripDetails", tripDetails);
         return "newTrip";
@@ -87,13 +92,16 @@ public class PassengerController extends BaseController{
         }
         TripDetails tripDetails = new TripDetails();
         tripDetails.setTrip(new Trip());
+        tripDetails.setFavouriteLocation(new FavlocationJoinLocation());
         tripDetails.setFavouriteLocationsList(favouriteLocationService.getFavLocations(passengerService.getLoggedInPassengerId()));
         model.addAttribute("tripDetails", tripDetails);
         return "newScheduledTrip";
     }
 
     @PostMapping("/passenger/newTrip")
-    public String createTrip(@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
+    public String createTrip(@RequestParam(name = "favLocLabel", defaultValue = "") String label,
+                             @RequestParam(name =
+            "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Trip trip = tripDetails.getTrip();
         if(!tripService.checkValidTrip(trip)) {
             redirectAttributes.addFlashAttribute("errorMsg", "Invalid Location!");
@@ -105,14 +113,13 @@ public class PassengerController extends BaseController{
         tripService.saveTrip(trip);
 
         if(addFavouriteLocation){
-            FavlocationJoinLocation favouriteLocation = tripDetails.getFavouriteLocation();
             FavouriteLocation favLoc = new FavouriteLocation();
             Location location=new Location();
             location.setLatitudeLocation(trip.getEndLatitude());
             location.setLongitudeLocation(trip.getEndLongitude());
+            location = (favouriteLocationService.saveLocation(location));
             favLoc.setPassengerId(passengerId);
-            favLoc.setLabel("Hello");
-            location = favouriteLocationService.saveLocation(location);
+            favLoc.setLabel(label);
             favLoc.setLocationId(location.getLocationId());
             favouriteLocationService.saveFavouriteLocation(favLoc);
         }
@@ -120,7 +127,7 @@ public class PassengerController extends BaseController{
     }
 
     @PostMapping("/passenger/newScheduledTrip")
-    public String createScheduledTrip(@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
+    public String createScheduledTrip(@RequestParam(name = "favLocLabel", defaultValue = "") String label,@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Trip trip = tripDetails.getTrip();
         Long passengerId = passengerService.getLoggedInPassengerId();
         trip.setPassengerId(passengerId);
@@ -156,14 +163,13 @@ public class PassengerController extends BaseController{
         timer.schedule(scheduleTripInsert, d);
 
         if(addFavouriteLocation){
-            FavlocationJoinLocation favouriteLocation = tripDetails.getFavouriteLocation();
             FavouriteLocation favLoc = new FavouriteLocation();
             Location location=new Location();
             location.setLatitudeLocation(trip.getEndLatitude());
             location.setLongitudeLocation(trip.getEndLongitude());
+            location = (favouriteLocationService.saveLocation(location));
             favLoc.setPassengerId(passengerId);
-            favLoc.setLabel("Hello");
-            location = favouriteLocationService.saveLocation(location);
+            favLoc.setLabel(label);
             favLoc.setLocationId(location.getLocationId());
             favouriteLocationService.saveFavouriteLocation(favLoc);
         }
