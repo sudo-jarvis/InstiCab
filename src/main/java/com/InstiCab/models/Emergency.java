@@ -11,10 +11,11 @@ import java.sql.Time;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Service {
+public class Emergency {
     private Long requestId;
     private Time requestTime;
     private String type;
-    private Long userId;
+    private String username;
+
 
 }
