@@ -1,10 +1,13 @@
 package com.InstiCab.service.Implementation;
 
 import com.InstiCab.dao.EmergencyDAO;
+import com.InstiCab.models.Emergency;
 import com.InstiCab.service.EmergencyService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmergencyServiceImpl implements EmergencyService {
@@ -29,4 +32,11 @@ public class EmergencyServiceImpl implements EmergencyService {
     public void createHospitalRequest() {
         emergencyDAO.createEmergencyRequest(2,userService.findLoggedInUsername());
     }
+
+    @Override
+    public List<Emergency> getEmergencyRequests() {
+        return emergencyDAO.getEmergencyRequests();
+    }
+
+
 }

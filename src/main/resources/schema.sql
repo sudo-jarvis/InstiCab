@@ -171,5 +171,3 @@ INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(3,25.25898082
 INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(4,25.266216084701153,82.98792913561284);
 
 INSERT IGNORE INTO location(location_id,latitude,longitude) VALUES(5,25.261953268672897,82.9895353508379);
-
-

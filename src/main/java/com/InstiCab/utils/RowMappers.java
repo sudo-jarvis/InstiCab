@@ -161,16 +161,6 @@ public final class RowMappers {
         }
     };
 
-//    public static RowMapper<CouponBeneficiary> couponBeneficiaryRowMapper = new RowMapper<CouponBeneficiary>() {
-//        @Override
-//        public CouponBeneficiary mapRow(ResultSet row, int i) throws SQLException {
-//            CouponBeneficiary couponBeneficiary = new CouponBeneficiary();
-//            couponBeneficiary.setUsername(row.getString("username"));
-//            couponBeneficiary.setCount(row.getInt("count"));
-//            return couponBeneficiary;
-//        }
-//    };
-
     public static RowMapper<TransactionDispute> transactionDisputeRowMapper = new RowMapper<TransactionDispute>() {
         @Override
         public TransactionDispute mapRow(ResultSet row, int i) throws SQLException {
@@ -179,6 +169,18 @@ public final class RowMappers {
             transactionDispute.setTransactionId(row.getLong("transaction_id"));
             transactionDispute.setDescription(row.getString("description"));
             return transactionDispute;
+        }
+    };
+
+    public static RowMapper<Emergency> emergencyRowMapper = new RowMapper<Emergency>() {
+        @Override
+        public Emergency mapRow(ResultSet row, int rowNum) throws SQLException {
+            Emergency emergency = new Emergency();
+            emergency.setUsername(row.getString("username"));
+            emergency.setRequestId(row.getLong("request_id"));
+            emergency.setRequestTime(row.getTime("request_time"));
+            emergency.setType(row.getInt("type"));
+            return emergency;
         }
     };
 }

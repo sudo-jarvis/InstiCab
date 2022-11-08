@@ -39,7 +39,7 @@ public class EmergencyController extends BaseController {
         return "redirect:/";
     }
 
-    @PostMapping("/EmergencyRequest/Police")
+    @PostMapping("/EmergencyRequest/police")
     public String CreatePoliceRequest(Model model){
         if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
             return FORBIDDEN_ERROR_PAGE;
@@ -55,6 +55,15 @@ public class EmergencyController extends BaseController {
         }
         emergencyService.createFireStationRequest();
         return "redirect:/";
+
     }
 
+    @GetMapping("/ViewEmergencyRequest")
+    public String ViewEmergencyRequests(Model model){
+        if(!isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        model.addAttribute("requests",emergencyService.getEmergencyRequests());
+        return "view_emergency_request";
+    }
 }
