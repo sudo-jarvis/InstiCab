@@ -32,19 +32,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <a class="active text-light" aria-current="page">
-                                <button type="button" class="btn btn-danger">Call Hospital</button>
-                            </a>
+                            <form method="POST" th:action="@{/EmergencyRequest/hospital}">
+                                <button type="submit" class="btn btn-danger" >Call Hospital</button>
+                            </form>
                         </div>
                         <div class="col">
-                            <a class="active text-light" aria-current="page">
-                                <button type="button" class="btn btn-info" >Call Police Station</button>
-                            </a>
+                            <form method="POST" th:action="@{/EmergencyRequest/police}">
+                                <button type="submit" class="btn btn-info" >Call Police Station</button>
+                            </form>
                         </div>
                         <div class="col">
-                            <a class="active text-light" aria-current="page">
-                                <button type="button" class="btn btn-warning">Call Fire Station</button>
-                            </a>
+                            <form method="POST" th:action="@{/EmergencyRequest/fire}">
+                                <button type="submit" class="btn btn-warning">Call Fire Station</button>
+                            </form>
                         </div>
                     </div>
                 </div>
