@@ -92,6 +92,7 @@ public final class RowMappers {
             trip.setEndLongitude(row.getFloat("end_longitude"));
             trip.setDriverId(row.getLong("driver_id"));
             trip.setPassengerId(row.getLong("passenger_id"));
+            trip.setFeedback(row.getString("feedback"));
             return trip;
 
         }

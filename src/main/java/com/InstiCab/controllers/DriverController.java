@@ -139,6 +139,15 @@ public class DriverController extends BaseController{
         return "earning_history";
     }
 
+    @GetMapping("/driver/showTrips")
+    public String showTrips(Model model,RedirectAttributes redirectAttributes) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        Long driverId = driverService.findLoggedInDriver();
+        model.addAttribute("trips",tripService.getDriverAllTrips(driverId));
+        return "allTrips";
+    }        
+
     @GetMapping("/driver/myprofile")
     public String driverProfile(Model model) {
         if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))

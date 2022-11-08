@@ -166,4 +166,13 @@ public class TripDAO {
             throw new DuplicateKeyException("Trip Request doesnt exist ! !");
         }
     }
+
+    public List<Trip> getDriverAllTrips(Long driverId) throws Exception {
+        final String sql = "SELECT * from trip WHERE driver_id = ? order by trip_id";
+        try {
+            return jdbcTemplate.query(sql,RowMappers.tripRowMapper, driverId);
+        }catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
 }
