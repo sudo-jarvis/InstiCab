@@ -102,4 +102,9 @@ public class TripServiceImpl implements TripService {
     public void saveFeedback(String feedback, Long tripId) {
         tripDAO.saveFeedback(feedback, tripId);
     }
+
+    @Override
+    public List<Trip> getDriverAllTrips(Long driverId) throws Exception {
+        return tripDAO.getDriverAllTrips(driverId);
+    }
 }

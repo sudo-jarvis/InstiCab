@@ -3,6 +3,7 @@ package com.InstiCab.service.Implementation;
 import com.InstiCab.dao.DriverDAO;
 import com.InstiCab.dao.EarningsHistoryDAO;
 import com.InstiCab.models.EarningsHistory;
+import com.InstiCab.models.Trip;
 import com.InstiCab.service.EarningsHistoryService;
 import com.InstiCab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -32,4 +32,6 @@ public interface TripService {
     boolean checkValidTrip(Trip trip);
 
     void saveFeedback(String feedback, Long tripId);
+
+    List<Trip> getDriverAllTrips(Long driverId) throws Exception;
 }
