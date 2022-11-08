@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="components/head::head">
+</head>
+<body class="sign-in-basic">
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center justify-content-lg-between">
+
+    <h1 class="logo me-auto me-lg-0"><a th:href="@{/}">IC<span>.</span></a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar order-last order-lg-0">
+      <ul>
+        <li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+    <a class="get-started-btn scrollto" th:href="@{/logout/}">Logout</a>
+  </div>
+</header>
+<section id="hero" class="d-flex align-items-center justify-content-center">
+
+  <div class="container">
+    <div class="row g-7">
+      <div class="col-lg-12 col-md-12 col-12 mx-auto">
+        <div class="card z-index-0 fadeIn3 fadeInBottom">
+          <div class="card-body bg-gradient-secondary text-center">
+            <h1>ALL Pending Trip Requests</h1>
+            <div th:if="${tripReqList eq null or #lists.size(tripReqList) eq 0}">
+              No Pending Requests found! <br />
+            </div>
+            <table
+                    class="table table-dark table-striped"
+                    th:if="${tripReqList ne null and #lists.size(tripReqList) ne 0}"
+            >
+              <thead class="thead-dark">
+              <tr>
+                <th scope="col">tripId</th>
+                <th scope="col">startLatitude</th>
+                <th scope="col">startLongitude</th>
+                <th scope="col">passengerId</th>
+              </tr>
+              </thead>
+              <tbody class="text-white">
+              <div th:each="request:${tripReqList}">
+                <tr>
+                  <td th:text="${request.tripId}"></td>
+                  <td th:text="${request.startLatitude}"></td>
+                  <td th:text="${request.startLongitude}"></td>
+                  <td th:text="${request.passengerId}"></td>
+                  <td>
+                    <a class="btn btn-warning" data-bs-toggle="collapse"
+                       th:href="'#collapse'+${request.tripId}"
+                       role="button"
+                       aria-expanded="false"
+                       th:aria-controls="'collapse'+${request.tripId}">
+                      View Details
+                    </a>
+                  </td>
+                  <td>
+                    <form method="POST"
+                          th:action="@{/driver/accept/__${request.tripId}__/}">
+                      <button type="submit" class="btn btn-success" >Accept</button>
+                    </form>
+                  </td>
+                  <td>
+                    <form method="POST"
+                          th:action="@{/driver/reject/__${request.tripId}__/}">
+                      <button type="submit" class="btn btn-danger" >Reject</button>
+                    </form>
+
+                  </td>
+
+                </tr>
+                <tr class ="collapse" th:id="'collapse'+${request.tripId}">
+
+                  <td colspan="12">
+
+                    <div class="row">
+                      <div class="col-2"> Start Latitude</div>
+                      <div th:text="${request.startLatitude}"
+                           class="col-6"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"> Start Longitude</div>
+                      <div th:text="${request.startLongitude}"
+                           class="col-6"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"> End Latitude</div>
+                      <div th:text="${request.endLatitude}"
+                           class="col-6"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"> End Longitude</div>
+                      <div th:text="${request.endLongitude}"
+                           class="col-6"></div>
+                    </div>
+                  </td>
+                </tr>
+
+              </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-12 mx-auto">
+        <div class="card z-index-0 fadeIn3 fadeInBottom">
+          <div class="card-body bg-gradient-secondary text-center">
+            <h1>My Ongoing Trips</h1>
+            <div th:if="${tripList eq null or #lists.size(tripList) eq 0}">
+              No Ongoing Trips found! <br />
+            </div>
+            <table
+                    class="table table-dark table-striped"
+                    th:if="${tripList ne null and #lists.size(tripList) ne 0}"
+            >
+              <thead class="thead-dark">
+              <tr>
+                <th scope="col">tripId</th>
+                <th scope="col">startDate</th>
+                <th scope="col">startTime</th>
+                <th scope="col">passengerId</th>
+              </tr>
+              </thead>
+              <tbody class="text-white">
+              <div th:each="request:${tripList}">
+                <tr>
+                  <td th:text="${request.tripId}"></td>
+                  <td th:text="${request.startDate}"></td>
+                  <td th:text="${request.startTime}"></td>
+                  <td th:text="${request.passengerId}"></td>
+                  <td>
+                    <a class="btn btn-warning" data-bs-toggle="collapse"
+                       th:href="'#collapse'+${request.tripId}"
+                       role="button"
+                       aria-expanded="false"
+                       th:aria-controls="'collapse'+${request.tripId}">
+                      View Details
+                    </a>
+                  </td>
+                  <td>
+                    <form method="POST"
+                          th:action="@{/driver/end/__${request.tripId}__/}">
+                      <button type="submit" class="btn btn-success" >End Trip</button>
+                    </form>
+                  </td>
+                </tr>
+                <tr class ="collapse" th:id="'collapse'+${request.tripId}">
+
+                  <td colspan="12">
+
+                    <div class="row">
+                      <div class="col-2"> Start Latitude</div>
+                      <div th:text="${request.startLatitude}"
+                           class="col-6"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"> Start Longitude</div>
+                      <div th:text="${request.startLongitude}"
+                           class="col-6"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"> End Latitude</div>
+                      <div th:text="${request.endLatitude}"
+                           class="col-6"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2"> End Longitude</div>
+                      <div th:text="${request.endLongitude}"
+                           class="col-6"></div>
+                    </div>
+                  </td>
+                </tr>
+
+              </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="/assets/vendor/aos/aos.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="/assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="/assets/js/main.js"></script>
+<footer th:replace="components/footer::footer"></footer>
+</body>
+</html>
+

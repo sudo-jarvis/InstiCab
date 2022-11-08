@@ -23,14 +23,16 @@ public class DriverController extends BaseController{
     private PassengerService passengerService;
     private TransactionService transactionService;
     private EarningsHistoryService earningsHistoryService;
+    private EmergencyService emergencyService;
     @Autowired
     public DriverController(UserService userService, DriverService driverService,
-                            RegistrationRequestService registrationRequestService, TripService tripService, PassengerService passengerService, TransactionService transactionService, EarningsHistoryService earningsHistoryService) {
+                            RegistrationRequestService registrationRequestService, TripService tripService, PassengerService passengerService, TransactionService transactionService, EarningsHistoryService earningsHistoryService, EmergencyService emergencyService) {
         super(userService,driverService,registrationRequestService);
         this.tripService = tripService;
         this.passengerService = passengerService;
         this.transactionService = transactionService;
         this.earningsHistoryService = earningsHistoryService;
+        this.emergencyService = emergencyService;
     }
 
     public double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -139,25 +141,71 @@ public class DriverController extends BaseController{
         return "earning_history";
     }
 
+
     @GetMapping("/driver/showTrips")
     public String showTrips(Model model,RedirectAttributes redirectAttributes) throws Exception {
         if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
             return FORBIDDEN_ERROR_PAGE;
         Long driverId = driverService.findLoggedInDriver();
         model.addAttribute("trips",tripService.getDriverAllTrips(driverId));
-        return "allTrips";
+        return "currentTrips";
     }        
 
     @GetMapping("/driver/profile")
     public String driverProfile(Model model) {
-        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+        if (!isLoggedIn() || !isAuthorized(model, ROLE_DRIVER))
             return FORBIDDEN_ERROR_PAGE;
         Long driverId = driverService.findLoggedInDriver();
         Driver driver = driverService.getDriverByDriverId(driverId);
         String username = userService.findLoggedInUsername();
         User user = userService.getUserByUsername(username);
-        model.addAttribute("driver",driver);
-        model.addAttribute("user",user);
+        model.addAttribute("driver", driver);
+        model.addAttribute("user", user);
         return "driver_profile";
+    }
+
+
+    @GetMapping("/driver/EmergencyRequest")
+    public String NewEmergencyRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        return "emergencyServices";
+    }
+
+    @PostMapping("/driver/EmergencyRequest/hospital")
+    public String CreateHospitalRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        emergencyService.createHospitalRequest();
+        return "redirect:/";
+    }
+
+    @PostMapping("/driver/EmergencyRequest/police")
+    public String CreatePoliceRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        emergencyService.createPoliceRequest();
+        return "redirect:/";
+    }
+
+    @PostMapping("/driver/EmergencyRequest/fire")
+    public String CreateFireStationRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        emergencyService.createFireStationRequest();
+        return "redirect:/";
+    }
+    @GetMapping("/driver/previousTrips")
+    public String showPreviousRequest(Model model,RedirectAttributes redirectAttributes){
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        Long driverId = driverService.findLoggedInDriver();
+        model.addAttribute("earningHistory",earningsHistoryService.getEarningHistory(driverId));
+        return "earning_history";
+
     }
 }
