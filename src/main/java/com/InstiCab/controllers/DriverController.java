@@ -138,4 +138,17 @@ public class DriverController extends BaseController{
         model.addAttribute("earningHistory",earningsHistoryService.getEarningHistory(driverId));
         return "earning_history";
     }
+
+    @GetMapping("/driver/myprofile")
+    public String driverProfile(Model model) {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        Long driverId = driverService.findLoggedInDriver();
+        Driver driver = driverService.getDriverByDriverId(driverId);
+        String username = userService.findLoggedInUsername();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("driver",driver);
+        model.addAttribute("user",user);
+        return "driver_profile";
+    }
 }
