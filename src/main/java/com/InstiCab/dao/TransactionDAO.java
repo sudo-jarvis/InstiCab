@@ -31,7 +31,7 @@ public class TransactionDAO {
                     transaction.getDateTransaction(), transaction.getTimeTransaction());
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in inserting into transcation");
         }
     }
 
@@ -43,7 +43,7 @@ public class TransactionDAO {
             return jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting passenger transcation");
         }
     }
 
@@ -53,7 +53,7 @@ public class TransactionDAO {
             return !jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username).isEmpty();
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting pending transcation");
         }
     }
 
@@ -64,7 +64,7 @@ public class TransactionDAO {
             jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in ending transcation");
         }
     }
 
@@ -76,7 +76,7 @@ public class TransactionDAO {
             jdbcTemplate.update(sql, status,transactionId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in changing transaction status");
         }
     }
 
@@ -86,7 +86,7 @@ public class TransactionDAO {
             return jdbcTemplate.queryForObject(sql, RowMappers.transactionRowMapper,transactionId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in getting transaction");
         }
     }
 
@@ -96,7 +96,7 @@ public class TransactionDAO {
             jdbcTemplate.update(sql,transaction.getDateTransaction(), transaction.getTimeTransaction());
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in updating transaction date");
         }
     }
 }

@@ -65,7 +65,7 @@
                         </a>
                       </td>
                       <td>
-                        <form method="POST" th:if="${passengerTrip.status eq 0}"
+                        <form method="POST" th:if="${passengerTrip.status eq 0 or passengerTrip.status eq 5}"
                               th:action="@{/passenger/cancel/__${passengerTrip.tripId}__/}">
                           <button type="submit" class="btn btn-danger" >Cancel</button>
                         </form>

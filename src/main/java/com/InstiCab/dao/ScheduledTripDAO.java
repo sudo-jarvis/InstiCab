@@ -19,7 +19,7 @@ public class ScheduledTripDAO {
             jdbcTemplate.update(sql,scheduledTrip.getTripTime(),scheduledTrip.getTripId());
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in schedule trip dao");
         }
     }
 
@@ -29,7 +29,7 @@ public class ScheduledTripDAO {
             jdbcTemplate.update(sql,scheduledTrip.getTripId());
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in deleting scheduled trip");
         }
     }
 }

@@ -26,7 +26,7 @@ public class CouponDAO {
             return jdbcTemplate.query(sql, RowMappers.couponRowMapper, passengerId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting all coupons");
         }
     }
 
@@ -36,7 +36,7 @@ public class CouponDAO {
             jdbcTemplate.update(sql, couponId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in deleting coupon");
         }
     }
 
