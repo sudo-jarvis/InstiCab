@@ -144,6 +144,10 @@ public class PassengerController extends BaseController{
         String dateTime = today + " " + time;
         Date d = dateFormat1.parse(dateTime);
         tripService.saveTrip(trip);
+        if(d.compareTo(java.sql.Date.valueOf(LocalDate.now()))<0){
+            redirectAttributes.addFlashAttribute("errorMsg","Give Future Time ! !");
+            return FORBIDDEN_ERROR_PAGE;
+        }
         trip = tripService.getScheduledTrip(passengerService.getLoggedInPassengerId());
         ScheduledTrip scheduledTrip = new ScheduledTrip();
         scheduledTrip.setTripId(trip.getTripId());

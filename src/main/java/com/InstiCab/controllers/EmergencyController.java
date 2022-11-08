@@ -28,8 +28,27 @@ public class EmergencyController extends BaseController {
     EmergencyService emergencyService;
 
     public EmergencyController(UserService userService, DriverService driverService,
-                                     RegistrationRequestService registrationRequestService){
+                                     RegistrationRequestService registrationRequestService,EmergencyService emergencyService) throws ParseException {
         super(userService,driverService,registrationRequestService);
+        this.emergencyService = emergencyService;
+        String time = "00:00:01";
+        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String today = dateFormat2.format(new Date());
+        String dateTime = today + " " + time;
+        Date d = dateFormat1.parse(dateTime);
+        Timer timer = new Timer();
+        TimerTask scheduleRequestDelete = new TimerTask(){
+            @Override
+            public void run(){
+                try {
+                    emergencyService.deleteRequest();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        timer.schedule(scheduleRequestDelete, d,86400000);
 
     }
 
@@ -47,26 +66,8 @@ public class EmergencyController extends BaseController {
             redirectAttributes.addFlashAttribute("errorMsg","Proper Authorization Required !");
             return FORBIDDEN_ERROR_PAGE;
         }
-        String time = "00:00:00";
-        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-        String today = dateFormat2.format(new Date());
-        String dateTime = today + " " + time;
-        Date d = dateFormat1.parse(dateTime);
         redirectAttributes.addFlashAttribute("successMsg","Emergency Request Succesfully Sent !");
         emergencyService.createHospitalRequest();
-        Timer timer = new Timer();
-        TimerTask scheduleRequestDelete = new TimerTask(){
-            @Override
-            public void run(){
-                try {
-                    emergencyService.deleteRequest();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        timer.schedule(scheduleRequestDelete, d);
         return "redirect:/";
     }
 
@@ -76,26 +77,7 @@ public class EmergencyController extends BaseController {
             redirectAttributes.addFlashAttribute("errorMsg","Proper Authorization Required !");
             return FORBIDDEN_ERROR_PAGE;
         }
-        String time = "00:00:00";
-        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-        String today = dateFormat2.format(new Date());
-        String dateTime = today + " " + time;
-        Date d = dateFormat1.parse(dateTime);
-        redirectAttributes.addFlashAttribute("successMsg","Emergency Request Succesfully Sent !");
         emergencyService.createPoliceRequest();
-        Timer timer = new Timer();
-        TimerTask scheduleRequestDelete = new TimerTask(){
-            @Override
-            public void run(){
-                try {
-                    emergencyService.deleteRequest();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        timer.schedule(scheduleRequestDelete, d);
         return "redirect:/";
     }
 
@@ -105,26 +87,8 @@ public class EmergencyController extends BaseController {
             redirectAttributes.addFlashAttribute("errorMsg","Proper Authorization Required !");
             return FORBIDDEN_ERROR_PAGE;
         }
-        String time = "00:00:00";
-        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-        String today = dateFormat2.format(new Date());
-        String dateTime = today + " " + time;
-        Date d = dateFormat1.parse(dateTime);
         redirectAttributes.addFlashAttribute("successMsg","Emergency Request Succesfully Sent !");
         emergencyService.createFireStationRequest();
-        Timer timer = new Timer();
-        TimerTask scheduleRequestDelete = new TimerTask(){
-            @Override
-            public void run(){
-                try {
-                    emergencyService.deleteRequest();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        timer.schedule(scheduleRequestDelete, d);
         return "redirect:/";
     }
 

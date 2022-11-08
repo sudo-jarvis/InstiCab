@@ -46,7 +46,9 @@
                                 <tr>
                                     <td th:text="${request.requestId}"></td>
                                     <td th:text="${request.requestTime}"></td>
-                                    <td th:text="${request.type}"></td>
+                                    <td th:if="${request.type eq 0}">Fire Service</td>
+                                    <td th:if="${request.type eq 1}">Police Service</td>
+                                    <td th:if="${request.type eq 2}">Hospital Service</td>
                                     <td th:text="${request.username}"></td>
                                 </tr>
                             </div>

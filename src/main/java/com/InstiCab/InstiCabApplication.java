@@ -1,5 +1,6 @@
 package com.InstiCab;
 
+import com.InstiCab.service.EmergencyService;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -19,10 +20,22 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class InstiCabApplication implements CommandLineRunner {
 	@Autowired
 	private DataSource dataSource;
+
+
+	public InstiCabApplication() throws ParseException {
+
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(InstiCabApplication.class, args);
@@ -42,29 +55,31 @@ public class InstiCabApplication implements CommandLineRunner {
 		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("schema.sql"));
         resourceDatabasePopulator.execute(dataSource);
 	}
-	@Bean
-	public ServletWebServerFactory servletContainer() {
-		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-			@Override
-			protected void postProcessContext(Context context) {
-				SecurityConstraint securityConstraint = new SecurityConstraint();
-				securityConstraint.setUserConstraint("CONFIDENTIAL");
-				SecurityCollection collection = new SecurityCollection();
-				collection.addPattern("/*");
-				securityConstraint.addCollection(collection);
-				context.addConstraint(securityConstraint);
-			}
-		};
-		tomcat.addAdditionalTomcatConnectors(redirectConnector());
-		return tomcat;
-	}
 
-	private Connector redirectConnector() {
-		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-		connector.setScheme("http");
-		connector.setPort(80);
-		connector.setSecure(false);
-		connector.setRedirectPort(443);
-		return connector;
-	}
+
+//	@Bean
+//	public ServletWebServerFactory servletContainer() {
+//		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+//			@Override
+//			protected void postProcessContext(Context context) {
+//				SecurityConstraint securityConstraint = new SecurityConstraint();
+//				securityConstraint.setUserConstraint("CONFIDENTIAL");
+//				SecurityCollection collection = new SecurityCollection();
+//				collection.addPattern("/*");
+//				securityConstraint.addCollection(collection);
+//				context.addConstraint(securityConstraint);
+//			}
+//		};
+//		tomcat.addAdditionalTomcatConnectors(redirectConnector());
+//		return tomcat;
+//	}
+
+//	private Connector redirectConnector() {
+//		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+//		connector.setScheme("http");
+//		connector.setPort(80);
+//		connector.setSecure(false);
+//		connector.setRedirectPort(443);
+//		return connector;
+//	}
 }

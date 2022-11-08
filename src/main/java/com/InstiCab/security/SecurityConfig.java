@@ -32,7 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.requiresChannel().anyRequest().requiresSecure();
         http.authorizeRequests().anyRequest().permitAll();
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/401/");
 
