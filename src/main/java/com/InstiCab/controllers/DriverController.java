@@ -146,5 +146,18 @@ public class DriverController extends BaseController{
         Long driverId = driverService.findLoggedInDriver();
         model.addAttribute("trips",tripService.getDriverAllTrips(driverId));
         return "allTrips";
+    }        
+
+    @GetMapping("/driver/myprofile")
+    public String driverProfile(Model model) {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        Long driverId = driverService.findLoggedInDriver();
+        Driver driver = driverService.getDriverByDriverId(driverId);
+        String username = userService.findLoggedInUsername();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("driver",driver);
+        model.addAttribute("user",user);
+        return "driver_profile";
     }
 }

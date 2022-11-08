@@ -35,7 +35,7 @@ public class TripDAO {
 
 
     public boolean tripAlreadyExists(Long passengerId) {
-        final String sql = "SELECT * FROM trip WHERE (status=0 AND status=1) AND passenger_id=?";
+        final String sql = "SELECT * FROM trip WHERE status<3 AND passenger_id=?";
         try {
             return !jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId).isEmpty();
         } catch (Exception e) {

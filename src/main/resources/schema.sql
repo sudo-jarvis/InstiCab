@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS vehicle(
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS service(
+CREATE TABLE IF NOT EXISTS emergency_service(
     request_id BIGINT NOT NULL AUTO_INCREMENT,
     request_time time,
     type VARCHAR(255) NOT NULL,

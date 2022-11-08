@@ -37,7 +37,7 @@ public class HomeController extends BaseController{
             return "home";
         }
 
-        return "login";
+        return "index";
     }
 
 
