@@ -34,13 +34,9 @@ public class UserDAO {
                 " FROM transaction" +
                 " WHERE status = 1 AND (date_transaction > ?)" +
                 " GROUP BY username" +
-                " HAVING ct > 5" +
+                " HAVING ct > 1" +
                 " LIMIT ?) AS u);";
         try {
-//            Random r = new Random();
-//            int low = 10;
-//            int high = coupon.getMaxDiscount();
-//            float value = r.nextInt(high-low) + low;
             return jdbcTemplate.query(sql, RowMappers.userRowMapper, sinceDate, numCoupons);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Error");

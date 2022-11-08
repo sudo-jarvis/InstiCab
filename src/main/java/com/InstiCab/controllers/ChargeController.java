@@ -6,7 +6,6 @@ import com.InstiCab.service.StripeService;
 import com.InstiCab.service.TransactionService;
 import com.InstiCab.service.TripService;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
 import com.stripe.model.PaymentIntent;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +62,7 @@ public class ChargeController {
         System.out.println(transactionId);
         Transaction transaction = transactionService.getTransaction(Long.valueOf(transactionId));
         Trip trip = tripService.getTripByTripId(transaction.getTripId());
+        tripService.changeTripStatus(trip.getTripId(),4);
         EarningsHistory earning = new EarningsHistory();
         double distance = distance(trip.getStartLatitude(), trip.getStartLongitude(), trip.getEndLatitude(),
                 trip.getEndLongitude());
