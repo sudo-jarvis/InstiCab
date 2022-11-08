@@ -41,6 +41,17 @@
     }
   }
 
+  function addInputField() {
+    const temp1 = document.getElementById("addFavLoc");
+    const temp2 = document.getElementById("destination1");
+    if(temp1.checked) {
+      temp2.classList.remove("d-none");
+    }
+    else {
+      temp2.classList.add("d-none");
+     }
+  }
+
   function setToLocation(){
     const x = document.getElementById("toLocations").value;
     const arr = x.split(" ");
@@ -170,9 +181,14 @@
               </div>
 
               <div class="form-check form-switch d-flex align-items-center mb-3" id="addDestFav">
-                <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" />
+                <input class="form-check-input" type="checkbox" name="addFavouriteLocation" id="addFavLoc" onchange="addInputField()"/>
                 <input id="favAdd" type="hidden" name="addFavouriteLocation" value="false"/>
                 <label class="form-check-label mb-0 ms-2" for="addFavLoc">Add destination to your Favourite locations</label>
+              </div>
+
+              <div class="col input-group input-group-outline my-3 d-none" id="destination1">
+                <label for="addLabel" class="form-label">Add label: </label>
+                <input id="addLabelName" type="text" class="form-control" required>
               </div>
 
 
