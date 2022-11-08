@@ -253,4 +253,14 @@ public class PassengerController extends BaseController{
         tripService.cancelTrip(tripId);
         return "redirect:/";
     }
+
+    @GetMapping("/passenger/profile")
+    public String passengerProfile(Model model) {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER))
+            return FORBIDDEN_ERROR_PAGE;
+        String username = userService.findLoggedInUsername();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("user",user);
+        return "passenger_profile";
+    }
 }

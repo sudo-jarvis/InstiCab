@@ -26,47 +26,23 @@
                 <div class="card z-index-0 fadeIn3 fadeInBottom">
                     <div class="card-body bg-gradient-secondary text-center">
                         <h1> My Profile </h1>
-                        <table class="table table-light">
-                            <tr>
-                                <td> Username </td>
-                                <td th:text="${user.username}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Name</td>
-                                <td th:text="${user.firstName + ' ' + user.middleName + ' ' + user.lastName}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Email </td>
-                                <td th:text="${user.email}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Phone No </td>
-                                <td th:text="${user.phoneNo}"> </td>
-                            </tr>
-                            <tr>
-                                <td> License Number </td>
-                                <td th:text="${driver.licenseNumber}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Aadhar Number </td>
-                                <td th:text="${driver.aadharNumber}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Account Number </td>
-                                <td th:text="${driver.accountNo}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Account Name </td>
-                                <td th:text="${driver.accountName}"> </td>
-                            </tr>
-                            <tr>
-                                <td> Bank Name </td>
-                                <td th:text="${driver.bankName}"> </td>
-                            </tr>
-                            <tr>
-                                <td> IFSC Code </td>
-                                <td th:text="${driver.ifscCode}"> </td>
-                            </tr>
+                            <table class="table table-light">
+                                <tr>
+                                    <td> Username </td>
+                                    <td th:text="${user.username}"> </td>
+                                </tr>
+                                <tr>
+                                    <td> Name</td>
+                                    <td th:text="${user.firstName + ' ' + user.middleName + ' ' + user.lastName}"> </td>
+                                </tr>
+                                <tr>
+                                    <td> Email </td>
+                                    <td th:text="${user.email}"> </td>
+                                </tr>
+                                <tr>
+                                    <td> Phone No </td>
+                                    <td th:text="${user.phoneNo}"> </td>
+                                </tr>
                         </table>
                     </div>
                 </div>
