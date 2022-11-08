@@ -20,4 +20,6 @@ public interface TransactionService {
     void changeTransactionStatus(Long transactionId, Integer status)throws Exception;
 
     Transaction getTransaction(Long transactionId) throws Exception;
+
+    void updateTransactionDateTime(Transaction transaction) throws Exception;
 }

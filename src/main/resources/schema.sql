@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS trip(
     end_longitude FLOAT NOT NULL,
     driver_id BIGINT,
     passenger_id BIGINT NOT NULL,
+    feedback VARCHAR(255),
     PRIMARY KEY (trip_id),
     FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (passenger_id) REFERENCES passenger(passenger_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -121,15 +122,12 @@ CREATE TABLE IF NOT EXISTS vehicle(
 );
 
 CREATE TABLE IF NOT EXISTS service(
-    service_id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
+    request_id BIGINT NOT NULL AUTO_INCREMENT,
+    request_time time,
     type VARCHAR(255) NOT NULL,
-    latitude_location FLOAT NOT NULL,
-    longitude_location FLOAT NOT NULL,
-    contact_no VARCHAR(255) NOT NULL UNIQUE,
-    vehicle_id BIGINT,
-    PRIMARY KEY (service_id),
-    FOREIGN KEY (vehicle_id) REFERENCES vehicle(vehicle_id) ON DELETE SET NULL ON UPDATE CASCADE
+    username VARCHAR(255),
+    PRIMARY KEY (request_id),
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS transaction(

@@ -84,4 +84,13 @@ public class TransactionDAO {
             throw new Exception(e);
         }
     }
+
+    public void updateTransactionDateTime(Transaction transaction) throws Exception {
+        final String sql = "UPDATE transaction SET date_transaction=?, time_transaction=?";
+        try {
+            jdbcTemplate.update(sql,transaction.getDateTransaction(), transaction.getTimeTransaction());
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
 }

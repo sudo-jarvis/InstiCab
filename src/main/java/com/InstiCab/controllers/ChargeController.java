@@ -13,6 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Log
 @Controller
 public class ChargeController {
@@ -61,6 +66,9 @@ public class ChargeController {
         model.addAttribute("transactionId", Long.valueOf(transactionId));
         System.out.println(transactionId);
         Transaction transaction = transactionService.getTransaction(Long.valueOf(transactionId));
+        transaction.setDateTransaction(Date.valueOf(LocalDate.now()));
+        transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
+        transactionService.updateTransactionDateTime(transaction);
         Trip trip = tripService.getTripByTripId(transaction.getTripId());
         tripService.changeTripStatus(trip.getTripId(),4);
         EarningsHistory earning = new EarningsHistory();

@@ -124,8 +124,6 @@ public class DriverController extends BaseController{
         transaction.setAmount((int) (distance*40));
         transaction.setTripId(trip.getTripId());
         transaction.setStatus(0);
-        transaction.setDateTransaction(Date.valueOf(LocalDate.now()));
-        transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
 
         transactionService.saveTransaction(transaction);
         tripService.changeTripStatus(trip.getTripId(),3);

@@ -99,7 +99,7 @@ public class PassengerController extends BaseController{
     }
 
     @PostMapping("/passenger/newTrip")
-    public String createTrip(@RequestParam(name = "favLocLabel", defaultValue = "") String label,
+    public String createTrip(@RequestParam(name = "favLocLabel", defaultValue = "", required = false) String label,
                              @RequestParam(name =
             "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Trip trip = tripDetails.getTrip();
@@ -127,7 +127,7 @@ public class PassengerController extends BaseController{
     }
 
     @PostMapping("/passenger/newScheduledTrip")
-    public String createScheduledTrip(@RequestParam(name = "favLocLabel", defaultValue = "") String label,@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
+    public String createScheduledTrip(@RequestParam(name = "favLocLabel", defaultValue = "", required = false) String label,@RequestParam(name = "addFavouriteLocation", defaultValue = "false") Boolean addFavouriteLocation, @ModelAttribute("tripDetails") TripDetails tripDetails, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Trip trip = tripDetails.getTrip();
         Long passengerId = passengerService.getLoggedInPassengerId();
         trip.setPassengerId(passengerId);
