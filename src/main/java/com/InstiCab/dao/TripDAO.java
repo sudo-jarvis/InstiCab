@@ -30,18 +30,18 @@ public class TripDAO {
                     trip.getEndLatitude(),trip.getEndLongitude(),trip.getPassengerId());
         } catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in saving trip");
         }
     }
 
 
     public boolean tripAlreadyExists(Long passengerId) {
-        final String sql = "SELECT * FROM trip WHERE status<3 AND passenger_id=?";
+        final String sql = "SELECT * FROM trip WHERE status<2 AND passenger_id=?";
         try {
             return !jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId).isEmpty();
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error trip already exists");
         }
     }
     public List<Trip> getTripReqList() throws Exception {
@@ -50,7 +50,7 @@ public class TripDAO {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper,0);
         }catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in getting trip request list");
         }
     }
 
@@ -82,7 +82,7 @@ public class TripDAO {
             return jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting all passenger trips");
         }
     }
 
@@ -114,7 +114,7 @@ public class TripDAO {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper,1);
         }catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in getting trip list");
         }
     }
 
@@ -124,7 +124,7 @@ public class TripDAO {
             return !(jdbcTemplate.query(sql,RowMappers.tripRowMapper,1,driverId).isEmpty());
         }catch (Exception e){
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error trip already running");
         }
     }
 
@@ -177,7 +177,7 @@ public class TripDAO {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper, driverId);
         }catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("error in getting all driver trips ");
         }
     }
 

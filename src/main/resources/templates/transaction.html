@@ -67,7 +67,7 @@
                                             <input type="hidden"
                                                    name="tripId" th:value="${transaction.tripId}" />
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
-                                            <button type="submit" class="btn btn-info" >Use Coupon</button>
+                                            <button type="submit" class="btn btn-info" th:if="${transaction.status ne 3}">Use Coupon</button>
                                         </form>
 <!--                                        <form th:if="${transaction.status eq 3  }" method="POST"-->
 <!--                                              th:action="@{/passenger/coupon/}">-->
@@ -87,7 +87,7 @@
                                             <input type="hidden"
                                                    name="tripId" th:value="${transaction.tripId}" />
                                             <input type="hidden" name="amountToPay" th:value="${transaction.amount}" />
-                                            <button type="submit" class="btn btn-success" >Pay</button>
+                                            <button type="submit" class="btn btn-success" th:if="${transaction.status ne 3}">Pay</button>
                                         </form>
 <!--                                        <form th:if="${transaction.status eq 3}" method="POST"-->
 <!--                                              th:action="@{/checkout/}">-->

@@ -24,6 +24,7 @@ public class EmergencyDAO {
             jdbcTemplate.update(sql,type, Time.valueOf(LocalTime.now()),loggedInUsername);
         } catch (Exception e) {
             System.out.println(e);
+            throw new UsernameNotFoundException("Error in creating Emergency Request");
         }
     }
 
@@ -33,7 +34,7 @@ public class EmergencyDAO {
             return jdbcTemplate.query(sql, RowMappers.emergencyRowMapper);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in listing emergency");
         }
     }
 }

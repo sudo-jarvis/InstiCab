@@ -38,7 +38,7 @@ public class EarningsHistoryDAO {
             return jdbcTemplate.query(sql, RowMappers.earningsHistoryRowMapper, driverId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting Earning History");
         }
     }
 }

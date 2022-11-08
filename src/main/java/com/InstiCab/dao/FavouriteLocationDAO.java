@@ -44,7 +44,7 @@ public class FavouriteLocationDAO {
                     df.format(n2)).isEmpty());
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in checking Existing location");
         }
     }
 
@@ -56,7 +56,7 @@ public class FavouriteLocationDAO {
             return jdbcTemplate.query(sql, RowMappers.favouriteLocationRowMapper,passengerId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting fav location");
         }
     }
 
@@ -68,7 +68,7 @@ public class FavouriteLocationDAO {
         }
         catch(Exception e){
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in saving location");
         }
     }
 
@@ -81,7 +81,7 @@ public class FavouriteLocationDAO {
             return jdbcTemplate.queryForObject(sql, RowMappers.LocationRowMapper, df.format(n1),df.format(n2));
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Driver not found ! !");
+            throw new UsernameNotFoundException("Error in getting location");
         }
     }
 }

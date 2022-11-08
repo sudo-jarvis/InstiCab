@@ -39,7 +39,7 @@ public class UserDAO {
         try {
             return jdbcTemplate.query(sql, RowMappers.userRowMapper, sinceDate, numCoupons);
         } catch (Exception e) {
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting coupon beneficiaries");
         }
     }
 
@@ -63,9 +63,14 @@ public class UserDAO {
     public void updateUser(User user) {
         final String sql = "UPDATE user SET username = ?, first_name = ?, middle_name = ?, last_name = ?, email = ?, " +
                 "phone_no = ?, password = ?, last_login_date = ?, last_login_time = ?, role = ?";
-        jdbcTemplate.update(sql, user.getUsername(), user.getFirstName(), user.getMiddleName(),
-                user.getLastName(), user.getEmail(), user.getPhoneNo(), user.getPassword(), user.getLastLoginDate(),
-                user.getLastLoginTime(), user.getRole());
+        try{
+            jdbcTemplate.update(sql, user.getUsername(), user.getFirstName(), user.getMiddleName(),
+                    user.getLastName(), user.getEmail(), user.getPhoneNo(), user.getPassword(), user.getLastLoginDate(),
+                    user.getLastLoginTime(), user.getRole());
+        }catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("error can't update user");
+        }
     }
 
     public User getUserDataById(int id) {
@@ -100,7 +105,7 @@ public class UserDAO {
             jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
         }catch (Exception e) {
             System.out.println(e);
-            throw new Exception(e);
+            throw new Exception("can't update last login");
         }
     }
 

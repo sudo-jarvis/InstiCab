@@ -56,7 +56,7 @@ public class DriverDAO {
             return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, driverId);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Driver not found ! !");
+            throw new UsernameNotFoundException("Driver not found from driverId! !");
         }
     }
     public Driver getDriverDataByUsername(String username) {
@@ -65,7 +65,7 @@ public class DriverDAO {
             return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, username);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Driver not found ! !");
+            throw new UsernameNotFoundException("Driver not found from username! !");
         }
     }
     public List<Driver> getAllPendingDrivers(){
@@ -79,7 +79,7 @@ public class DriverDAO {
             return jdbcTemplate.query(sql, RowMappers.driverRowMapper);
         } catch (Exception e) {
             System.out.println(e);
-            throw new UsernameNotFoundException("Error");
+            throw new UsernameNotFoundException("Error in getting Pending Driver");
         }
     }
 

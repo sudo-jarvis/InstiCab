@@ -37,7 +37,7 @@ public class RegistrationRequestDAO {
         }
         catch(Exception e){
             System.out.println(e);
-            throw new UsernameNotFoundException("Driver not found ! !");
+            throw new UsernameNotFoundException("Error in listing Registration Request");
         }
     }
 
