@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="components/head :: head"></head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-item text-light" href="#">InstiCab</a>
+        <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link active text-light" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item text-light">
+                    <a th:href="@{/about/}" class="nav-link text-light">About</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/contact}" class="nav-link text-light">Contact</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container my-auto">
+    <br />
+    <div class="row">
+        <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h3>
+                            Please share us your experience
+                        </h3>
+                    </div>
+                    <form role="form" class="text-start" method="POST" th:action="@{/saveFeedback/}">
+                        <div class="row">
+                            <div class="col input-group input-group-outline my-3">
+                                <label class="form-label">Feedback</label>
+                                <input type="text" class="form-control" name="feedback" />
+                            </div>
+                            <div class="col input-group input-group-outline my-3">
+                                <input type="hidden"
+                                       name="tripId" th:value="${tripId}" />
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <input type="submit" value="Submit Feedback" class="btn bg-gradient-primary w-100 my-4 mb-2" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:replace="components/toast :: toast"></script>
+<footer th:replace="components/footer::footer"></footer>
+</body>
+</html>
