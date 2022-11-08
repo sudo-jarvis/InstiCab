@@ -38,9 +38,16 @@ public class DriverDAO {
     public void updateDriver(Driver driver) {
         final String sql = "UPDATE driver SET driver_id = ?, license_number = ?, aadhar_number = ?, account_no = ?, " +
                 "account_name= ?, ifsc_code = ?, bank_name = ?, username = ?";
-        jdbcTemplate.update(sql,driver.getDriverId(),driver.getLicenseNumber(),driver.getAadharNumber(),
-                driver.getAccountNo(),driver.getAccountName(),driver.getIfscCode(),driver.getBankName(),
-                driver.getUsername());
+        try {
+            jdbcTemplate.update(sql, driver.getDriverId(), driver.getLicenseNumber(), driver.getAadharNumber(),
+                    driver.getAccountNo(), driver.getAccountName(), driver.getIfscCode(), driver.getBankName(),
+                    driver.getUsername());
+        }
+        catch(Exception e){
+            System.out.println(e);
+            throw new UsernameNotFoundException("Driver not found ! !");
+        }
+
     }
 
     public Driver getDriverDataBydriverId(Long driverId) {
@@ -48,6 +55,7 @@ public class DriverDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, driverId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Driver not found ! !");
         }
     }
@@ -56,6 +64,7 @@ public class DriverDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.driverRowMapper, username);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Driver not found ! !");
         }
     }
@@ -69,6 +78,7 @@ public class DriverDAO {
         try {
             return jdbcTemplate.query(sql, RowMappers.driverRowMapper);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }

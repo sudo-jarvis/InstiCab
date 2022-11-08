@@ -31,6 +31,7 @@ public class PassengerDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.passengerRowMapper, username);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Passenger not found");
         }
     }
@@ -40,6 +41,7 @@ public class PassengerDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.passengerRowMapper, passengerId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Passenger not found ! !");
         }
     }

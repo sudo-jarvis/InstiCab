@@ -18,6 +18,7 @@ public class ScheduledTripDAO {
         try {
             jdbcTemplate.update(sql,scheduledTrip.getTripTime(),scheduledTrip.getTripId());
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -27,6 +28,7 @@ public class ScheduledTripDAO {
         try {
             jdbcTemplate.update(sql,scheduledTrip.getTripId());
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }

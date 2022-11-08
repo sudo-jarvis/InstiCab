@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class EmergencyController extends BaseController {
@@ -23,7 +24,7 @@ public class EmergencyController extends BaseController {
     }
 
     @GetMapping("/EmergencyRequest")
-    public String NewEmergencyRequest(Model model){
+    public String NewEmergencyRequest(Model model,RedirectAttributes redirectAttributes){
         if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
             return FORBIDDEN_ERROR_PAGE;
         }
@@ -31,35 +32,41 @@ public class EmergencyController extends BaseController {
     }
 
     @PostMapping("/EmergencyRequest/hospital")
-    public String CreateHospitalRequest(Model model){
+    public String CreateHospitalRequest(Model model, RedirectAttributes redirectAttributes){
         if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            redirectAttributes.addFlashAttribute("errorMsg","Proper Authorization Required !");
             return FORBIDDEN_ERROR_PAGE;
         }
+        redirectAttributes.addFlashAttribute("successMsg","Emergency Request Succesfully Sent !");
         emergencyService.createHospitalRequest();
         return "redirect:/";
     }
 
     @PostMapping("/EmergencyRequest/police")
-    public String CreatePoliceRequest(Model model){
+    public String CreatePoliceRequest(Model model,RedirectAttributes redirectAttributes){
         if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            redirectAttributes.addFlashAttribute("errorMsg","Proper Authorization Required !");
             return FORBIDDEN_ERROR_PAGE;
         }
+        redirectAttributes.addFlashAttribute("successMsg","Emergency Request Succesfully Sent !");
         emergencyService.createPoliceRequest();
         return "redirect:/";
     }
 
     @PostMapping("/EmergencyRequest/fire")
-    public String CreateFireStationRequest(Model model){
+    public String CreateFireStationRequest(Model model,RedirectAttributes redirectAttributes){
         if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            redirectAttributes.addFlashAttribute("errorMsg","Proper Authorization Required !");
             return FORBIDDEN_ERROR_PAGE;
         }
+        redirectAttributes.addFlashAttribute("successMsg","Emergency Request Succesfully Sent !");
         emergencyService.createFireStationRequest();
         return "redirect:/";
 
     }
 
     @GetMapping("/admin/ViewEmergencyRequest")
-    public String ViewEmergencyRequests(Model model){
+    public String ViewEmergencyRequests(Model model,RedirectAttributes redirectAttributes){
         if(!isAuthorized(model,ROLE_ADMIN)){
             return FORBIDDEN_ERROR_PAGE;
         }

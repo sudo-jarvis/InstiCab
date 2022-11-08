@@ -32,7 +32,13 @@ public class RegistrationRequestDAO {
     }
     public List<RegistrationRequest> getAllActiveRegistrationRequests() {
         final String sql = "SELECT * FROM registration_request WHERE status = ? order by driver_id";
-        return jdbcTemplate.query(sql, RowMappers.RegistrationRequestRowMapper, "0");
+        try{
+            return jdbcTemplate.query(sql, RowMappers.RegistrationRequestRowMapper, "0");
+        }
+        catch(Exception e){
+            System.out.println(e);
+            throw new UsernameNotFoundException("Driver not found ! !");
+        }
     }
 
     public void rejectRequest(Long driverId) {
@@ -62,6 +68,7 @@ public class RegistrationRequestDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.RegistrationRequestRowMapper, driverId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Registration Request not found");
         }
     }

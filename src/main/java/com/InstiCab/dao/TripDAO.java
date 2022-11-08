@@ -29,6 +29,7 @@ public class TripDAO {
             jdbcTemplate.update(sql,trip.getStatus(),trip.getStartLatitude(),trip.getStartLongitude(),
                     trip.getEndLatitude(),trip.getEndLongitude(),trip.getPassengerId());
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -48,6 +49,7 @@ public class TripDAO {
         try {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper,0);
         }catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -57,6 +59,7 @@ public class TripDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, tripId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Trip not found ! !");
         }
     }
@@ -66,20 +69,19 @@ public class TripDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.tripRowMapper, passengerId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Trip not found ! !");
         }
     }
 
     public List<Trip> getPassengerAllTrips(Long passengerId){
-        final String sql = "SELECT t.trip_id, t.start_date, t.start_time, t.end_date, t.end_time, " +
-                "t.status, " +
-                "t.start_latitude, t.start_longitude, t.end_latitude, t.end_longitude, t.driver_id, t.passenger_id" +
-                " FROM " +
+        final String sql = "SELECT * FROM " +
                 "trip as t WHERE" +
                 " t.passenger_id = ? order by t.trip_id";
         try {
             return jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }
@@ -111,6 +113,7 @@ public class TripDAO {
         try {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper,1);
         }catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -120,6 +123,7 @@ public class TripDAO {
         try {
             return !(jdbcTemplate.query(sql,RowMappers.tripRowMapper,1,driverId).isEmpty());
         }catch (Exception e){
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -172,6 +176,7 @@ public class TripDAO {
         try {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper, driverId);
         }catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
