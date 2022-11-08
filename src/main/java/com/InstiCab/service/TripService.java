@@ -33,5 +33,7 @@ public interface TripService {
 
     void saveFeedback(String feedback, Long tripId);
 
-    List<Trip> getDriverAllTrips(Long driverId) throws Exception;
+    List<Trip> getDriverPreviousTrips(Long driverId) throws Exception;
+
+//    List<Trip> getDriverCurrentTrips(Long driverId) throws Exception;
 }

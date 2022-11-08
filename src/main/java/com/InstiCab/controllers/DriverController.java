@@ -142,14 +142,15 @@ public class DriverController extends BaseController{
     }
 
 
-    @GetMapping("/driver/showTrips")
+    @GetMapping("/driver/currentTrips")
     public String showTrips(Model model,RedirectAttributes redirectAttributes) throws Exception {
         if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
             return FORBIDDEN_ERROR_PAGE;
         Long driverId = driverService.findLoggedInDriver();
-        model.addAttribute("trips",tripService.getDriverAllTrips(driverId));
+        model.addAttribute("tripReqList",tripService.getTripReqList());
+        model.addAttribute("tripList",tripService.getTripList());
         return "currentTrips";
-    }        
+    }
 
     @GetMapping("/driver/profile")
     public String driverProfile(Model model) {
@@ -164,4 +165,47 @@ public class DriverController extends BaseController{
         return "driver_profile";
     }
 
+    @GetMapping("/driver/EmergencyRequest")
+    public String NewEmergencyRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        return "emergencyServices";
+    }
+
+    @PostMapping("/driver/EmergencyRequest/hospital")
+    public String CreateHospitalRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        emergencyService.createHospitalRequest();
+        return "redirect:/";
+    }
+
+    @PostMapping("/driver/EmergencyRequest/police")
+    public String CreatePoliceRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        emergencyService.createPoliceRequest();
+        return "redirect:/";
+    }
+
+    @PostMapping("/driver/EmergencyRequest/fire")
+    public String CreateFireStationRequest(Model model){
+        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
+        emergencyService.createFireStationRequest();
+        return "redirect:/";
+    }
+    @GetMapping("/driver/previousTrips")
+    public String showPreviousRequest(Model model,RedirectAttributes redirectAttributes) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
+            return FORBIDDEN_ERROR_PAGE;
+        Long driverId = driverService.findLoggedInDriver();
+        model.addAttribute("trips",tripService.getDriverPreviousTrips(driverId));
+        return "previousTrips";
+
+    }
 }
