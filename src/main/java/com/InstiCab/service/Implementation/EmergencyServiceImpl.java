@@ -38,5 +38,10 @@ public class EmergencyServiceImpl implements EmergencyService {
         return emergencyDAO.getEmergencyRequests();
     }
 
+    @Override
+    public void deleteRequest() {
+        emergencyDAO.deleteRequest();
+    }
+
 
 }

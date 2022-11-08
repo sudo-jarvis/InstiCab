@@ -161,7 +161,7 @@
               </div>
               <div class="row">
                 <div class="col input-group input-group-outline my-3" id ="endLocation">
-                  <button type="button" id="endLocation" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
+                  <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"
                           onclick="changeVal(0)">
                     Select To Location
                   </button>
@@ -190,7 +190,7 @@
 
 
               <div class="col input-group input-group-outline my-3 d-none" id="destination1">
-                <label for="addLabel" class="form-label">Add label: </label>
+                <label for="addLabelFav" class="form-label">Add label: </label>
                 <input id="addLabelFav" name="favLocLabel" type="text" class="form-control"
                        th:value="${tripDetails.favouriteLocation.label}"
                 >

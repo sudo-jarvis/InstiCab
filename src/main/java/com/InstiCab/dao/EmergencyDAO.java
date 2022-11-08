@@ -37,4 +37,13 @@ public class EmergencyDAO {
             throw new UsernameNotFoundException("Error in listing emergency");
         }
     }
+
+    public void deleteRequest() {
+        final String sql = "DELETE FROM emergency_service";
+        try {
+            jdbcTemplate.update(sql);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
