@@ -28,11 +28,9 @@
                 <div>
                     <h3 th:if='${error}' th:text='${error}' style='color: red;'></h3>
                     <div th:unless='${error}'>
-                        <h3 style='color: green;'>Success!</h3>
-                        <div>Id.: <span th:text='${id}' /></div>
-                        <div>Status: <span th:text='${status}' /></div>
-                        <div>Charge id.: <span th:text='${chargeId}' /></div>
-                        <div>Transaction id.: <span th:text='${transactionId}' /></div>
+                        <h3 style='color:#4bb543;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;font-size:60px;'>Success!</h3>
+                        <div style="color:white;font-size:25px;">Transaction id.: <span th:text='${transactionId}' /></div>
+                        <br>
                         <form method="POST" th:action="@{/feedback/}">
                             <input type="hidden"
                                    name="tripId" th:value="${tripId}" />
