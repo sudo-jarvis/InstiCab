@@ -43,7 +43,7 @@ public class FavouriteLocationDAO {
             return !(jdbcTemplate.query(sql, RowMappers.LocationRowMapper,df.format(n1),
                     df.format(n2)).isEmpty());
         } catch (Exception e) {
-            System.out.println("1"+ e);
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }
@@ -78,10 +78,9 @@ public class FavouriteLocationDAO {
             DecimalFormat df = new DecimalFormat("#.####");
             Float n1 = location.getLatitudeLocation();
             Float n2 = location.getLongitudeLocation();
-            System.out.println(df.format(n1)+" "+df.format(n2));
             return jdbcTemplate.queryForObject(sql, RowMappers.LocationRowMapper, df.format(n1),df.format(n2));
         } catch (Exception e) {
-            System.out.println("2 "+location.getLatitudeLocation()+" "+location.getLongitudeLocation()+" " + e);
+            System.out.println(e);
             throw new UsernameNotFoundException("Driver not found ! !");
         }
     }

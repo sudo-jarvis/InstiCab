@@ -30,7 +30,6 @@ public class HomeController extends BaseController{
                     redirectAttributes.addFlashAttribute("errorMsg", "Not Verified ! !");
                     return "redirect:/logout";
                 }
-//                System.out.println("hi");;
                 return "redirect:/driver";
             }
             model.addAttribute("isPassenger",true);
@@ -38,23 +37,5 @@ public class HomeController extends BaseController{
         }
 
         return "index";
-    }
-
-
-    @GetMapping({"/test"})
-    public String test(Model model, RedirectAttributes redirectAttributes) {
-        return "emergencyServices";
-    }
-
-    @GetMapping({"/test2"})
-    public String test2(Model model, RedirectAttributes redirectAttributes) {
-
-        model.addAttribute("id", 00);
-        model.addAttribute("status", 0);
-        model.addAttribute("chargeId", 0);
-        model.addAttribute("transactionId",0);
-//        model.addAttribute("error", "ok");
-
-        return "result";
     }
 }

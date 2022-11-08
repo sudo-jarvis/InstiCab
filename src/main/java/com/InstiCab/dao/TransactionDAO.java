@@ -30,6 +30,7 @@ public class TransactionDAO {
                     transaction.getUsername(),
                     transaction.getDateTransaction(), transaction.getTimeTransaction());
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -41,6 +42,7 @@ public class TransactionDAO {
         try {
             return jdbcTemplate.query(sql, RowMappers.transactionRowMapper, username);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }
@@ -61,6 +63,7 @@ public class TransactionDAO {
         try {
             jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -72,6 +75,7 @@ public class TransactionDAO {
         try {
             jdbcTemplate.update(sql, status,transactionId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -81,6 +85,7 @@ public class TransactionDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.transactionRowMapper,transactionId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -90,6 +95,7 @@ public class TransactionDAO {
         try {
             jdbcTemplate.update(sql,transaction.getDateTransaction(), transaction.getTimeTransaction());
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }

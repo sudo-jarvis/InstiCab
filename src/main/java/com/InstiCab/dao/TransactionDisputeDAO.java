@@ -26,6 +26,7 @@ public class TransactionDisputeDAO {
         try {
             jdbcTemplate.update(sql, transactionDispute.getTransactionId(),transactionDispute.getDescription());
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }
@@ -35,6 +36,7 @@ public class TransactionDisputeDAO {
         try {
             return jdbcTemplate.query(sql, RowMappers.transactionDisputeRowMapper);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
 
@@ -45,6 +47,7 @@ public class TransactionDisputeDAO {
         try {
             jdbcTemplate.update(sql,status,transactionId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }

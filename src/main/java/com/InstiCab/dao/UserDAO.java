@@ -75,7 +75,13 @@ public class UserDAO {
 
     public List<User> getAllUsers() {
         final String sql = "SELECT * FROM user";
-        return jdbcTemplate.query(sql, RowMappers.userRowMapper);
+        try{
+            return jdbcTemplate.query(sql, RowMappers.userRowMapper);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Username not available!");
+        }
     }
 
     public User getUserDataByUsername(String username) {
@@ -83,6 +89,7 @@ public class UserDAO {
         try {
             return jdbcTemplate.queryForObject(sql, RowMappers.userRowMapper, username);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("User not found");
         }
     }
@@ -92,6 +99,7 @@ public class UserDAO {
         try {
             jdbcTemplate.update(sql, Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), username);
         }catch (Exception e) {
+            System.out.println(e);
             throw new Exception(e);
         }
     }

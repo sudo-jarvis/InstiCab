@@ -164,48 +164,4 @@ public class DriverController extends BaseController{
         return "driver_profile";
     }
 
-
-    @GetMapping("/driver/EmergencyRequest")
-    public String NewEmergencyRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        return "emergencyServices";
-    }
-
-    @PostMapping("/driver/EmergencyRequest/hospital")
-    public String CreateHospitalRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        emergencyService.createHospitalRequest();
-        return "redirect:/";
-    }
-
-    @PostMapping("/driver/EmergencyRequest/police")
-    public String CreatePoliceRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        emergencyService.createPoliceRequest();
-        return "redirect:/";
-    }
-
-    @PostMapping("/driver/EmergencyRequest/fire")
-    public String CreateFireStationRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        emergencyService.createFireStationRequest();
-        return "redirect:/";
-    }
-    @GetMapping("/driver/previousTrips")
-    public String showPreviousRequest(Model model,RedirectAttributes redirectAttributes){
-        if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))
-            return FORBIDDEN_ERROR_PAGE;
-        Long driverId = driverService.findLoggedInDriver();
-        model.addAttribute("earningHistory",earningsHistoryService.getEarningHistory(driverId));
-        return "earning_history";
-
-    }
 }
