@@ -114,9 +114,8 @@ public class DriverController extends BaseController{
         Trip trip = tripService.getTripByTripId(tripId);
         trip.setEndDate(Date.valueOf(LocalDate.now()));
         trip.setEndTime(Time.valueOf(LocalTime.now()));
-        trip.setEndLatitude(trip.getEndLatitude());
-        trip.setEndLongitude(trip.getEndLongitude());
-
+        trip.setStatus(3);
+        tripService.updateTrip(trip);
         double distance = distance(trip.getStartLatitude(), trip.getStartLongitude(), trip.getEndLatitude(), trip.getEndLongitude());
 
         Transaction transaction = new Transaction();
@@ -128,7 +127,6 @@ public class DriverController extends BaseController{
         transaction.setStatus(0);
 
         transactionService.saveTransaction(transaction);
-        tripService.changeTripStatus(trip.getTripId(),3);
         return "redirect:/driver";
     }
 
@@ -165,40 +163,6 @@ public class DriverController extends BaseController{
         return "driver_profile";
     }
 
-    @GetMapping("/driver/EmergencyRequest")
-    public String NewEmergencyRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        return "emergencyServices";
-    }
-
-    @PostMapping("/driver/EmergencyRequest/hospital")
-    public String CreateHospitalRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        emergencyService.createHospitalRequest();
-        return "redirect:/";
-    }
-
-    @PostMapping("/driver/EmergencyRequest/police")
-    public String CreatePoliceRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        emergencyService.createPoliceRequest();
-        return "redirect:/";
-    }
-
-    @PostMapping("/driver/EmergencyRequest/fire")
-    public String CreateFireStationRequest(Model model){
-        if(!isLoggedIn() || isAuthorized(model,ROLE_ADMIN)){
-            return FORBIDDEN_ERROR_PAGE;
-        }
-        emergencyService.createFireStationRequest();
-        return "redirect:/";
-    }
     @GetMapping("/driver/previousTrips")
     public String showPreviousRequest(Model model,RedirectAttributes redirectAttributes) throws Exception {
         if(!isLoggedIn() || !isAuthorized(model,ROLE_DRIVER))

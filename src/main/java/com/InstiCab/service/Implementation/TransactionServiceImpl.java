@@ -49,8 +49,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void updateTransactionDateTime(Transaction transaction) throws Exception {
-        transactionDAO.updateTransactionDateTime(transaction);
+    public void updateTransactionDateTimeStatus(Transaction transaction) throws Exception {
+        transactionDAO.updateTransactionDateTimeStatus(transaction);
     }
 
 

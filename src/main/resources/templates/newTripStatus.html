@@ -55,6 +55,7 @@
                       <td th:if="${passengerTrip.status eq 2}" th:text="Cancelled"></td>
                       <td th:if="${passengerTrip.status eq 3}" th:text="Payment_Pending"></td>
                       <td th:if="${passengerTrip.status eq 4}" th:text="Completed"></td>
+                      <td th:if="${passengerTrip.status eq 5}" th:text="Scheduled"></td>
                       <td>
                         <a class="btn btn-warning" data-bs-toggle="collapse"
                            th:href="'#collapse'+${passengerTrip.tripId}"

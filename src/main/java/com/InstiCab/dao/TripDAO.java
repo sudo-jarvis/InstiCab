@@ -36,7 +36,7 @@ public class TripDAO {
 
 
     public boolean tripAlreadyExists(Long passengerId) {
-        final String sql = "SELECT * FROM trip WHERE status<2 AND passenger_id=?";
+        final String sql = "SELECT * FROM trip WHERE (status<2 OR status=5) AND passenger_id=?";
         try {
             return !jdbcTemplate.query(sql, RowMappers.tripRowMapper, passengerId).isEmpty();
         } catch (Exception e) {
@@ -151,7 +151,7 @@ public class TripDAO {
     }
 
     public void cancelTrip(Long tripId) {
-        final String sql = "UPDATE trip SET status = 2 WHERE trip_id = ? AND status=0";
+        final String sql = "UPDATE trip SET status = 2 WHERE trip_id = ? AND (status=0 OR status = 5) ";
         try {
             jdbcTemplate.update(sql, tripId);
         } catch (Exception e){
@@ -178,6 +178,16 @@ public class TripDAO {
         }catch (Exception e) {
             System.out.println(e);
             throw new Exception("error in getting all driver trips ");
+        }
+    }
+
+    public void updateTrip(Trip trip) {
+        final String sql = "UPDATE trip SET status = ?, end_time = ?, end_date = ? WHERE trip_id = ?";
+        try {
+            jdbcTemplate.update(sql,trip.getStatus(),trip.getEndTime(),trip.getEndDate(),trip.getTripId());
+        } catch (Exception e){
+            System.out.println(e);
+            throw new DuplicateKeyException("Trip Request doesnt exist ! !");
         }
     }
 

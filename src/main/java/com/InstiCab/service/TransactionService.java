@@ -21,5 +21,5 @@ public interface TransactionService {
 
     Transaction getTransaction(Long transactionId) throws Exception;
 
-    void updateTransactionDateTime(Transaction transaction) throws Exception;
+    void updateTransactionDateTimeStatus(Transaction transaction) throws Exception;
 }

@@ -27,11 +27,14 @@
     const var4=document.getElementById("locationsLabel2");
     const var5=document.getElementById("addDestFav");
     const var6=document.getElementById("favAdd");
+    const var7=document.getElementById("destination1");
+
     if(var3.checked){
       var2.classList.add("d-none");
       var4.classList.remove("d-none");
       var5.classList.add("d-none");
       var6.value = false;
+      var7.classList.add("d-none");
     }
     else{
       var2.classList.remove("d-none");
@@ -145,6 +148,7 @@
                 <div class="col input-group input-group-outline my-3 d-none" id="locationsLabel1">
                   <label for="fromLocations">Choose a location:</label>
                   <select name="locations" id="fromLocations" onchange="setFromLocation()">
+                    <option>Select</option>
                     <option th:each="loc:${tripDetails.favouriteLocationsList}"
                             th:value="${loc.latitudeLocation}+' '+${loc.longitudeLocation}"><span
                             th:text="${loc.label}"></span></option>
@@ -166,6 +170,7 @@
                   <label for="toLocations">Choose a location:</label>
 
                   <select name="locations" id="toLocations" onchange="setToLocation()">
+                    <option>Select</option>
                     <option th:each="loc:${tripDetails.favouriteLocationsList}"
                             th:value="${loc.latitudeLocation}+' '+${loc.longitudeLocation}"><span
                             th:text="${loc.label}"></span></option>
@@ -188,7 +193,7 @@
                 <label for="addLabel" class="form-label">Add label: </label>
                 <input id="addLabelFav" name="favLocLabel" type="text" class="form-control"
                        th:value="${tripDetails.favouriteLocation.label}"
-                       required>
+                >
               </div>
 
 

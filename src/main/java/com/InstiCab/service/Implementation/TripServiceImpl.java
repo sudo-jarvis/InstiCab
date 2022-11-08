@@ -108,6 +108,11 @@ public class TripServiceImpl implements TripService {
         return tripDAO.getDriverPreviousTrips(driverId);
     }
 
+    @Override
+    public void updateTrip(Trip trip) {
+        tripDAO.updateTrip(trip);
+    }
+
 //    @Override
 //    public List<Trip> getDriverCurrentTrips(Long driverId) throws Exception {
 //        return tripDAO.getDriverCurrentTrips(driverId);

@@ -90,8 +90,8 @@ public class TransactionDAO {
         }
     }
 
-    public void updateTransactionDateTime(Transaction transaction) throws Exception {
-        final String sql = "UPDATE transaction SET date_transaction=?, time_transaction=?";
+    public void updateTransactionDateTimeStatus(Transaction transaction) throws Exception {
+        final String sql = "UPDATE transaction SET status=1,date_transaction=?, time_transaction=?";
         try {
             jdbcTemplate.update(sql,transaction.getDateTransaction(), transaction.getTimeTransaction());
         } catch (Exception e) {

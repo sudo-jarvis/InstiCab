@@ -35,5 +35,7 @@ public interface TripService {
 
     List<Trip> getDriverPreviousTrips(Long driverId) throws Exception;
 
+    void updateTrip(Trip trip);
+
 //    List<Trip> getDriverCurrentTrips(Long driverId) throws Exception;
 }

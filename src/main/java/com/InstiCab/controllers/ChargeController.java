@@ -69,7 +69,8 @@ public class ChargeController {
         Transaction transaction = transactionService.getTransaction(Long.valueOf(transactionId));
         transaction.setDateTransaction(Date.valueOf(LocalDate.now()));
         transaction.setTimeTransaction(Time.valueOf(LocalTime.now()));
-        transactionService.updateTransactionDateTime(transaction);
+        transactionService.updateTransactionDateTimeStatus(transaction);
+
         Trip trip = tripService.getTripByTripId(transaction.getTripId());
         tripService.changeTripStatus(trip.getTripId(),4);
         EarningsHistory earning = new EarningsHistory();
