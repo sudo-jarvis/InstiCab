@@ -101,8 +101,8 @@
                           name="phoneNo"
                           required
                           th:field="*{phoneNo}"
-                          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                          maxlength="10"
+                          pattern="[0-9]{10}"
+                          oninvalid="setCustomValidity('Please enter like 9718212373')"
                   >
                 </div>
                 <div class="input-group input-group-outline mb-3">
