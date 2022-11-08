@@ -171,8 +171,8 @@ public class TripDAO {
         }
     }
 
-    public List<Trip> getDriverAllTrips(Long driverId) throws Exception {
-        final String sql = "SELECT * from trip WHERE driver_id = ? order by trip_id";
+    public List<Trip> getDriverPreviousTrips(Long driverId) throws Exception {
+        final String sql = "SELECT * from trip WHERE driver_id = ? and (status = 2 or status = 4) order by trip_id";
         try {
             return jdbcTemplate.query(sql,RowMappers.tripRowMapper, driverId);
         }catch (Exception e) {
@@ -180,4 +180,13 @@ public class TripDAO {
             throw new Exception(e);
         }
     }
+
+//    public List<Trip> getDriverCurrentTrips(Long driverId) throws Exception {
+//        final String sql = "SELECT * from trip WHERE driver_id = ? and (status = 0 or status = 1) order by trip_id";
+//        try {
+//            return jdbcTemplate.query(sql,RowMappers.tripRowMapper, driverId);
+//        }catch (Exception e) {
+//            throw new Exception(e);
+//        }
+//    }
 }
