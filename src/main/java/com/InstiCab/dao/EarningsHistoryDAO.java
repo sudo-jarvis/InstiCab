@@ -33,10 +33,11 @@ public class EarningsHistoryDAO {
     }
 
     public List<EarningsHistory> getEarningHistory(Long driverId) {
-        final String sql = "SELECT * FROM earning_history as e WHERE e.driver_id = ? order by e.earning_id";
+        final String sql = "SELECT * FROM earning_history as e WHERE e.driver_id = ? order by e.trip_id";
         try {
             return jdbcTemplate.query(sql, RowMappers.earningsHistoryRowMapper, driverId);
         } catch (Exception e) {
+            System.out.println(e);
             throw new UsernameNotFoundException("Error");
         }
     }
