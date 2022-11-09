@@ -211,18 +211,27 @@ public class PassengerController extends BaseController{
 
     @PostMapping("/feedback")
     public String feedback(@RequestParam(name = "tripId") String tripId, Model model) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
         model.addAttribute("tripId", tripId);
         return "feedback";
     }
 
     @PostMapping("/saveFeedback")
     public String saveFeedback(@RequestParam(name = "feedback") String feedback, @RequestParam(name = "tripId") String tripId, Model model) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
         tripService.saveFeedback(feedback, Long.valueOf(tripId));
         return "redirect:/";
     }
 
     @PostMapping("/endTransaction")
     public String endTransaction(Model model,RedirectAttributes redirectAttributes) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
         Long passengerId = passengerService.getLoggedInPassengerId();
         Passenger passenger = passengerService.getPassengerByPassengerId(passengerId);
         transactionService.endTransaction(passenger.getUsername());
@@ -234,6 +243,9 @@ public class PassengerController extends BaseController{
             "transactionId") String transactionId, @RequestParam(name =
             "tripId") String tripId, Model model,RedirectAttributes redirectAttributes) throws ParseException {
 
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
         Long passengerId = passengerService.getLoggedInPassengerId();
         List<Coupon>allCoupons = couponService.getPassengerAllCoupons(passengerId);
         List<Coupon> availableCoupons = new ArrayList<>();
@@ -258,6 +270,9 @@ public class PassengerController extends BaseController{
 
     @PostMapping("/passenger/cancel/{tripId}")
     public String cancelTrip(@PathVariable("tripId") Long tripId, Model model,RedirectAttributes redirectAttributes) throws Exception {
+        if(!isLoggedIn() || !isAuthorized(model,ROLE_PASSENGER)){
+            return FORBIDDEN_ERROR_PAGE;
+        }
         tripService.cancelTrip(tripId);
         return "redirect:/";
     }

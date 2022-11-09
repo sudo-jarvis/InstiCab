@@ -19,11 +19,9 @@ public class EmergencyDAO {
     private JdbcTemplate jdbcTemplate;
 
     public void createEmergencyRequest(Integer type, String loggedInUsername) {
-        System.out.println("emergencyrequest");
         final String sql = "INSERT INTO emergency_service(type,request_time,username) VALUES(?,?,?)";
         try {
             jdbcTemplate.update(sql,type, Time.valueOf(LocalTime.now()),loggedInUsername);
-            System.out.println("tryBlock");
         } catch (Exception e) {
             System.out.println(e);
             throw new UsernameNotFoundException("Error in creating Emergency Request");

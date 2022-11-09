@@ -91,9 +91,10 @@ public class TransactionDAO {
     }
 
     public void updateTransactionDateTimeStatus(Transaction transaction) throws Exception {
-        final String sql = "UPDATE transaction SET status=1,date_transaction=?, time_transaction=?";
+        final String sql = "UPDATE transaction SET status=1,date_transaction=?, time_transaction=? where " +
+                "transaction_id = ?";
         try {
-            jdbcTemplate.update(sql,transaction.getDateTransaction(), transaction.getTimeTransaction());
+            jdbcTemplate.update(sql,transaction.getDateTransaction(), transaction.getTimeTransaction(),transaction.getTransactionId());
         } catch (Exception e) {
             System.out.println(e);
             throw new Exception("error in updating transaction date");
